@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: center;  /* Center the links horizontally */
+    background-color: #333;   /* Dark background */
+    padding: 15px 0;            /* Padding around the navbar */
+}
+
+/* Styling for the links */
+.navbar-link {
+    color: #fff;              /* White text */
+    text-decoration: none;    /* Remove underline */
+    font-size: 1.2rem;        /* Increase font size */
+    padding-right: 20px;      /* Space between links */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for links */
+.navbar-link:hover {
+    color: #61dafb;
+}
+
+/* Add spacing after the last link */
+.navbar-link:last-child {
+    padding-right: 0;
+}

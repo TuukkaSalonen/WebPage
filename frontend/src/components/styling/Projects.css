@@ -1,0 +1,24 @@
+.projects-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    height: 100vh;           /* Full viewport height */
+    font-family: 'Arial', sans-serif; /* Apply a custom font */
+    font-size: 2rem;         /* Font size */
+    color: white;             /* Text color */
+    background-color: #282c34; /* Light background color */
+    text-align: center;      /* Center text */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import Google Fonts */
+
+.projects-container {
+    font-family: 'Roboto', sans-serif; /* Use the Roboto font */
+    font-weight: 400;
+}
+
+/* Add hover effect for a cool touch */
+.projects-container-text:hover {
+    color: #007bff; /* Change text color on hover */
+}
+

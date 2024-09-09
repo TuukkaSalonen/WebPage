@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+  font-size: 1.2rem;
+  min-height: 100vh;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+footer {
+  background-color: #333; /* Footer background color */
+  color: #fff;            /* Footer text color */
+  text-align: center;     /* Center text */
+  padding: 10px 0;        /* Padding for footer */
+}
+
+.main-content {
+  flex: 1; /* Takes up remaining space */
+}

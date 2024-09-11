@@ -5,12 +5,10 @@
     height: 100vh;           /* Full viewport height */
     font-family: 'Arial', sans-serif; /* Apply a custom font */
     font-size: 2rem;         /* Font size */
-    color: white;             /* Text color */
-    background-color: #282c34; /* Light background color */
+    color: black;             /* Text color */
+    background-color: #E6E6FA; /* Light background color */
     text-align: center;      /* Center text */
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Import Google Fonts */
 
 .projects-container {
     font-family: 'Roboto', sans-serif; /* Use the Roboto font */

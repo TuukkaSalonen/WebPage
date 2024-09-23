@@ -1,8 +1,17 @@
 .navbar {
     display: flex;
-    justify-content: center;  /* Center the links horizontally */
+    justify-content: center;  /* Center the links */
+    align-items: center;
     background-color: #001f3f;   /* Dark background */
     padding: 15px 0;            /* Padding around the navbar */
+    position: relative;         /* Relative positioning for absolute child */
+}
+
+/* Center the links */
+.navbar-center {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;  /* Allow the center div to grow */
 }
 
 /* Styling for the links */
@@ -10,7 +19,45 @@
     padding-right: 20px;      /* Space between links */
 }
 
-/* Add spacing after the last link */
-.navbar-link:last-child {
-    padding-right: 0;
+.visitor-count {
+    color: white;
+    position: absolute;       /* Absolute positioning */
+    right: 20px;              /* Position it to the right corner */
+    white-space: nowrap;      /* Prevent text from wrapping */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 640px) {
+    .navbar {
+        flex-direction: column;  /* Stack items vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .navbar-center {
+        order: 1;                /* Ensure links are first */
+        width: 100%;             /* Full width */
+        justify-content: center; /* Center links */
+        margin-bottom: 10px;     /* Space below links */
+    }
+
+    .visitor-count {
+        position: static;        /* Remove absolute positioning */
+        order: 2;                /* Ensure visitor count is last */
+        text-align: center;
+        width: 100%;             /* Full width */
+    }
+}
+
+button {
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.active {
+    background-color: #02517c; /* Active background color */
 }

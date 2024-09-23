@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port that the app will run on
-EXPOSE 3000
+EXPOSE ${FDOCKER_PORT}
 
 # Start the application
 CMD ["npm", "start"]

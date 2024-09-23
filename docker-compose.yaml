@@ -1,0 +1,79 @@
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    environment:
+      - PORT=${BACKEND_PORT}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB=${DB_NAME}
+
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - backend_network
+      - frontend_network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    networks:
+      - frontend_network
+    links:
+      - backend
+
+  db:
+    image: postgres:16
+    container_name: database
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend_network
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "${NGINX_PORT}:${NGINX_PORT}"
+    environment:
+      - NGINX_PORT=${NGINX_PORT}
+      - FRONTEND_PORT=${FRONTEND_PORT}
+      - BACKEND_PORT=${BACKEND_PORT}
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - frontend_network
+      - backend_network
+
+networks:
+  frontend_network:
+    driver: bridge
+  backend_network:
+    driver: bridge
+
+volumes:
+  pgdata:

@@ -16,7 +16,7 @@ COPY . .
 RUN npm install -g tsx
 
 # Expose the port that the app will run on
-EXPOSE 3001
+EXPOSE ${BDOCKER_PORT}
 
 # Start the application using tsx
-CMD ["tsx", "src/server.ts"]
+CMD ["tsx", "server.ts"]

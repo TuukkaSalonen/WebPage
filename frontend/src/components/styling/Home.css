@@ -1,31 +1,46 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    height: 100vh;           /* Full viewport height */
-    font-family: 'Arial', sans-serif; /* Apply a custom font */
-    font-size: 2rem;         /* Font size */
-    color: black;             /* Text color */
-    background-color: #E6E6FA; /* Light background color */
-    text-align: center;      /* Center text */
-}
-
-.home-container {
-    font-family: 'Roboto', sans-serif; /* Use the Roboto font */
-    font-weight: 400;
-}
-
-.home-container > div {
-   margin-bottom: 1rem;
-}
-
-.home-container > div:last-child {
-    margin-bottom: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
   }
-
-/* Add hover effect for a cool touch */
-.home-container-text:hover {
-    color: #007bff; /* Change text color on hover */
-}
-
+  
+  .home-container-text {
+    margin-bottom: 20px;
+  }
+  
+  .home-container-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 75px;
+  }
+  
+  .home-container-text p {
+    font-size: 1.3rem;
+    color: #555;
+  }
+  
+  .home-container-social {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .home-container-social a {
+    color: #333;
+    transition: color 0.3s;
+  }
+  
+  .home-container-social a:hover {
+    color: #0073b1; /* LinkedIn color */
+  }
+  
+  .home-container-social a:nth-child(2):hover {
+    color: #000000; /* GitHub color */
+  }
+  
+  .home-container-social a:nth-child(3):hover {
+    color: #d44638; /* Email color */
+  }

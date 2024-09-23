@@ -3,15 +3,13 @@
     justify-content: center; /* Center horizontally */
     align-items: center;     /* Center vertically */
     height: 100vh;           /* Full viewport height */
-    font-family: 'Arial', sans-serif; /* Apply a custom font */
     font-size: 2rem;         /* Font size */
     color: black;             /* Text color */
-    background-color: #E6E6FA; /* Light background color */
+    background-color: #f0f0f0; /* Light background color */
     text-align: center;      /* Center text */
 }
 
 .projects-container {
-    font-family: 'Roboto', sans-serif; /* Use the Roboto font */
     font-weight: 400;
 }
 

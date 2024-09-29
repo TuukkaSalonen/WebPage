@@ -1,6 +1,6 @@
 .chatbox-container {
     position: fixed;
-    bottom: 80px;
+    bottom: 100px;
     right: 20px;
     width: 300px;
     height: 400px;
@@ -36,6 +36,8 @@
 
 .chatbox-header h3 {
     margin: 0;
+    height: 30px;
+    font-size: 25px;
 }
 
 .chatbox-body {
@@ -89,11 +91,17 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.chat-icon:hover {
+    background-color: #001f3f;
 }
 
 .chat-icon img {
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     filter: invert(1);
 }
 

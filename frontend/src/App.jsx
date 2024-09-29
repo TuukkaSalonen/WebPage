@@ -5,7 +5,6 @@ import { Home } from './components/Home.jsx';
 import { Details } from './components//Details.jsx';
 import { Projects } from './components/Projects.jsx';
 import { NotFound } from './components/NotFound.jsx';
-import FloatingChat from './components/Chat.jsx';
 
 const App = ({ visitorCount }) => {
 	return (
@@ -18,10 +17,10 @@ const App = ({ visitorCount }) => {
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
-				<FloatingChat />
 			</div>
 			<footer>
 				<p>Copyright &copy; 2024</p>
+				<p className='last-update'>Last update: 29.9.2024</p>
 			</footer>
 		</div>
 	);

@@ -7,10 +7,7 @@
     color: black;             /* Text color */
     background-color: #f0f0f0; /* Light background color */
     text-align: center;      /* Center text */
-}
-
-.projects-container {
-    font-weight: 400;
+    padding: 20px;
 }
 
 /* Add hover effect for a cool touch */

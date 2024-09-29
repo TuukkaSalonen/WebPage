@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(AI_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 export const getChatResponse = async (req: Request, res: Response): Promise<void> => {
-    try {
+	try {
 		const message = req.body.message.toString();
 		const response = await generateAIResponse(message);
 		res.status(200).json({ message: response });
@@ -18,9 +18,9 @@ export const getChatResponse = async (req: Request, res: Response): Promise<void
 const generateAIResponse = async (message: string) => {
 	try {
 		const generated = await model.generateContent(message);
-        return generated.response.text();
+		return generated.response.text();
 	} catch (error) {
 		console.error(error);
-		return "Error occurred when generating message";
+		return 'Error occurred when generating message';
 	}
 };

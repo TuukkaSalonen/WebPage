@@ -7,9 +7,24 @@
 
 footer {
   background-color: #001f3f; /* Footer background color */
-  color: #fff;            /* Footer text color */
-  text-align: center;     /* Center text */
-  padding: 10px 0;        /* Padding for footer */
+  color: #fff;               /* Footer text color */
+  display: flex;             /* Use Flexbox */
+  justify-content: center;   /* Center horizontally */
+  align-items: center;       /* Center vertically */
+  height: 60px;              /* Fixed height for footer */
+  padding: 0 20px;           /* Optional padding */
+  font-size: 1.5rem;         /* Increased font size for footer */
+  position: relative;        /* Relative positioning for child elements */
+}
+
+footer p {
+  margin: 0;                 /* Remove default margin */
+}
+
+footer .last-update {
+  position: absolute;        /* Absolute positioning */
+  left: 20px;               /* Position 20px from the right */
+  font-size: 1rem;           /* Smaller font size for last update */
 }
 
 .main-content {

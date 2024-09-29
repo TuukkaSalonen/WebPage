@@ -1,6 +1,7 @@
 import express from 'express';
-import {setAndGetVisitorCount/*, addVisitor*/} from '../controllers/generalController'
+import {setAndGetVisitorCount/*, addVisitor*/} from '../controllers/visitorController'
 import { getChatResponse } from '../controllers/chatController';
+
 const generalRoutes = express.Router({mergeParams: true});
 
 generalRoutes.get('/visitor', setAndGetVisitorCount);

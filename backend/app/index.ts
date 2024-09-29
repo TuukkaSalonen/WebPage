@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 import knex, { Knex } from 'knex';
 import { deleteTables, isConnectionClosed } from '../db/dbConnection';
 import db from '../db/dbConnection';
@@ -8,29 +10,38 @@ import { incrementAndSelectVisitors } from '../db/queries/general';
 import generalRoutes from './routes/generalRoutes';
 
 const env = process.env;
-const port = env.PORT;
+const port = env.FRONTEND_PORT;
 
 export const app = express();
 
-// Middleware setup
-app.use(express.json());
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes,
+	max: 100, // limit each IP to 100 requests per windowMs
+	message: 'Too many requests from this IP, please try again after 15 minutes',
+});
 
 const corsOptions = {
-	//origin: `localhost:${port}`,
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	allowedHeaders: ['Content-Type'],
-  origin: 'http://frontend:3000',
+	origin: `http://frontend:${port}`,
 };
 
+// Trust the first proxy
+app.set('trust proxy', 1);
+
+// Middleware setup
+app.use(express.json());
+app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
 
-app.use("/api/general", generalRoutes);
+app.use(morgan('dev')); // Log HTTP requests for development
 
+app.use('/api/general', generalRoutes);
 
 // Basic served HTML page
 app.get('/', async (req, res) => {
-  res.send(`<!DOCTYPE html>
+	res.send(`<!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">

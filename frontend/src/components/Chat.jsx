@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMessage } from '../redux/actionCreators/chatActions.ts';
 import './styling/Chat.css';
-import { fetchChatRequest } from '../redux/actionCreators/thunks/chat.ts';
-
-//Lisää chatbot kysymykset/vastaukset state storeen
+import CircularProgress from '@mui/material/CircularProgress';
 
 const FloatingChat = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState('');
+	const dispatch = useDispatch();
+	const messages = useSelector((state) => state.chat.messages);
+	const loading = useSelector((state) => state.chat.loading);
 
 	const toggleChatbox = () => {
 		setIsOpen(!isOpen);
 	};
 
-	const handleSend = async () => {
+	const handleSend = () => {
 		if (input.trim()) {
-			const newMessage = { text: input, sender: 'user' };
-			setMessages((prevMessages) => [...prevMessages, newMessage]);
+			dispatch(sendMessage(input));
 			setInput('');
-			const botResponse = await fetchChatRequest(newMessage.text);
-			setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
 		}
 	};
 
@@ -39,6 +38,11 @@ const FloatingChat = () => {
 								{message.text}
 							</div>
 						))}
+						{loading && (
+							<div className="message bot">
+								<CircularProgress color="001f3f" size={20} />
+							</div>
+						)}
 					</div>
 				</div>
 				<div className="chatbox-input">

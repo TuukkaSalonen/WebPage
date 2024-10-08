@@ -11,10 +11,29 @@ footer {
   display: flex;             /* Use Flexbox */
   justify-content: center;   /* Center horizontally */
   align-items: center;       /* Center vertically */
-  height: 60px;              /* Fixed height for footer */
+  height: 50px;              /* Fixed height for footer */
   padding: 0 20px;           /* Optional padding */
   font-size: 1.5rem;         /* Increased font size for footer */
   position: relative;        /* Relative positioning for child elements */
+}
+
+footer a {
+  color: #fff;               /* White text color */
+	transition: color 0.3s;
+	margin-right: 10px; /* Add distance between icons */
+	font-size: 15px;
+}
+
+footer a:nth-child(2):hover {
+	color: #0073b1; /* LinkedIn color */
+}
+
+footer a:nth-child(3):hover {
+	color: #000000; /* GitHub color */
+}
+
+footer a:nth-child(4):hover {
+	color: #d44638; /* Email color */
 }
 
 footer p {

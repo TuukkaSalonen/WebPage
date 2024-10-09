@@ -5,6 +5,7 @@
 	background-color: #001f3f; /* Dark background */
 	padding: 10px 0; /* Padding around the navbar */
 	position: relative; /* Relative positioning for absolute child */
+	width: 100%; /* Full width */
 }
 
 /* Center the links */

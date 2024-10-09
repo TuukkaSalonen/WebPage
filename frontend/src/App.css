@@ -1,10 +1,3 @@
-.App {
-  text-align: center;
-  font-size: 1.2rem;
-  min-height: 100vh;
-  color: black;
-}
-
 footer {
   background-color: #001f3f; /* Footer background color */
   color: #fff;               /* Footer text color */
@@ -15,37 +8,58 @@ footer {
   padding: 0 20px;           /* Optional padding */
   font-size: 1.5rem;         /* Increased font size for footer */
   position: relative;        /* Relative positioning for child elements */
+  flex-wrap: wrap;           /* Allow wrapping of child elements */
 }
 
 footer a {
   color: #fff;               /* White text color */
-	transition: color 0.3s;
-	margin-right: 10px; /* Add distance between icons */
-	font-size: 15px;
+  transition: color 0.3s;
+  margin-right: 10px;        /* Add distance between icons */
+  font-size: 15px;
 }
 
 footer a:nth-child(2):hover {
-	color: #0073b1; /* LinkedIn color */
+  color: #0073b1; /* LinkedIn color */
 }
 
 footer a:nth-child(3):hover {
-	color: #000000; /* GitHub color */
+  color: #000000; /* GitHub color */
 }
 
 footer a:nth-child(4):hover {
-	color: #d44638; /* Email color */
+  color: #d44638; /* Email color */
 }
 
 footer p {
   margin: 0;                 /* Remove default margin */
 }
-
 footer .last-update {
   position: absolute;        /* Absolute positioning */
-  left: 20px;               /* Position 20px from the right */
+  left: 20px;                /* Position 20px from the left */
   font-size: 1rem;           /* Smaller font size for last update */
 }
 
-.main-content {
-  flex: 1; /* Takes up remaining space */
+@media screen and (max-width: 600px) {
+  footer {
+    flex-direction: column; /* Stack elements vertically */
+    height: auto;           /* Adjust height to content */
+    padding: 10px 20px;     /* Adjust padding */
+  }
+
+  footer .links {
+    display: flex;          /* Use flexbox for links */
+    justify-content: center; /* Center links horizontally */
+    flex-wrap: wrap;        /* Allow wrapping if necessary */
+    width: 100%;            /* Full width */
+    margin-bottom: 10px;    /* Add bottom margin */
+  }
+
+  footer a {
+    margin-right: 10px;     /* Add right margin */
+    margin-bottom: 0;       /* Remove bottom margin */
+  }
+
+  footer p {
+    margin-top: 30px;       /* Add top margin */
+  }
 }

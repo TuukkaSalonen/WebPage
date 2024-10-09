@@ -4,7 +4,6 @@
 	grid-template-rows: auto auto;
 	gap: 10px;
 	padding: 10px;
-	background-color: #f9f9f9;
 	height: 100vh; /* Full viewport height */
 	overflow-y: auto; /* Enable vertical scrolling if content overflows */
 	font-size: 20px;
@@ -43,13 +42,14 @@
 
 .details-section {
 	padding: 20px;
-	background-color: #fff;
+	background-color: #f0f0f0 ;
 	border-radius: 8px;
 	border: 1px solid #f1f1f1;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	text-align: center;
 }
 
 .details-section.fade-in {
@@ -131,7 +131,6 @@
 
 .knowledge-list ul {
 	list-style: none;
-	padding: 0;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 	gap: 5px;

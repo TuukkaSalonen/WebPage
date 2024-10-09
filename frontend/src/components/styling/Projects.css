@@ -1,17 +1,58 @@
 .projects-container {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    height: 100vh;           /* Full viewport height */
-    font-size: 2rem;         /* Font size */
-    color: black;             /* Text color */
-    background-color: #f0f0f0; /* Light background color */
-    text-align: center;      /* Center text */
-    padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh; /* Full viewport height */
+	font-size: 20px; /* Font size */
+	color: black; /* Text color */
+	background-color: #f0f0f0; /* Light background color */
+	padding: 20px;
 }
 
-/* Add hover effect for a cool touch */
-.projects-container-text:hover {
-    color: #007bff; /* Change text color on hover */
+.projects-container-text {
+	max-width: 800px;
+	margin: 0 auto;
+	width: 100%;
 }
 
+.projects-container-text h2 {
+	font-size: 2rem;
+	margin-bottom: 20px;
+	color: #333;
+	text-align: center;
+}
+
+.projects-list ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.projects-list li {
+	margin: 10px 0;
+}
+
+.projects-list a {
+	text-decoration: none;
+	color: #0073e6;
+	transition:
+		color 0.3s,
+		transform 0.3s;
+}
+
+.projects-list a:hover {
+	color: #005bb5;
+	transform: scale(1.05);
+}
+
+.projects-list h3 {
+	margin: 0;
+	font-size: 1.5rem;
+    text-align: center;
+}
+
+.floating-chat {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+}

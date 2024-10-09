@@ -29,7 +29,7 @@ const Navbar = ({ visitorCount, loading }) => {
 				<Link to="/projects" className="navbar-link">
 					<Button
 						variant="contained"
-						className={location.pathname === '/projects' ? 'active' : ''}
+						className={location.pathname.startsWith('/projects') ? 'active' : ''}
 					>
 						Projects
 					</Button>

@@ -8,6 +8,7 @@ import { NotFound } from './components/NotFound.jsx';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { Snake } from './components/Snake.jsx';
 
 const App = ({ visitorCount }) => {
 	return (
@@ -17,29 +18,32 @@ const App = ({ visitorCount }) => {
 				<Routes>
 					<Route path="/details" element={<Details />}></Route>
 					<Route path="/projects" element={<Projects />}></Route>
+					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 			<footer>
-				<p className='last-update'>Last update: 8.10.2024</p>
-				<a
-								href="https://www.linkedin.com/in/tuukkasalonen/"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<FontAwesomeIcon icon={faLinkedin} size="2x" />
-							</a>
-							<a
-								href="https://github.com/TuukkaSalonen"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<FontAwesomeIcon icon={faGithub} size="2x" />
-							</a>
-							<a href="mailto:tuukka.salonen2@gmail.com">
-								<FontAwesomeIcon icon={faEnvelope} size="2x" />
-							</a>
+				<p className="last-update">Last update: 8.10.2024</p>
+				<div className="links">
+					<a
+						href="https://www.linkedin.com/in/tuukkasalonen/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<FontAwesomeIcon icon={faLinkedin} size="2x" />
+					</a>
+					<a
+						href="https://github.com/TuukkaSalonen"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<FontAwesomeIcon icon={faGithub} size="2x" />
+					</a>
+					<a href="mailto:tuukka.salonen2@gmail.com">
+						<FontAwesomeIcon icon={faEnvelope} size="2x" />
+					</a>
+				</div>
 			</footer>
 		</div>
 	);

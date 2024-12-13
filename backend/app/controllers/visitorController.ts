@@ -13,16 +13,3 @@ export const setAndGetVisitorCount = async (req: Request, res: Response): Promis
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };
-
-/*
-export const addVisitor = async (req: Request, res: Response): Promise<void> => {
-	try {
-		await incrementVisitorCount();
-		const visitors = await selectVisitors();
-		const count = visitors.data ? visitors.data : 0;
-		res.status(200).json({ visitorCount: count });
-	} catch (error) {
-		res.status(500).json({ status: 500, message: 'Internal server error' });
-	}
-};
-*/

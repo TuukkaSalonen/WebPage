@@ -1,12 +1,15 @@
 import express from 'express';
-import {setAndGetVisitorCount/*, addVisitor*/} from '../controllers/visitorController'
+import { setAndGetVisitorCount } from '../controllers/visitorController';
 import { getChatResponse } from '../controllers/chatController';
+import { getSnakeLeaderboard, postSnakeScore } from '../controllers/snakeController';
 
-const generalRoutes = express.Router({mergeParams: true});
+const generalRoutes = express.Router({ mergeParams: true });
 
 generalRoutes.get('/visitor', setAndGetVisitorCount);
-//generalRoutes.post('/visitor', addVisitor);
 
 generalRoutes.post('/chat', getChatResponse);
+
+generalRoutes.get('/snake', getSnakeLeaderboard);
+generalRoutes.post('/snake', postSnakeScore);
 
 export default generalRoutes;

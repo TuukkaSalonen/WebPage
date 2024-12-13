@@ -29,6 +29,7 @@ export const Home = () => {
 					My LinkedIn and GitHub profiles are linked in the footer below. Also, feel free to reach out
 					to me via email.
 				</p>
+				<p>Note that this site is not in active development and is used as a hobby.</p>
 			</div>
 		</div>
 	);

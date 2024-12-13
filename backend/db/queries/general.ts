@@ -1,33 +1,27 @@
 import db from '../dbConnection';
 
-const table = 'app.general';
+const generalTable = 'app.general'; // Siirrä constants fileen
+const snakeTable = 'app.snake';
 
 export async function selectAll() {
-	return await db(table).select('*');
+	return await db(generalTable).select('*');
 }
-
-/*
-export async function selectVisitors() {
-	return await db(table).select('data').where('name', 'visitors').first();
-}
-
-export async function incrementVisitorCount() {
-	return await db(table)
-	  .where('name', 'visitors')
-	  .increment('data', 1).update({updated_at: db.fn.now()});
-}
-*/
 
 export async function incrementAndSelectVisitors() {
-	await db(table)
-	  .where('name', 'visitors')
-	  .increment('data', 1)
-	  .update({ updated_at: db.fn.now() });
-  
-	const result = await db(table)
-	  .select('data')
-	  .where('name', 'visitors')
-	  .first();
-  
+	await db(generalTable)
+		.where('name', 'visitors')
+		.increment('data', 1)
+		.update({ updated_at: db.fn.now() });
+
+	const result = await db(generalTable).select('data').where('name', 'visitors').first();
+
 	return result;
-  }
+}
+
+export async function getTopScores() {
+	return await db(snakeTable).select('*').orderBy('score', 'desc').limit(10);
+}
+
+export async function setScore(name: string, score: number) {
+	await db(snakeTable).insert({ name, score });
+}

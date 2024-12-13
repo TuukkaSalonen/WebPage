@@ -3,8 +3,8 @@ import type { Knex } from 'knex';
 export async function up(knex: Knex): Promise<void> {
     await knex.schema.createSchemaIfNotExists('app');
     
-    const tableExists = await knex.schema.withSchema('app').hasTable('general');
-    if (!tableExists) {
+    const generalTableExists = await knex.schema.withSchema('app').hasTable('general');
+    if (!generalTableExists) {
       await knex.schema.withSchema('app').createTable('general', (table) => {
         table.increments('id').primary();
         table.string('name').unique();
@@ -17,6 +17,16 @@ export async function up(knex: Knex): Promise<void> {
         created_at: knex.fn.now(),
         updated_at: knex.fn.now()
       })
+    }
+
+    const snakeTableExists = await knex.schema.withSchema('app').hasTable('snake');
+    if (!snakeTableExists) {
+      await knex.schema.withSchema('app').createTable('snake', (table) => {
+        table.increments('id').primary();
+        table.string('name');
+        table.integer('score');
+        table.timestamps(true, true);
+      });
     }
   }
   

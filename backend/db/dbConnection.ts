@@ -1,6 +1,6 @@
 import knex from 'knex';
 import config from './knexfile';
-import { up as upGeneral, down as downGeneral } from './migrations/20240913103931_general';
+import { up as upGeneral, down as downGeneral } from './migrations/init';
 
 const db = knex(config);
 
@@ -18,6 +18,7 @@ export async function createTables() {
 	console.log('Creating tables...');
 	try {
 		await upGeneral(db);
+		console.log('Tables created');
 	} catch (error) {
 		console.error('Error running migration up:', error);
 	}
@@ -25,7 +26,12 @@ export async function createTables() {
 
 export async function deleteTables() {
 	console.log('Deleting tables...');
-	await downGeneral(db);
+	try {
+		await downGeneral(db);
+		console.log('Tables deleted');
+	} catch (error) {
+		console.error('Error running migration down:', error);
+	}
 }
 
 export async function isConnectionClosed(): Promise<boolean> {

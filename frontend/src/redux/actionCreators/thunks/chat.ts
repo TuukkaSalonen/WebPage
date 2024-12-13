@@ -11,7 +11,11 @@ export const fetchChatRequest = async (message: string): Promise<string> => {
 			throw new Error('Network response was not ok');
 		}
 		const data = await response.json();
-		return data.message;
+		if (data.message) {
+			return data.message;
+		} else {
+			throw new Error('No message in response');
+		}
 	} catch (error) {
 		console.error('There was a problem with fetch operation:', error);
 		return "I'm sorry, something unexpected occurred.";

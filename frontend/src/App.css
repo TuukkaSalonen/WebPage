@@ -1,65 +1,73 @@
 footer {
-  background-color: #001f3f; /* Footer background color */
-  color: #fff;               /* Footer text color */
-  display: flex;             /* Use Flexbox */
-  justify-content: center;   /* Center horizontally */
-  align-items: center;       /* Center vertically */
-  height: 50px;              /* Fixed height for footer */
-  padding: 0 20px;           /* Optional padding */
-  font-size: 1.5rem;         /* Increased font size for footer */
-  position: relative;        /* Relative positioning for child elements */
-  flex-wrap: wrap;           /* Allow wrapping of child elements */
+	background-color: #001f3f; /* Footer background color */
+	color: #fff; /* Footer text color */
+	display: flex; /* Use Flexbox */
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+	height: 50px; /* Fixed height for footer */
+	padding: 0 20px; /* Optional padding */
+	font-size: 1.5rem; /* Increased font size for footer */
+	position: relative; /* Relative positioning for child elements */
+	flex-wrap: wrap; /* Allow wrapping of child elements */
 }
 
 footer a {
-  color: #fff;               /* White text color */
-  transition: color 0.3s;
-  margin-right: 10px;        /* Add distance between icons */
-  font-size: 15px;
+	color: #fff; /* White text color */
+	transition: color 0.3s;
+	margin-right: 10px; /* Add distance between icons */
+	font-size: 15px;
+}
+
+footer a:nth-child(1):hover {
+	color: #0073b1; /* LinkedIn color */
 }
 
 footer a:nth-child(2):hover {
-  color: #0073b1; /* LinkedIn color */
+	color: #000000; /* GitHub color */
 }
 
 footer a:nth-child(3):hover {
-  color: #000000; /* GitHub color */
-}
-
-footer a:nth-child(4):hover {
-  color: #d44638; /* Email color */
+	color: #d44638; /* Email color */
 }
 
 footer p {
-  margin: 0;                 /* Remove default margin */
+	margin: 0; /* Remove default margin */
 }
 footer .last-update {
-  position: absolute;        /* Absolute positioning */
-  left: 20px;                /* Position 20px from the left */
-  font-size: 1rem;           /* Smaller font size for last update */
+	position: absolute; /* Absolute positioning */
+	left: 20px; /* Position 20px from the left */
+	font-size: 1rem; /* Smaller font size for last update */
 }
 
 @media screen and (max-width: 600px) {
-  footer {
-    flex-direction: column; /* Stack elements vertically */
-    height: auto;           /* Adjust height to content */
-    padding: 10px 20px;     /* Adjust padding */
-  }
+    footer {
+        flex-direction: column; /* Stack elements vertically */
+        height: auto; /* Adjust height to content */
+        padding: 10px 20px; /* Adjust padding */
+    }
 
-  footer .links {
-    display: flex;          /* Use flexbox for links */
-    justify-content: center; /* Center links horizontally */
-    flex-wrap: wrap;        /* Allow wrapping if necessary */
-    width: 100%;            /* Full width */
-    margin-bottom: 10px;    /* Add bottom margin */
-  }
+    footer .links {
+        display: flex; /* Use flexbox for links */
+        justify-content: center; /* Center links horizontally */
+        flex-wrap: wrap; /* Allow wrapping if necessary */
+        width: 100%; /* Full width */
+        order: 1; /* Ensure links go first */
+    }
 
-  footer a {
-    margin-right: 10px;     /* Add right margin */
-    margin-bottom: 0;       /* Remove bottom margin */
-  }
+    footer a {
+        margin: 0px 10px; /* Add right margin */
+        margin-bottom: 0; /* Remove bottom margin */
+    }
 
-  footer p {
-    margin-top: 30px;       /* Add top margin */
-  }
+    footer p {
+        margin-top: 30px; /* Add top margin */
+    }
+
+    footer .last-update {
+        position: static; /* Remove absolute positioning */
+        width: 100%; /* Full width */
+        text-align: center; /* Center align text */
+        margin-top: 10px; /* Add top margin */
+        order: 2; /* Ensure last-update goes second */
+    }
 }

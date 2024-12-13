@@ -24,7 +24,7 @@ const App = ({ visitorCount }) => {
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 8.10.2024</p>
+				<p className="last-update">Last update: 12.12.2024</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"
@@ -40,7 +40,7 @@ const App = ({ visitorCount }) => {
 					>
 						<FontAwesomeIcon icon={faGithub} size="2x" />
 					</a>
-					<a href="mailto:tuukka.salonen2@gmail.com">
+					<a href="mailto:tuukkasalonen@outlook.com">
 						<FontAwesomeIcon icon={faEnvelope} size="2x" />
 					</a>
 				</div>

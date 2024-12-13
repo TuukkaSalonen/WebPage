@@ -13,8 +13,7 @@ export const NotFound = () => {
 			}, 1000);
 
 			return () => clearTimeout(timer);
-		}
-		else {
+		} else {
 			navigate('/');
 		}
 	}, [seconds, navigate]);

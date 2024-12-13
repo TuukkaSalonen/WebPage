@@ -2,9 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './styling/Navbar.css';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 
-const Navbar = ({ visitorCount, loading }) => {
+const Navbar = ({ visitorCount }) => {
 	const location = useLocation();
 
 	return (
@@ -35,9 +34,7 @@ const Navbar = ({ visitorCount, loading }) => {
 					</Button>
 				</Link>
 			</div>
-			<div className="visitor-count">
-				{loading ? <CircularProgress size={24} /> : `Total visitors: ${visitorCount}`}
-			</div>
+			<div className="visitor-count">{`Total visitors: ${visitorCount}`}</div>
 		</nav>
 	);
 };

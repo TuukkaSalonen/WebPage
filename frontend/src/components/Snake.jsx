@@ -10,7 +10,20 @@ import {
 	faArrowCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { getSnakeLeaderboard, postSnakeScore } from '../redux/actionCreators/thunks/snake.ts';
+import { useState } from 'react';
+
 export const Snake = () => {
+	const [leaderboard, setLeaderboard] = useState([]);
+
+	useEffect(() => {
+		const fetchLeaderboard = async () => {
+			const topLeaderboard = await getSnakeLeaderboard();
+			setLeaderboard(topLeaderboard);
+		};
+		fetchLeaderboard();
+	}, []);
+
 	useEffect(() => {
 		const playBoard = document.querySelector('.play-board');
 		const scoreElement = document.querySelector('.score');
@@ -37,14 +50,20 @@ export const Snake = () => {
 			foodY = Math.floor(Math.random() * 30) + 1;
 		};
 
-		const handleGameOver = () => {
+		const handleGameOver = async () => {
 			// Clearing the timer and reloading the page on game over
 			clearInterval(setIntervalId);
 			alert('Game Over! Press OK to replay...');
+			await postSnakeScore(score);
 			window.location.reload();
 		};
 
 		const changeDirection = (e) => {
+			// Prevent scrolling when playing the game
+			if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+				e.preventDefault();
+			}
+
 			// Changing velocity value based on key press
 			if (e.key === 'ArrowUp' && velocityY !== 1) {
 				velocityX = 0;
@@ -78,7 +97,7 @@ export const Snake = () => {
 				highScore = score >= highScore ? score : highScore;
 				localStorage.setItem('high-score', highScore);
 				scoreElement.innerText = `Score: ${score}`;
-				highScoreElement.innerText = `High Score: ${highScore}`;
+				highScoreElement.innerText = `Your High Score: ${highScore}`;
 			}
 			// Updating the snake's head position based on the current velocity
 			snakeX += velocityX;
@@ -151,11 +170,23 @@ export const Snake = () => {
 				</div>
 				<div className="leaderboard">
 					<h3>Leaderboard</h3>
+					<div className="leaderboard-header">
+						<span>Place</span>
+						<span>Name</span>
+						<span>Score</span>
+					</div>
 					<ul>
-						<li>Player 1: 100</li>
-						<li>Player 2: 90</li>
-						<li>Player 3: 80</li>
-						{/* Add more leaderboard entries here */}
+						{leaderboard && leaderboard.length === 0 ? (
+							<li>No scores yet!</li>
+						) : (
+							leaderboard.map((entry, index) => (
+								<li key={index}>
+									<span>{index + 1}.</span>
+									<span>{entry.name}</span>
+									<span>{entry.score}</span>
+								</li>
+							))
+						)}
 					</ul>
 				</div>
 			</div>

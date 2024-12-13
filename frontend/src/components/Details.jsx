@@ -65,16 +65,16 @@ export const Details = () => {
 						<li>NodeJS</li>
 						<li>Express</li>
 						<li>Python</li>
-						<li>HTML</li>
-						<li>CSS</li>
 						<li>Git</li>
 						<li>Docker</li>
 						<li>Firebase</li>
 						<li>Android</li>
 						<li>RabbitMQ</li>
 						<li>Mocha</li>
-						<li>Jest</li>
 						<li>Nginx</li>
+						<li>Scala</li>
+						<li>Spark</li>
+						<li>Terraform</li>
 					</ul>
 				</div>
 				<div className="details-section">
@@ -82,7 +82,8 @@ export const Details = () => {
 					<p>
 						My name is Tuukka Salonen. I am a Master's degree student in Computer
 						Science at Tampere University focusing on Software Engineering. I have
-						always been passionate about games which led me to this branch.
+						always been passionate about video games and how they were made which led me
+						to this branch.
 					</p>
 					<p>
 						My main focus and interest throughout my university studies has been
@@ -96,11 +97,7 @@ export const Details = () => {
 					</p>
 				</div>
 				<div>
-					<div className="details-section">
-						<h2>Hobbies</h2>
-						<p>Gaming, Jogging</p>
-					</div>
-					<div className="details-section">
+					<div className="details-section additional-section">
 						<h2>CV</h2>
 						<Link
 							href="CV_TEMPLATE.pdf"
@@ -112,7 +109,7 @@ export const Details = () => {
 							View CV-TEMPLATE
 						</Link>
 					</div>
-					<div className="details-section">
+					<div className="details-section additional-section">
 						<h2>Contact Me</h2>
 						<div className="contact-section">
 							<a
@@ -129,10 +126,14 @@ export const Details = () => {
 							>
 								<FontAwesomeIcon icon={faGithub} size="2x" />
 							</a>
-							<a href="mailto:tuukka.salonen2@gmail.com">
+							<a href="mailto:tuukkasalonen@outlook.com">
 								<FontAwesomeIcon icon={faEnvelope} size="2x" />
 							</a>
 						</div>
+					</div>
+					<div className="details-section additional-section">
+						<h2>Hobbies</h2>
+						<p>Gaming, Jogging</p>
 					</div>
 				</div>
 			</div>

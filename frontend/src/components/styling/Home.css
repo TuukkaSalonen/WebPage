@@ -1,54 +1,63 @@
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    padding: 20px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .home-container.fade-in {
-    opacity: 1;
-    transform: translateY(0);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: #f0f0f0;
+	padding: 20px;
+	text-align: center;
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.6s ease-out,
+		transform 0.6s ease-out;
 }
 
-  .home-container-text {
-    margin-bottom: 20px;
-  }
-  
-  .home-container-text h1 {
-    font-size: 2.5rem;
-    margin-bottom: 75px;
-  }
-  
-  .home-container-text p {
-    font-size: 1.3rem;
-    color: #555;
-  }
-  
-  .home-container-social {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .home-container-social a {
-    color: #333;
-    transition: color 0.3s;
-  }
-  
-  .home-container-social a:hover {
-    color: #0073b1; /* LinkedIn color */
-  }
-  
-  .home-container-social a:nth-child(2):hover {
-    color: #000000; /* GitHub color */
-  }
-  
-  .home-container-social a:nth-child(3):hover {
-    color: #d44638; /* Email color */
-  }
+.home-container.fade-in {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.home-container-text {
+	margin-bottom: 20px;
+}
+
+.home-container-text h1 {
+	font-size: 2.5rem;
+	margin-bottom: 75px;
+}
+
+.home-container-text p {
+	font-size: 1.3rem;
+	color: #555;
+}
+
+.home-container-social {
+	display: flex;
+	gap: 20px;
+}
+
+.home-container-social a {
+	color: #333;
+	transition: color 0.3s;
+}
+
+.home-container-social a:hover {
+	color: #0073b1; /* LinkedIn color */
+}
+
+.home-container-social a:nth-child(2):hover {
+	color: #000000; /* GitHub color */
+}
+
+.home-container-social a:nth-child(3):hover {
+	color: #d44638; /* Email color */
+}
+
+@media screen and (max-width: 600px) {
+	.home-container {
+		padding: 10px;
+		height: auto; /* Adjust height to auto for smaller screens */
+	}
+}

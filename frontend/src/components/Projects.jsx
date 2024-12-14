@@ -21,8 +21,8 @@ export const Projects = () => {
 							<p>
 								A simple snake game made with HTML, CSS, and JavaScript. The game
 								includes a high score feature. The results will be saved and added
-								to the leaderboard. I wanted to try to add a simple game that uses
-								the database from the backend to store high scores. Try to reach the #1 spot! Original
+								to the leaderboard database. I wanted to try to add a simple game that uses
+								the database from the backend to store scores. Try to reach the #1 spot! Original
 								source code is from {' '}
 								<a
 									href="https://www.codingnepalweb.com/create-snake-game-htm-css-javascript"

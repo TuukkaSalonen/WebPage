@@ -1,3 +1,12 @@
+.content {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	width: 100%;
+	max-width: 100%; /* Ensure content does not exceed viewport width */
+	overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
 .snake-container {
 	display: flex;
 	flex-direction: column;
@@ -6,6 +15,7 @@
 	width: 100%;
 	background-color: #f0f0f0;
 	margin: 10px 0px;
+	overflow-x: hidden;
 }
 
 .top-bar {
@@ -13,6 +23,7 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	position: relative;
 }
 
 .back-button {
@@ -43,6 +54,8 @@
 	align-items: flex-start;
 	justify-content: center;
 	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
 }
 
 .wrapper {
@@ -54,6 +67,7 @@
 	height: 80vmin;
 	max-width: 80vmin;
 	max-height: 80vmin;
+	margin: 5px;
 	background: #293447;
 	border-radius: 5px;
 	box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
@@ -64,7 +78,6 @@
 	font-weight: 500;
 	font-size: 1.2rem;
 	display: flex;
-
 	justify-content: space-between;
 	width: 100%;
 }
@@ -90,43 +103,43 @@
 }
 
 .controls {
-	display: none;
-	justify-content: space-between;
+	flex-direction: row; /* Ensure controls are in a row */
+	width: 100%; /* Make controls take full width */
+	justify-content: space-between; /* Space out controls */
+	display: flex; /* Display controls */
 }
+
 .controls i {
-	padding: 25px 0;
-	text-align: center;
-	font-size: 1.3rem;
-	color: #b8c6dc;
-	width: calc(100% / 4);
-	cursor: pointer;
-	border-right: 1px solid #171b26;
+	padding: 15px 0;
+	font-size: 1rem;
+	flex: 1; /* Make controls take equal space */
+	text-align: center; /* Center align text */
 }
 
 .leaderboard {
-    padding: 20px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
-    width: 200px; /* Adjust width to fit headers */
-    margin: 20px; /* Center the leaderboard div horizontally */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center align items horizontally */
-    text-align: center; /* Center align text */
+	padding: 20px;
+	background: #fff;
+	border-radius: 20px;
+	box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
+	width: 200px; /* Adjust width to fit headers */
+	margin: 5px; /* Center the leaderboard div horizontally */
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center align items horizontally */
+	text-align: center; /* Center align text */
 }
 
 .leaderboard-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-weight: bold;
-    margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 .leaderboard-header .name {
-    flex: 2;
-    text-align: center;
+	flex: 2;
+	text-align: center;
 }
 
 .leaderboard ul {
@@ -139,11 +152,12 @@
 	margin-top: 0;
 	font-size: 1.5rem;
 	color: #333;
+	text-decoration: underline;
 }
 
 .leaderboard-header span {
-    flex: 1;
-    text-align: center;
+	flex: 1;
+	text-align: center;
 }
 
 .leaderboard li {
@@ -155,8 +169,12 @@
 }
 
 .leaderboard li span {
-    flex: 1;
-    text-align: center;
+	flex: 1;
+	text-align: center;
+}
+
+.arrow-active {
+	color:red;
 }
 
 @media screen and (max-width: 800px) {
@@ -169,20 +187,13 @@
 		font-size: 1rem;
 		padding: 15px 27px;
 	}
-	.controls {
-		flex-direction: row; /* Ensure controls are in a row */
-		width: 100%; /* Make controls take full width */
-		justify-content: space-between; /* Space out controls */
-	}
-	.controls i {
-		padding: 15px 0;
-		font-size: 1rem;
-		flex: 1; /* Make controls take equal space */
-		text-align: center; /* Center align text */
-	}
 	.leaderboard {
 		width: 100%;
 		margin-left: 0;
 		margin-top: 20px;
+	}
+	.content {
+		flex-direction: column; /* Stack the game and leaderboard vertically */
+		align-items: center; /* Center align items horizontally */
 	}
 }

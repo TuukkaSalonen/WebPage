@@ -59,22 +59,27 @@ export const Snake = () => {
 		};
 
 		const changeDirection = (e) => {
-			// Prevent scrolling when playing the game
-			if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-				e.preventDefault();
+			const key = e.key || e;
+
+			controls.forEach((button) => button.classList.remove('arrow-active'));
+
+			// Find the button corresponding to the pressed key and add the active class
+			const activeButton = Array.from(controls).find((button) => button.dataset.key === key);
+			if (activeButton) {
+				activeButton.classList.add('arrow-active');
 			}
 
 			// Changing velocity value based on key press
-			if (e.key === 'ArrowUp' && velocityY !== 1) {
+			if (key === 'ArrowUp' && velocityY !== 1) {
 				velocityX = 0;
 				velocityY = -1;
-			} else if (e.key === 'ArrowDown' && velocityY !== -1) {
+			} else if (key === 'ArrowDown' && velocityY !== -1) {
 				velocityX = 0;
 				velocityY = 1;
-			} else if (e.key === 'ArrowLeft' && velocityX !== 1) {
+			} else if (key === 'ArrowLeft' && velocityX !== 1) {
 				velocityX = -1;
 				velocityY = 0;
-			} else if (e.key === 'ArrowRight' && velocityX !== -1) {
+			} else if (key === 'ArrowRight' && velocityX !== -1) {
 				velocityX = 1;
 				velocityY = 0;
 			}
@@ -133,9 +138,17 @@ export const Snake = () => {
 		setIntervalId = setInterval(initGame, 100);
 		document.addEventListener('keyup', changeDirection);
 
+		const preventArrowScroll = (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
+        };
+        window.addEventListener('keydown', preventArrowScroll);
+
 		return () => {
 			clearInterval(setIntervalId);
 			document.removeEventListener('keyup', changeDirection);
+			window.removeEventListener('keydown', preventArrowScroll);
 		};
 	}, []);
 

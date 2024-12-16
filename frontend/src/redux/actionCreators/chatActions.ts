@@ -1,15 +1,7 @@
 import { Dispatch } from 'redux';
 import { fetchChatRequest } from './thunks/chat.ts';
-
-export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const FETCH_MESSAGE_REQUEST = 'FETCH_MESSAGE_REQUEST';
-export const FETCH_MESSAGE_SUCCESS = 'FETCH_MESSAGE_SUCCESS';
-export const FETCH_MESSAGE_FAILURE = 'FETCH_MESSAGE_FAILURE';
-
-interface Message {
-	text: string;
-	sender: 'user' | 'bot';
-}
+import { ADD_MESSAGE, FETCH_MESSAGE_FAILURE, FETCH_MESSAGE_REQUEST, FETCH_MESSAGE_SUCCESS } from './actionConstants.ts';
+import { Message } from './actionConstants.ts';
 
 export const addMessage = (message: Message) => ({
 	type: ADD_MESSAGE,

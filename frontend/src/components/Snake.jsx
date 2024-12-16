@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import './styling/Snake.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,24 +9,30 @@ import {
 	faArrowCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { getSnakeLeaderboard, postSnakeScore } from '../redux/actionCreators/thunks/snake.ts';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { fetchScores, sendScore } from '../redux/actionCreators/snakeActions.ts';
 
 export const Snake = () => {
-	const [leaderboard, setLeaderboard] = useState([]);
+	const dispatch = useDispatch();
+	const leaderboard = useSelector((state) => state.snake.scores);
+	const loading = useSelector((state) => state.snake.loading);
+	const [score, setScore] = useState(0);
+	const [highScore, setHighScore] = useState(0);
+
+	const scoreRef = useRef(score);
+	const highScoreRef = useRef(highScore);
 
 	useEffect(() => {
 		const fetchLeaderboard = async () => {
-			const topLeaderboard = await getSnakeLeaderboard();
-			setLeaderboard(topLeaderboard);
+			dispatch(fetchScores());
+			setHighScore(localStorage.getItem('high-score') || 0);
 		};
 		fetchLeaderboard();
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		const playBoard = document.querySelector('.play-board');
-		const scoreElement = document.querySelector('.score');
-		const highScoreElement = document.querySelector('.high-score');
 		const controls = document.querySelectorAll('.controls i');
 
 		let gameOver = false;
@@ -38,11 +43,6 @@ export const Snake = () => {
 			velocityY = 0;
 		let snakeBody = [];
 		let setIntervalId;
-		let score = 0;
-
-		// Getting high score from the local storage
-		let highScore = localStorage.getItem('high-score') || 0;
-		highScoreElement.innerText = `High Score: ${highScore}`;
 
 		const updateFoodPosition = () => {
 			// Passing a random 1 - 30 value as food position
@@ -54,7 +54,7 @@ export const Snake = () => {
 			// Clearing the timer and reloading the page on game over
 			clearInterval(setIntervalId);
 			alert('Game Over! Press OK to replay...');
-			await postSnakeScore(score);
+			dispatch(sendScore(scoreRef.current));
 			window.location.reload();
 		};
 
@@ -98,11 +98,16 @@ export const Snake = () => {
 			if (snakeX === foodX && snakeY === foodY) {
 				updateFoodPosition();
 				snakeBody.push([foodY, foodX]); // Pushing food position to snake body array
-				score++; // increment score by 1
-				highScore = score >= highScore ? score : highScore;
-				localStorage.setItem('high-score', highScore);
-				scoreElement.innerText = `Score: ${score}`;
-				highScoreElement.innerText = `Your High Score: ${highScore}`;
+				setScore((prevScore) => {
+                    const newScore = prevScore + 1;
+                    scoreRef.current = newScore;
+                    if (newScore > highScoreRef.current) {
+                        localStorage.setItem('high-score', newScore);
+                        setHighScore(newScore);
+                        highScoreRef.current = newScore;
+                    }
+                    return newScore;
+                });
 			}
 			// Updating the snake's head position based on the current velocity
 			snakeX += velocityX;
@@ -150,7 +155,7 @@ export const Snake = () => {
 			document.removeEventListener('keyup', changeDirection);
 			window.removeEventListener('keydown', preventArrowScroll);
 		};
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="snake-container">
@@ -162,8 +167,8 @@ export const Snake = () => {
 			<div className="content">
 				<div className="wrapper">
 					<div className="game-details">
-						<span className="score">Score: 0</span>
-						<span className="high-score">High Score: 0</span>
+						<span className="score">Score: {score}</span>
+						<span className="high-score">High Score: {highScore}</span>
 					</div>
 					<div className="play-board"></div>
 					<div className="controls">
@@ -189,18 +194,20 @@ export const Snake = () => {
 						<span>Score</span>
 					</div>
 					<ul>
-						{leaderboard && leaderboard.length === 0 ? (
-							<li>No scores yet!</li>
-						) : (
-							leaderboard.map((entry, index) => (
-								<li key={index}>
-									<span>{index + 1}.</span>
-									<span>{entry.name}</span>
-									<span>{entry.score}</span>
-								</li>
-							))
-						)}
-					</ul>
+                        {loading ? (
+                            <li className='scorePlaceholder'>Loading...</li>
+                        ) : leaderboard && leaderboard.length === 0 ? (
+                            <li className='scorePlaceholder'>No scores yet!</li>
+                        ) : (
+                            leaderboard.map((entry, index) => (
+                                <li key={index}>
+                                    <span>{index + 1}.</span>
+                                    <span>{entry.name}</span>
+                                    <span>{entry.score}</span>
+                                </li>
+                            ))
+                        )}
+                    </ul>
 				</div>
 			</div>
 		</div>

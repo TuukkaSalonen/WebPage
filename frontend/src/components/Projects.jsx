@@ -31,6 +31,7 @@ export const Projects = () => {
 								>
 									here.
 								</a>
+								The game is modified to use Redux for state management and to save scores to the database.
 							</p>
 						</li>
 					</ul>

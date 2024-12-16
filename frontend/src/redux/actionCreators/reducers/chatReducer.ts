@@ -3,12 +3,8 @@ import {
 	FETCH_MESSAGE_REQUEST,
 	FETCH_MESSAGE_SUCCESS,
 	FETCH_MESSAGE_FAILURE,
-} from '../chatActions.ts';
-
-interface Message {
-	text: string;
-	sender: 'user' | 'bot';
-}
+} from '../actionConstants.ts';
+import { Message } from '../actionConstants.ts';
 
 interface ChatState {
 	messages: Message[];

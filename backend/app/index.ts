@@ -3,11 +3,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
-import knex, { Knex } from 'knex';
-import { deleteTables, isConnectionClosed } from '../db/dbConnection';
-import db from '../db/dbConnection';
-import { incrementAndSelectVisitors } from '../db/queries/general';
 import generalRoutes from './routes/generalRoutes';
+import cookieParser from 'cookie-parser';
+//import loginRoutes from './routes/loginRoutes';
+import { setDefaultUser } from './controllers/loginController';
 
 const env = process.env;
 const port = env.FRONTEND_PORT;
@@ -31,13 +30,16 @@ app.set('trust proxy', 1);
 
 // Middleware setup
 app.use(express.json());
+app.use(cookieParser());
 app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
 
 app.use(morgan('dev')); // Log HTTP requests for development
+app.use(setDefaultUser)
 
 app.use('/api/general', generalRoutes);
+//app.use('/api/login', loginRoutes);
 
 // Basic served HTML page
 app.get('/', async (req, res) => {

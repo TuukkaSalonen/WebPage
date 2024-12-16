@@ -11,25 +11,27 @@ export const Home = () => {
 	return (
 		<div className="home-container">
 			<div className="home-container-text">
-				<h1>Welcome to my site!</h1>
+				<h1>Welcome!</h1>
 				<p>
 					This website is dedicated for trying and testing different full-stack web
 					development techniques. The site is built with React and Express which are
-					created with Docker images. Database is built with PostgreSQL and the site is
+					created with Docker images. PostgreSQL is used for the database and the site is
 					hosted by ????.
 				</p>
 				<p>
-					I have also added seperated page for showcasing my projects which I have created
-					to test different web techniques. Also I created a page thatg provides
-					information about me and my education. You can check my previous projects on
-					Github, where this websites source code and most of my university projects are
-					located.
+					I have also added separated page for showcasing my projects which I have created
+					to test different web techniques. Also, I created a page that provides
+					background information about me. You can check my previous projects on Github,
+					where this websites source code and most of my university projects are located.
 				</p>
 				<p>
-					My LinkedIn and GitHub profiles are linked in the footer below. Also, feel free to reach out
-					to me via email.
+					My LinkedIn and GitHub profiles are linked in the footer below. Also, feel free
+					to reach out to me via email.
 				</p>
-				<p>Note that this site is not in active development and is used as a hobby.</p>
+				<p>
+					Note that this site is not in active development and is used as a hobby and
+					testing platform.
+				</p>
 			</div>
 		</div>
 	);

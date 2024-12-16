@@ -45,7 +45,7 @@ footer .last-update {
 	font-size: 1rem; /* Smaller font size for last update */
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
     footer {
         flex-direction: column; /* Stack elements vertically */
         height: auto; /* Adjust height to content */

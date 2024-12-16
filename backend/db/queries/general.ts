@@ -23,5 +23,9 @@ export async function getTopScores() {
 }
 
 export async function setScore(name: string, score: number) {
-	await db(snakeTable).insert({ name, score });
+    const [insertedRecord] = await db(snakeTable)
+        .insert({ name, score })
+        .returning(['name', 'score']); 
+
+    return insertedRecord;
 }

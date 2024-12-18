@@ -2,3 +2,7 @@ node_modules
 build/
 .env
 Ohjeita.txt
+ssl/server.crt
+ssl/server.key
+ssl/ca.cert
+ssl/ssl-dhparams.pem

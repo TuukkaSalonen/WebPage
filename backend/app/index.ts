@@ -9,8 +9,7 @@ import cookieParser from 'cookie-parser';
 import { setDefaultUser } from './controllers/loginController';
 
 const env = process.env;
-const frontendUrl = `http://localhost:${env.FRONTEND_PORT}`
-
+const frontendUrl = env.ENV === "production" ? `https://localhost:${env.FRONTEND_PORT_SSL}` : `http://localhost:${env.FRONTEND_PORT}`;
 export const app = express();
 
 const limiter = rateLimit({

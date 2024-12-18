@@ -13,6 +13,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
+      - ENV=development
     volumes:
       - ./backend:/app
     depends_on:
@@ -26,7 +27,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.dev
     ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      - "${FRONTEND_PORT_DEV}:${FRONTEND_PORT_DEV}"
     volumes:
       - ./frontend:/app
     depends_on:

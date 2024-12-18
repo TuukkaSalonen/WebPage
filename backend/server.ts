@@ -1,6 +1,10 @@
-import {app} from './app/index.js';
+import { app } from './app/index.js';
 import { initializeDb, createTables, isConnectionClosed } from './db/dbConnection.js';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
 
+const env = process.env.ENV;
 const port = process.env.PORT;
 
 async function startServer() {
@@ -18,11 +22,20 @@ async function startServer() {
 			console.error('Database connection is closed.');
 			return;
 		}
-
-		// Start the server
-		app.listen(port, () => {
-			console.log(`Server is running on port ${port}`);
-		});
+		if (env === 'production') {
+			const sslOptions = {
+            	key: fs.readFileSync(path.resolve('/etc/ssl/server.key')),
+            	cert: fs.readFileSync(path.resolve('/etc/ssl/server.crt')),
+        	};
+			https.createServer(sslOptions, app).listen(port, () => {
+				console.log(`Server is running on port ${port}`);
+			});
+		}
+		else {
+			app.listen(port, () => {
+				console.log(`Backend server is running on port ${port}.`);
+			});
+		}
 	} catch (error) {
 		console.error('Error initializing server:', error);
 	}

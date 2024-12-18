@@ -7,12 +7,17 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
+      - FRONTEND_PORT_SSL=${FRONTEND_PORT_SSL}
       - PORT=${BACKEND_PORT}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
+      - ENV=production
+    volumes:
+      - ./ssl:/etc/ssl
     depends_on:
       - db
     networks:
@@ -24,10 +29,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - "${FRONTEND_PORT}:${NGINX_PORT}"
+      - "${FRONTEND_PORT}:3000"
+      - "${FRONTEND_PORT_SSL}:443"
+    volumes:
+      - ./ssl:/etc/ssl/
     environment:
       - BACKEND_PORT=${BACKEND_PORT}
-      - NGINX_PORT=${NGINX_PORT}
     depends_on:
       - backend
     networks:
@@ -44,6 +51,10 @@ services:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - /etc/ssl/:/etc/ssl/
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
     networks:
       - app_network
 

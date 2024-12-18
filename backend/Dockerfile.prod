@@ -1,0 +1,25 @@
+# Use a specific Node.js version for consistency
+FROM node:23.4.0
+
+# Create and set working directory
+WORKDIR /app
+
+# Copy package files and install dependencies first
+COPY package*.json ./
+
+RUN npm install --production
+
+# Copy the rest of the application code
+COPY . .
+
+# Install tsx globally
+RUN npm install -g tsx
+
+# Set environment to production
+ENV NODE_ENV=production
+
+# Expose the port that the app will run on
+EXPOSE ${BDOCKER_PORT}
+
+# Start the application using tsx
+CMD ["tsx", "server.ts"]

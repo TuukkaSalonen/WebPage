@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 
 export const setAndGetVisitorCount = async (req: Request, res: Response): Promise<void> => {
 	try {
+		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    	console.log(`Request IP: ${ip}`);
 		const visitors = await incrementAndSelectVisitors();
 		if (!visitors.data) {
 			res.status(200).json({ visitorCount: 0 });

@@ -29,7 +29,7 @@ export const Projects = () => {
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									here.
+									here. 
 								</a>
 								The game is modified to use Redux for state management and to save scores to the database.
 							</p>

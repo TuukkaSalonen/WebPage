@@ -3,7 +3,7 @@ services:
     container_name: backend
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
@@ -13,30 +13,25 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
-
-    volumes:
-      - ./backend:/app
     depends_on:
       - db
     networks:
-      - backend_network
-      - frontend_network
+      - app_network
 
   frontend:
     container_name: frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
-    volumes:
-      - ./frontend:/app
+      - "${FRONTEND_PORT}:${NGINX_PORT}"
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}
+      - NGINX_PORT=${NGINX_PORT}
     depends_on:
       - backend
     networks:
-      - frontend_network
-    links:
-      - backend
+      - app_network
 
   db:
     image: postgres:17.0
@@ -50,31 +45,10 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - backend_network
-
-  nginx:
-    container_name: nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.nginx
-    ports:
-      - "${NGINX_PORT}:${NGINX_PORT}"
-    environment:
-      - NGINX_PORT=${NGINX_PORT}
-      - FRONTEND_PORT=${FRONTEND_PORT}
-      - BACKEND_PORT=${BACKEND_PORT}
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - frontend_network
-      - backend_network
+      - app_network
 
 networks:
-  frontend_network:
-    driver: bridge
-  backend_network:
-    driver: bridge
+  app_network:
 
 volumes:
   pgdata:

@@ -11,6 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const fetchVisitorCount = async () => {
   try {
     const response = await fetch('/api/general/visitor');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     const data = await response.json();
     return data.visitorCount;
   } catch (error) {

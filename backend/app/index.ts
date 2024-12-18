@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import { setDefaultUser } from './controllers/loginController';
 
 const env = process.env;
-const port = env.FRONTEND_PORT;
+const frontendUrl = `http://localhost:${env.FRONTEND_PORT}`
 
 export const app = express();
 
@@ -20,9 +20,10 @@ const limiter = rateLimit({
 });
 
 const corsOptions = {
-	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	methods: ['GET', 'POST'],
 	allowedHeaders: ['Content-Type'],
-	origin: `http://frontend:${port}`,
+	origin: `${frontendUrl}`,
+  credentials: true
 };
 
 // Trust the first proxy
@@ -34,8 +35,7 @@ app.use(cookieParser());
 app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
-
-app.use(morgan('dev')); // Log HTTP requests for development
+app.use(morgan('combined')); // Log HTTP requests
 app.use(setDefaultUser)
 
 app.use('/api/general', generalRoutes);

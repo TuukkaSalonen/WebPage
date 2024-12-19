@@ -5,15 +5,10 @@ import './styling/Chat.css';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const FloatingChat = ({isOpen, toggleChat, closeChat}) => {
-	//const [isOpen, setIsOpen] = useState(false);
 	const [input, setInput] = useState('');
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.chat.messages);
 	const loading = useSelector((state) => state.chat.loading);
-
-	// const toggleChatbox = () => {
-	// 	setIsOpen(!isOpen);
-	// };
 
 	const handleSend = () => {
 		if (input.trim()) {

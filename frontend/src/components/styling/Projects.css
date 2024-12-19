@@ -64,12 +64,12 @@
 	text-align: center;
 }
 
-.floating-chat {
+/* .floating-chat {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
 	z-index: 1000;
-}
+} */
 
 .chatbot-link span {
 	cursor: pointer;

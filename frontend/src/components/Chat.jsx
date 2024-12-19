@@ -4,16 +4,16 @@ import { sendMessage } from '../redux/actionCreators/chatActions.ts';
 import './styling/Chat.css';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const FloatingChat = () => {
-	const [isOpen, setIsOpen] = useState(false);
+const FloatingChat = ({isOpen, toggleChat, closeChat}) => {
+	//const [isOpen, setIsOpen] = useState(false);
 	const [input, setInput] = useState('');
 	const dispatch = useDispatch();
 	const messages = useSelector((state) => state.chat.messages);
 	const loading = useSelector((state) => state.chat.loading);
 
-	const toggleChatbox = () => {
-		setIsOpen(!isOpen);
-	};
+	// const toggleChatbox = () => {
+	// 	setIsOpen(!isOpen);
+	// };
 
 	const handleSend = () => {
 		if (input.trim()) {
@@ -27,7 +27,7 @@ const FloatingChat = () => {
 			<div className={`chatbox-container ${isOpen ? 'open' : ''}`}>
 				<div className="chatbox-header">
 					<h3>Chat with Gemini AI</h3>
-					<button onClick={toggleChatbox} className="close-btn">
+					<button onClick={closeChat} className="close-btn">
 						&times;
 					</button>
 				</div>
@@ -56,7 +56,7 @@ const FloatingChat = () => {
 					<button onClick={handleSend}>Send</button>
 				</div>
 			</div>
-			<div className="chat-icon" onClick={toggleChatbox}>
+			<div className="chat-icon" onClick={toggleChat}>
 				<img src="/chatbot.png" alt="Chat Icon" />
 			</div>
 		</>

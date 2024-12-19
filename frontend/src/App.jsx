@@ -24,7 +24,7 @@ const App = ({ visitorCount }) => {
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 12.12.2024</p>
+				<p className="last-update">Last update: 19.12.2024</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"

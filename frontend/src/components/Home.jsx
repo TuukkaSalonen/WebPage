@@ -16,13 +16,13 @@ export const Home = () => {
 					This website is dedicated for trying and testing different full-stack web
 					development techniques. The site is built with React and Express which are
 					created with Docker images. PostgreSQL is used for the database and the site is
-					hosted by ????.
+					hosted by AWS.
 				</p>
 				<p>
 					I have also added separated page for showcasing my projects which I have created
 					to test different web techniques. Also, I created a page that provides
 					background information about me. You can check my previous projects on Github,
-					where this websites source code and most of my university projects are located.
+					where this website source code and most of my university projects are located.
 				</p>
 				<p>
 					My LinkedIn and GitHub profiles are linked in the footer below. Also, feel free

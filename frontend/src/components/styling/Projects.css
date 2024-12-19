@@ -7,6 +7,16 @@
 	color: black; /* Text color */
 	background-color: #f0f0f0; /* Light background color */
 	padding: 20px;
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.6s ease-out,
+		transform 0.6s ease-out;
+}
+
+.projects-container.fade-in {
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .projects-container-text {
@@ -20,6 +30,10 @@
 	margin-bottom: 20px;
 	color: #333;
 	text-align: center;
+}
+
+.projects-list {
+	margin-top: 50px;
 }
 
 .projects-list ul {
@@ -47,7 +61,7 @@
 .projects-list h3 {
 	margin: 0;
 	font-size: 1.5rem;
-    text-align: center;
+	text-align: center;
 }
 
 .floating-chat {
@@ -55,4 +69,14 @@
 	bottom: 20px;
 	right: 20px;
 	z-index: 1000;
+}
+
+.chatbot-link span {
+	cursor: pointer;
+	color: #007bff;
+}
+
+.chatbot-link span:hover {
+	color: #005bb5;
+	transform: scale(1.05);
 }

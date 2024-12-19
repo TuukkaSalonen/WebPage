@@ -5,4 +5,6 @@ Ohjeita.txt
 ssl/server.crt
 ssl/server.key
 ssl/ca.cert
+ssl/fullchain.pem
+ssl/privkey.pem
 ssl/ssl-dhparams.pem

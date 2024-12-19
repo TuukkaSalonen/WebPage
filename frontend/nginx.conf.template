@@ -13,7 +13,6 @@ server {
 
     ssl_certificate /etc/ssl/server.crt;
     ssl_certificate_key /etc/ssl/server.key;
-    ssl_trusted_certificate /etc/ssl/ca.cert;
     include /ssl/options-ssl-nginx.conf;
     ssl_dhparam /etc/ssl/ssl-dhparams.pem;
 

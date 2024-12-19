@@ -26,7 +26,7 @@ const devConfig = {
 	},
 };
 
-let prodConfig;
+let prodConfig = {};
 
 if (env.ENV === 'production') {
 	prodConfig = {
@@ -40,9 +40,8 @@ if (env.ENV === 'production') {
 			charset: 'utf8',
 			ssl: {
 				rejectUnauthorized: false,
-				ca: fs.readFileSync(path.resolve('/etc/ssl/ca.crt')).toString(),
-				key: fs.readFileSync(path.resolve('/etc/ssl/server.key')).toString(),
-				cert: fs.readFileSync(path.resolve('/etc/ssl/server.crt')).toString(),
+				key: fs.readFileSync(path.resolve('/etc/ssl/privkey.pem')).toString(),
+				cert: fs.readFileSync(path.resolve('/etc/ssl/fullchain.pem')).toString(),
 			},
 		},
 		pool: {
@@ -59,6 +58,6 @@ if (env.ENV === 'production') {
 	};
 }
 
-const knexConfig = env.ENV === 'production' ? prodConfig : devConfig;
+const config = env.ENV === 'production' ? prodConfig : devConfig;
 
-export default knexConfig;
+export default config;

@@ -24,8 +24,8 @@ async function startServer() {
 		}
 		if (env === 'production') {
 			const sslOptions = {
-            	key: fs.readFileSync(path.resolve('/etc/ssl/server.key')),
-            	cert: fs.readFileSync(path.resolve('/etc/ssl/server.crt')),
+            	key: fs.readFileSync(path.resolve('/etc/ssl/privkey.pem')),
+            	cert: fs.readFileSync(path.resolve('/etc/ssl/fullchain.pem')),
         	};
 			https.createServer(sslOptions, app).listen(port, () => {
 				console.log(`Server is running on port ${port}`);

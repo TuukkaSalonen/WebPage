@@ -11,9 +11,9 @@ server {
     listen 443;
     server_name tuukkasalonen.fi www.tuukkasalonen.fi
 
-    ssl_certificate /etc/ssl/fullchain.pem;
-    ssl_certificate_key /etc/ssl/privkey.pem;
-    include /ssl/options-ssl-nginx.conf;
+    ssl_certificate /etc/cert/fullchain.pem;
+    ssl_certificate_key /etc/cert/privkey.pem;
+    include /etc/ssl/options-ssl-nginx.conf;
     ssl_dhparam /etc/ssl/ssl-dhparams.pem;
 
     location / {

@@ -1,7 +1,13 @@
 services:
   backend:
     container_name: backend
+<<<<<<< HEAD
     image: 850995544968.dkr.ecr.eu-north-1.amazonaws.com/webapp:backend-prod-latest
+=======
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+>>>>>>> d7cb31fd4bb4fe6bae45492a2bd7f8f0c4e0053c
     environment:
       - FRONTEND_PORT=${FRONTEND_PORT}
       - FRONTEND_PORT_SSL=${FRONTEND_PORT_SSL}
@@ -39,8 +45,6 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "${DB_PORT}"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:

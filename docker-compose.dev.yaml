@@ -4,8 +4,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    ports:
-      - "${BACKEND_PORT}"
     environment:
       - PORT=${BACKEND_PORT}
       - DB_PORT=${DB_PORT}
@@ -42,8 +40,6 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "${DB_PORT}"
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:

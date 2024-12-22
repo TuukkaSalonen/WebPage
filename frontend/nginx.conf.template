@@ -1,31 +1,39 @@
-server {
-    listen 80;
-    server_name tuukkasalonen.fi www.tuukkasalonen.fi;
 
-    location / {
+
+    # HTTPS server block
+    server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        ssl_certificate /etc/letsencrypt/live/tuukkasalonen.fi/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/tuukkasalonen.fi/privkey.pem;
+        include /etc/ssl/options-ssl-nginx.conf;
+        ssl_dhparam /etc/ssl/ssl-dhparams.pem;
+
+        add_header Strict-Transport-Security "max-age=63072000" always;
+
+        # Root and API proxy configuration
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+            try_files $uri $uri/ /index.html;
+        }
+
+        location /api/ {
+            proxy_pass http://backend:${BACKEND_PORT};
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+
+    # Redirect HTTP to HTTPS
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
         return 301 https://$host$request_uri;
     }
-}
 
-server {
-    listen 443;
-    server_name tuukkasalonen.fi www.tuukkasalonen.fi;
 
-    ssl_certificate /etc/cert/fullchain.pem;
-    ssl_certificate_key /etc/cert/privkey.pem;
-    include /etc/ssl/options-ssl-nginx.conf;
-    ssl_dhparam /etc/ssl/ssl-dhparams.pem;
-
-    location / {
-        root /usr/share/nginx/html;
-        try_files $uri $uri/ /index.html;
-    }
-
-    location /api/ {
-        proxy_pass https://backend:${BACKEND_PORT};
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}

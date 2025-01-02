@@ -12,6 +12,7 @@
 	transition:
 		opacity 0.6s ease-out,
 		transform 0.6s ease-out;
+	color: #333;
 }
 
 .home-container.fade-in {

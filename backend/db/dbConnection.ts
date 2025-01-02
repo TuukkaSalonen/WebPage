@@ -4,14 +4,22 @@ import { up as upGeneral, down as downGeneral } from './migrations/init';
 
 const db = knex(config);
 
-export const initializeDb = async (): Promise<any> => {
-	try {
-		// Connection check
-		await db.raw('SELECT 1');
-		return db;
-	} catch (error) {
-		throw error;
-	}
+export const initializeDb = async (retries = 5, delay = 2000): Promise<any> => {
+    for (let i = 0; i < retries; i++) {
+        try {
+            // Connection check
+            await db.raw('SELECT 1');
+            console.log('Connected to database successfully.');
+            return db;
+        } catch (error) {
+            console.error(`Database connection failed. Retry ${i + 1} of ${retries}.`, error);
+            if (i < retries - 1) {
+                await new Promise(res => setTimeout(res, delay));
+            } else {
+                throw new Error('Failed to connect to the database after multiple attempts.');
+            }
+        }
+    }
 };
 
 export async function createTables() {

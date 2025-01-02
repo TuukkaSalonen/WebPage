@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 //import { validateLoginRequest } from '../utils/validator';
 //import { getUser } from '../../db/queries/user';
 
@@ -21,10 +20,3 @@ import { Request, Response } from 'express';
 //         res.status(500).json({ status: 500, message: 'Internal server error' });
 //     }
 // };
-
-export const setDefaultUser = (req: Request, res: Response, next: Function) => {
-    if (!req.cookies.user) {
-        res.cookie('user', JSON.stringify({ name: 'Guest' }), { httpOnly: true, secure: true });
-    }
-    next();
-};

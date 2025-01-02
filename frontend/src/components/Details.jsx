@@ -100,13 +100,13 @@ export const Details = () => {
 					<div className="details-section additional-section">
 						<h2>CV</h2>
 						<Link
-							href="CV_TEMPLATE.pdf"
+							href="CV_EN_TuukkaSalonen_Web.pdf"
 							target="_blank"
 							rel="noopener noreferrer"
 							underline="hover"
 							color="primary"
 						>
-							View CV-TEMPLATE
+							View CV
 						</Link>
 					</div>
 					<div className="details-section additional-section">

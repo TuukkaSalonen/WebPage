@@ -1,6 +1,6 @@
 import db from '../dbConnection';
 
-const generalTable = 'app.general'; // Siirrä constants fileen
+const generalTable = 'app.general';
 const snakeTable = 'app.snake';
 
 export async function selectAll() {

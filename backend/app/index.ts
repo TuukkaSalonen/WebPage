@@ -29,8 +29,8 @@ const corsOptions = {
 app.set('trust proxy', 1);
 
 // Middleware setup
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json()); // Parse JSON bodies
+app.use(cookieParser()); // Parse cookies
 app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
@@ -39,33 +39,3 @@ app.use(setDefaultUser)
 
 app.use('/api/general', generalRoutes);
 //app.use('/api/login', loginRoutes);
-
-// Basic served HTML page
-app.get('/', async (req, res) => {
-	res.send(`<!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Backend</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background-color: #f0f0f0;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h1>This is a basic html page for backend.</h1>
-      </div>
-    </body>
-    </html>
-  `);
-});

@@ -12,6 +12,7 @@ services:
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
       - ENV=development
+    restart: always
     volumes:
       - ./backend:/app
     depends_on:
@@ -28,6 +29,7 @@ services:
       - "${FRONTEND_PORT_DEV}:${FRONTEND_PORT_DEV}"
     volumes:
       - ./frontend:/app
+    restart: always
     depends_on:
       - backend
     networks:
@@ -40,6 +42,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:

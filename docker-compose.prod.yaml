@@ -12,6 +12,7 @@ services:
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
       - ENV=production
+    restart: always
     depends_on:
       - db
     networks:
@@ -29,6 +30,7 @@ services:
       - ./frontend/nginx.conf.template:/etc/nginx/conf.d/default.conf.template
     environment:
       - BACKEND_PORT=${BACKEND_PORT}
+    restart: always
     depends_on:
       - backend
     networks:
@@ -41,6 +43,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    restart: always
     volumes:
       - pgdataprod:/var/lib/postgresql/data
     networks:

@@ -14,7 +14,7 @@ export const Home = () => {
 				<h1>Welcome!</h1>
 				<p>
 					This website is dedicated for trying and testing different full-stack web
-					development techniques. The site is built with Docker containerizarion. React and Nginx is used in the frontend and Express in the backend. Node is used for both servers. 
+					development techniques. The site is built with Docker containerizarion. React and Nginx are used in the frontend and Express in the backend. Node is used for both servers. 
 					PostgreSQL is used for the database. The frontend, backend and database containers are run inside of an AWS EC2 virtual machine instance. 
 				</p>
 				<p>

@@ -80,10 +80,10 @@ export const Details = () => {
 				<div className="details-section">
 					<h2>Background</h2>
 					<p>
-						My name is Tuukka Salonen. I am a Master's degree student in Computer
-						Science at Tampere University focusing on Software Engineering. I have
-						always been passionate about video games and how they were made which led me
-						to this branch.
+						My name is Tuukka Salonen. I am a Computer Science Master's degree student
+						at Tampere University focusing on Software Engineering. I have always been
+						passionate about video games and how they were made which led me to this
+						branch.
 					</p>
 					<p>
 						My main focus and interest throughout my university studies has been

@@ -9,6 +9,7 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Snake } from './components/Snake.jsx';
+import { Stats } from './components/Stats.jsx';
 
 const App = ({ visitorCount }) => {
 	return (
@@ -19,12 +20,13 @@ const App = ({ visitorCount }) => {
 					<Route path="/details" element={<Details />}></Route>
 					<Route path="/projects" element={<Projects />}></Route>
 					<Route path="/projects/snake" element={<Snake />}></Route>
+					<Route path="/projects/rs" element={<Stats />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 2.1.2025</p>
+				<p className="last-update">Last update: 10.1.2025</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"

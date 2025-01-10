@@ -19,7 +19,7 @@ export const Details = () => {
 	return (
 		<div className="details-container">
 			<div className="photo-container">
-				<img src="photo.jpg" alt="Tuukka Salonen" className="profile-photo" />
+				<img src="images/photo.jpg" alt="Tuukka Salonen" className="profile-photo" />
 			</div>
 			<div className="education-content">
 				<div className="details-section">

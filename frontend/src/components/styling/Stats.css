@@ -1,18 +1,36 @@
-.hiscores-container {
+.stats-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin: 20px;
-    height: 100vh;
+    height: 100%;
 }
 
 h3 {
-    margin-top: 0;
+    margin-top: 10px;
     color: #333;
 }
 
 .text-field {
     width: 300px;
     text-align: center;
+}
+
+.skill-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.skill-table {
+    margin: 0 auto;
+}
+
+.table-row .MuiTableCell-root {
+    padding: 4px 8px; /* Reduce padding for table cells */
+}
+
+@media screen and (max-width: 768px) {
+ /* Puhelimella menee liian leveeks*/
 }

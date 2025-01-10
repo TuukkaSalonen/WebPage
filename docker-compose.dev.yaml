@@ -17,6 +17,8 @@ services:
       - ./backend:/app
     depends_on:
       - db
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
       - app_network
 

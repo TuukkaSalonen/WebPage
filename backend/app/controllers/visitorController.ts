@@ -12,9 +12,9 @@ export const getVisitorCount = async (req: Request, res: Response): Promise<void
 		}
 		const visitors = await selectVisitors();
 		if (!visitors.data) {
-			res.status(200).json({ visitorCount: 0 });
+			res.status(200).json({ status: 200, visitorCount: 0 });
 		} else {
-			res.status(200).json({ visitorCount: visitors.data });
+			res.status(200).json({ status: 200, visitorCount: visitors.data });
 		}
 	} catch (error) {
 		res.status(500).json({ status: 500, message: 'Internal server error' });

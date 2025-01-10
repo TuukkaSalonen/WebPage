@@ -61,6 +61,18 @@ export const Projects = () => {
 									save scores to the database.
 								</p>
 							</li>
+							<li>
+								<h3>
+									<Link to="/projects/rs">RuneScape highscores</Link>
+								</h3>
+								<p>
+									A RuneScape highscores lookup tool. You can search for your
+									RuneScape account by name and see your stats. The tool uses the
+									RuneScape API to get the data. I added this because I have
+									played RuneScape on and off for years and this was a great
+									chance to use an external API.
+								</p>
+							</li>
 						</ul>
 					</div>
 				</div>

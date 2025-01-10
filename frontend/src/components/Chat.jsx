@@ -21,7 +21,7 @@ const FloatingChat = ({isOpen, toggleChat, closeChat}) => {
 		<>
 			<div className={`chatbox-container ${isOpen ? 'open' : ''}`}>
 				<div className="chatbox-header">
-					<h3>Chat with Gemini AI</h3>
+					<h3 className='chat-title'>Chat with Gemini AI</h3>
 					<button onClick={closeChat} className="close-btn">
 						&times;
 					</button>

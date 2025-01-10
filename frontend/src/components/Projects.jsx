@@ -63,14 +63,14 @@ export const Projects = () => {
 							</li>
 							<li>
 								<h3>
-									<Link to="/projects/rs">RuneScape highscores</Link>
+									<Link to="/projects/rs">RuneScape stats</Link>
 								</h3>
 								<p>
-									A RuneScape highscores lookup tool. You can search for your
-									RuneScape account by name and see your stats. The tool uses the
-									RuneScape API to get the data. I added this because I have
-									played RuneScape on and off for years and this was a great
-									chance to use an external API.
+									A RuneScape stats lookup tool. You can search RuneScape accounts
+									by name and see the stats and ranks. The tool uses the RuneScape API to
+									retrieve the data. I added this because I have played the game on
+									and off for years and this was a great chance to use an external
+									API.
 								</p>
 							</li>
 						</ul>

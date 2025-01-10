@@ -1,3 +1,21 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /private/
+Disallow: /confidential/
+Disallow: /api/
+Disallow: /scripts/
+Disallow: /styles/
+Disallow: /tmp/
+Disallow: /logs/
+Disallow: /config/
+Disallow: /node_modules/
+
+# Allow all other content
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.tuukkasalonen.fi/sitemap.xml

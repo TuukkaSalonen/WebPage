@@ -22,6 +22,8 @@ export const Snake = () => {
 
 	const scoreRef = useRef(score);
 	const highScoreRef = useRef(highScore);
+	const gameOverRef = useRef(false);
+	const intervalIdRef = useRef(null);
 
 	useEffect(() => {
 		const fetchLeaderboard = async () => {
@@ -35,14 +37,12 @@ export const Snake = () => {
 		const playBoard = document.querySelector('.play-board');
 		const controls = document.querySelectorAll('.controls i');
 
-		let gameOver = false;
 		let foodX, foodY;
 		let snakeX = 5,
 			snakeY = 5;
 		let velocityX = 0,
 			velocityY = 0;
 		let snakeBody = [];
-		let setIntervalId;
 
 		const updateFoodPosition = () => {
 			// Passing a random 1 - 30 value as food position
@@ -52,16 +52,37 @@ export const Snake = () => {
 
 		const handleGameOver = async () => {
 			// Clearing the timer and reloading the page on game over
-			clearInterval(setIntervalId);
+			//clearInterval(setIntervalId);
+			clearInterval(intervalIdRef.current);
 			alert('Game Over! Press OK to replay...');
 			dispatch(sendScore(scoreRef.current));
-			window.location.reload();
+			//window.location.reload();
+			resetGame();
+		};
+
+		const resetButtons = () => {
+			controls.forEach((button) => button.classList.remove('arrow-active'));
+		};
+
+		const resetGame = () => {
+			clearInterval(intervalIdRef.current);
+			setScore(0);
+			scoreRef.current = 0;
+			gameOverRef.current = false;
+			snakeX = 5;
+			snakeY = 5;
+			velocityX = 0;
+			velocityY = 0;
+			snakeBody = [];
+			updateFoodPosition();
+			intervalIdRef.current = setInterval(initGame, 100);
+			resetButtons();
 		};
 
 		const changeDirection = (e) => {
 			const key = e.key || e;
 
-			controls.forEach((button) => button.classList.remove('arrow-active'));
+			resetButtons();
 
 			// Find the button corresponding to the pressed key and add the active class
 			const activeButton = Array.from(controls).find((button) => button.dataset.key === key);
@@ -91,7 +112,7 @@ export const Snake = () => {
 		);
 
 		const initGame = () => {
-			if (gameOver) return handleGameOver();
+			if (gameOverRef.current) return handleGameOver();
 			let html = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
 
 			// Checking if the snake hit the food
@@ -99,15 +120,15 @@ export const Snake = () => {
 				updateFoodPosition();
 				snakeBody.push([foodY, foodX]); // Pushing food position to snake body array
 				setScore((prevScore) => {
-                    const newScore = prevScore + 1;
-                    scoreRef.current = newScore;
-                    if (newScore > highScoreRef.current) {
-                        localStorage.setItem('high-score', newScore);
-                        setHighScore(newScore);
-                        highScoreRef.current = newScore;
-                    }
-                    return newScore;
-                });
+					const newScore = prevScore + 1;
+					scoreRef.current = newScore;
+					if (newScore > highScoreRef.current) {
+						localStorage.setItem('high-score', newScore);
+						setHighScore(newScore);
+						highScoreRef.current = newScore;
+					}
+					return newScore;
+				});
 			}
 			// Updating the snake's head position based on the current velocity
 			snakeX += velocityX;
@@ -121,7 +142,7 @@ export const Snake = () => {
 
 			// Checking if the snake's head is out of wall, if so setting gameOver to true
 			if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
-				return (gameOver = true);
+				return (gameOverRef.current = true);
 			}
 
 			for (let i = 0; i < snakeBody.length; i++) {
@@ -133,25 +154,25 @@ export const Snake = () => {
 					snakeBody[0][1] === snakeBody[i][1] &&
 					snakeBody[0][0] === snakeBody[i][0]
 				) {
-					gameOver = true;
+					gameOverRef.current = true;
 				}
 			}
 			playBoard.innerHTML = html;
 		};
 
 		updateFoodPosition();
-		setIntervalId = setInterval(initGame, 100);
+		intervalIdRef.current = setInterval(initGame, 100);
 		document.addEventListener('keyup', changeDirection);
 
 		const preventArrowScroll = (e) => {
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                e.preventDefault();
-            }
-        };
-        window.addEventListener('keydown', preventArrowScroll);
+			if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+				e.preventDefault();
+			}
+		};
+		window.addEventListener('keydown', preventArrowScroll);
 
 		return () => {
-			clearInterval(setIntervalId);
+			clearInterval(intervalIdRef.current);
 			document.removeEventListener('keyup', changeDirection);
 			window.removeEventListener('keydown', preventArrowScroll);
 		};
@@ -194,20 +215,20 @@ export const Snake = () => {
 						<span>Score</span>
 					</div>
 					<ul>
-                        {loading ? (
-                            <li className='scorePlaceholder'>Loading...</li>
-                        ) : leaderboard && leaderboard.length === 0 ? (
-                            <li className='scorePlaceholder'>No scores yet!</li>
-                        ) : (
-                            leaderboard.map((entry, index) => (
-                                <li key={index}>
-                                    <span>{index + 1}.</span>
-                                    <span>{entry.name}</span>
-                                    <span>{entry.score}</span>
-                                </li>
-                            ))
-                        )}
-                    </ul>
+						{loading ? (
+							<li className="scorePlaceholder">Loading...</li>
+						) : leaderboard && leaderboard.length === 0 ? (
+							<li className="scorePlaceholder">No scores yet!</li>
+						) : (
+							leaderboard.map((entry, index) => (
+								<li key={index}>
+									<span>{index + 1}.</span>
+									<span>{entry.name}</span>
+									<span>{entry.score}</span>
+								</li>
+							))
+						)}
+					</ul>
 				</div>
 			</div>
 		</div>

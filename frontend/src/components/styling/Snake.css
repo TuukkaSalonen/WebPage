@@ -1,6 +1,6 @@
 .content {
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: center;
 	width: 100%;
 	max-width: 100%; /* Ensure content does not exceed viewport width */
@@ -47,15 +47,6 @@
 .back-button:hover {
 	background-color: #ff4136;
 	transform: translateY(-2px); /* Slight lift on hover */
-}
-
-.content {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	width: 100%;
-	max-width: 100%;
-	overflow-x: hidden;
 }
 
 .wrapper {
@@ -122,11 +113,13 @@
 	border-radius: 20px;
 	box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
 	width: 200px; /* Adjust width to fit headers */
-	margin: 5px; /* Center the leaderboard div horizontally */
+	margin: 5px 5px 5px 20px; /* Center the leaderboard div horizontally */
 	display: flex;
 	flex-direction: column;
 	align-items: center; /* Center align items horizontally */
 	text-align: center; /* Center align text */
+	justify-items: center;
+	max-width: 80%;
 }
 
 .leaderboard-header {

@@ -1,4 +1,3 @@
-// Add error handling with notifications if user not found/error in RuneScape API
 export const getRsStats = async (username: string): Promise<Object> => {
 	try {
 		const response = await fetch(`/api/general/rs/${username}`, {
@@ -8,6 +7,7 @@ export const getRsStats = async (username: string): Promise<Object> => {
 			},
 			credentials: 'include',
 		});
+		console.log(response);
 		if (!response.ok) {
             const data = await response.json();
 			if (data.message) {

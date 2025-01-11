@@ -26,6 +26,7 @@ const snakeReducer = (state = initialState, action: any): SnakeState => {
 				...state,
 				scores: [...state.scores, action.payload].sort((a, b) => b.score - a.score).slice(0, 10),
 			};
+		// Doesnt do anything at the moment
 		case FETCH_SCORES_REQUEST:
 			return {
 				...state,

@@ -1,0 +1,46 @@
+.notification-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.notification {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.notification-loading {
+    border-color: #007bff;
+    background-color: #e7f3ff;
+    color: #007bff;
+}
+
+.notification-success {
+    border-color: #28a745;
+    background-color: #e6f4ea;
+    color: #28a745;
+}
+
+.notification-error {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.notification p {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}

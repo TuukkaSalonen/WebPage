@@ -51,12 +51,9 @@ export const Snake = () => {
 		};
 
 		const handleGameOver = async () => {
-			// Clearing the timer and reloading the page on game over
-			//clearInterval(setIntervalId);
 			clearInterval(intervalIdRef.current);
 			alert('Game Over! Press OK to replay...');
 			dispatch(sendScore(scoreRef.current));
-			//window.location.reload();
 			resetGame();
 		};
 
@@ -180,8 +177,8 @@ export const Snake = () => {
 
 	return (
 		<div className="snake-container">
-			<div className="top-bar">
-				<Link to="/projects" className="back-button">
+			<div className="snake-top-bar">
+				<Link to="/projects" className="snake-back-button">
 					<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
 				</Link>
 			</div>

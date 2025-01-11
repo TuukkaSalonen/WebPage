@@ -14,7 +14,7 @@ export const getRsStats = async (req: Request, res: Response): Promise<void> => 
 		const { username } = req.params;
 
 		if (!username || !validateUsername(username)) {
-			res.status(400).json({ message: 'Invalid username' });
+			res.status(400).json({ status: 400, message: 'Invalid username' });
 			return;
 		}
 		const apiResponse = await rsApiRequest(username);
@@ -60,12 +60,14 @@ const processStats = (data: string) => {
 		const lines = data.trim().split('\n');
 		const highscores = lines.slice(0, skills.length).map((line, index) => {
 			const [rank, level, experience] = line.split(',');
+			const parsedRank = parseInt(rank, 10);
+            const parsedExperience = parseInt(experience, 10);
 			return {
-				skill: skills[index],
-				rank: parseInt(rank, 10).toLocaleString('en-US'),
-				level: parseInt(level, 10).toLocaleString('en-US'),
-				experience: parseInt(experience, 10).toLocaleString('en-US'),
-			};
+                skill: skills[index],
+                rank: parsedRank < 1 ? '0' : parsedRank.toLocaleString('en-US'),
+                level: parseInt(level, 10).toLocaleString('en-US'),
+                experience: parsedExperience < 1 ? '0' : parsedExperience.toLocaleString('en-US'),
+            };
 		});
 		return highscores;
 	} catch (error) {

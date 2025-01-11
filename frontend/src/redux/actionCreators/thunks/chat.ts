@@ -6,6 +6,7 @@ export const fetchChatRequest = async (message: string): Promise<string> => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ message }),
+			credentials: 'include',
 		});
 		if (!response.ok) {
 			throw new Error('Network response was not ok');

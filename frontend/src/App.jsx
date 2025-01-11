@@ -10,11 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Snake } from './components/Snake.jsx';
 import { Stats } from './components/Stats.jsx';
+import { Notification } from './components/Notification.jsx';
 
 const App = ({ visitorCount }) => {
 	return (
 		<div className="App">
 			<Navbar visitorCount={visitorCount} />
+			<Notification />
 			<div className="main-content">
 				<Routes>
 					<Route path="/details" element={<Details />}></Route>
@@ -26,7 +28,7 @@ const App = ({ visitorCount }) => {
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 10.1.2025</p>
+				<p className="last-update">Last update: 11.1.2025</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"

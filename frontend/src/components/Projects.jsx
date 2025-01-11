@@ -34,7 +34,7 @@ export const Projects = () => {
 								</h3>
 								<p>
 									An AI chatbot is implemented to the site with Google Gemini. It
-									is located at bottom right of this page. You can ask it any
+									is located at bottom right corner of this page. You can ask it any
 									question and it will try to answer it. It is not perfect, but it
 									is a good example of how AI can be used in web development.
 									Remember to not give any personal info!{' '}
@@ -57,8 +57,8 @@ export const Projects = () => {
 									>
 										here.{' '}
 									</a>
-									The game is modified to use Redux for state management and to
-									save scores to the database.
+									The game is modified to save scores to the database and Redux is
+									for state management.
 								</p>
 							</li>
 							<li>
@@ -67,10 +67,10 @@ export const Projects = () => {
 								</h3>
 								<p>
 									A RuneScape stats lookup tool. You can search RuneScape accounts
-									by name and see the stats and ranks. The tool uses the RuneScape API to
-									retrieve the data. I added this because I have played the game on
-									and off for years and this was a great chance to use an external
-									API.
+									by name and see the skill stats and ranks. The tool uses the RuneScape
+									API to retrieve the data. I added this because I have played the
+									game on and off for years and this was a great chance to use an
+									external API.
 								</p>
 							</li>
 						</ul>

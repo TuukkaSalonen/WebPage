@@ -11,7 +11,7 @@ const FloatingChat = ({isOpen, toggleChat, closeChat}) => {
 	const loading = useSelector((state) => state.chat.loading);
 
 	const handleSend = () => {
-		if (input.trim()) {
+		if (input.trim() !== '') {
 			dispatch(sendMessage(input));
 			setInput('');
 		}

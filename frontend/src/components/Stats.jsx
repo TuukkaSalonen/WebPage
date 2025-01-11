@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,77 +7,88 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import './styling/Stats.css';
-import { getRsStats } from '../redux/actionCreators/thunks/rs.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStats } from '../redux/actionCreators/statActions.ts';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 // Add toggle virtual level & loading indicator
 
 export const Stats = () => {
 	const [username, setUsername] = useState('');
-	const [skills, setSkills] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const stats = useSelector((state) => state.stats.stats);
+	const name = useSelector((state) => state.stats.name);
+	const dispatch = useDispatch();
 
-	const fetchStats = async () => {
-		if (!username || loading) return;
-		setLoading(true);
-		try {
-			const data = await getRsStats(username);
-			console.log('Data saatu:', data);
-			if (data && Array.isArray(data)) {
-				setSkills(data);
-			} else {
-				console.log('Player not found');
-			}
-		} catch (error) {
-			console.error('Error fetching hiscores:', error);
+	useEffect(() => {
+		if (name) {
+			setUsername(name);
 		}
-		finally {
-			setLoading(false);
-		}
+	}, [name]);
+
+	const handleSend = () => {
+		dispatch(getStats(username));
 	};
+
 	const handleInputChange = (event) => {
 		setUsername(event.target.value);
 	};
 
 	return (
 		<div className="stats-container">
-			{/* Back button */}
-			<h3>Lookup RuneScape stats</h3>
-			<TextField
-				className="text-field"
-				placeholder="Enter username: e.g. PottuTatti"
-				variant="outlined"
-				value={username}
-				onChange={handleInputChange}
-				sx={{
-					'& .MuiInputBase-input': {
-						textAlign: 'center',
-					},
-				}}
-				onKeyDown={(event) => {
-					if (event.key === 'Enter') {
-						fetchStats();
-						event.preventDefault();
-					}
-				}}
-			/>
-			<Button
-				className="search-button"
-				variant="contained"
-				sx={{ margin: '5px' }}
-				onClick={() => fetchStats()}
-			>
-				Search stats
-			</Button>
+			<Link to="/projects" className="stat-back-button">
+				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
+			</Link>
+			<div className="search-column">
+				<h3>Lookup RuneScape stats</h3>
+				<TextField
+					className="text-field"
+					placeholder="Enter username: e.g. PottuTatti"
+					variant="outlined"
+					value={username}
+					onChange={handleInputChange}
+					sx={{
+						marginBottom: '5px',
+						'& .MuiInputBase-input': {
+							textAlign: 'center',
+						},
+						'& fieldset': {
+							borderColor: 'black',
+						},
+						'&:hover fieldset': {
+							borderColor: '#0056b3',
+						},
+						'&.Mui-focused fieldset': {
+							borderColor: '#0056b3',
+						},
+					}}
+					onKeyDown={(event) => {
+						if (event.key === 'Enter') {
+							handleSend();
+							event.preventDefault();
+						}
+					}}
+				/>
+				<Button
+					className="search-button"
+					variant="contained"
+					sx={{ margin: '10px' }}
+					onClick={() => handleSend()}
+				>
+					Search stats
+				</Button>
+			</div>
 			<TableContainer component={Paper} className="table-container">
 				<Table
 					className="skill-table"
 					size="small"
-					sx={{ minWidth: 650, maxWidth: 900 }}
+					sx={{ maxWidth: 900 }}
 					aria-label="simple table"
 				>
-					{skills.length > 0 && (
+					{stats.length > 0 && (
 						<TableHead>
 							<TableRow>
 								<TableCell sx={{ fontWeight: 'bold' }}>Skill</TableCell>
@@ -94,7 +105,7 @@ export const Stats = () => {
 						</TableHead>
 					)}
 					<TableBody>
-						{skills.map((skillrow, index) => (
+						{stats.map((skillrow, index) => (
 							<TableRow className="table-row" key={index}>
 								<TableCell component="th" scope="row">
 									<img

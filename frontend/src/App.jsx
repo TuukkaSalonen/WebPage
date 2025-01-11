@@ -16,8 +16,8 @@ const App = ({ visitorCount }) => {
 	return (
 		<div className="App">
 			<Navbar visitorCount={visitorCount} />
-			<Notification />
 			<div className="main-content">
+				<Notification />
 				<Routes>
 					<Route path="/details" element={<Details />}></Route>
 					<Route path="/projects" element={<Projects />}></Route>

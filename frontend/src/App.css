@@ -1,6 +1,5 @@
 .App {
     min-height: 100vh;
-    /*flex: column;*/
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -10,7 +9,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /*height: 100vh;*/
     justify-content: center;
     margin: 0;
 }

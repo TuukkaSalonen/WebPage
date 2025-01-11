@@ -2,10 +2,9 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/*min-height: 100vh; /* Full viewport height */
-	font-size: 20px; /* Font size */
-	color: #333; /* Text color */
-	background-color: #f0f0f0; /* Light background color */
+	font-size: 20px;
+	color: #333;
+	background-color: #f0f0f0;
 	padding: 20px;
 	opacity: 0;
 	transform: translateY(20px);

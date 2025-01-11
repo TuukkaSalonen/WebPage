@@ -66,7 +66,7 @@ export const Projects = () => {
 									<Link to="/projects/rs">RuneScape stats</Link>
 								</h3>
 								<p>
-									A RuneScape stats lookup tool. You can search RuneScape accounts
+									A RuneScape stats lookup tool. You can search regular RuneScape accounts
 									by name and see the skill stats and ranks. The tool uses the RuneScape
 									API to retrieve the data. I added this because I have played the
 									game on and off for years and this was a great chance to use an

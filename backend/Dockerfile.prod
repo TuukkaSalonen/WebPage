@@ -19,7 +19,7 @@ RUN npm install -g tsx
 ENV NODE_ENV=production
 
 # Expose the port that the app will run on
-EXPOSE ${BDOCKER_PORT}
+EXPOSE ${BACKEND_PORT}
 
 # Start the application using tsx
 CMD ["tsx", "server.ts"]

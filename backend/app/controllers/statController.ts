@@ -53,8 +53,6 @@ const rsApiRequest = async (username: string): Promise<ApiResponse> => {
 };
 
 // Process Runescape stats data into an array of objects for each skill with rank, level, and experience + image url
-
-// Add virtual level field https://runescape.wiki/w/Experience/Table for each skill
 const processStats = (data: string) => {
 	try {
 		const lines = data.trim().split('\n');
@@ -64,9 +62,9 @@ const processStats = (data: string) => {
             const parsedExperience = parseInt(experience, 10);
 			return {
                 skill: skills[index],
-                rank: parsedRank < 1 ? '0' : parsedRank.toLocaleString('en-US'),
-                level: parseInt(level, 10).toLocaleString('en-US'),
-                experience: parsedExperience < 1 ? '0' : parsedExperience.toLocaleString('en-US'),
+                rank: parsedRank < 1 ? '0' : parsedRank,
+                level: parseInt(level, 10),
+                experience: parsedExperience < 1 ? '0' : parsedExperience,
             };
 		});
 		return highscores;

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { getRsStats } from './thunks/stats.ts';
 import { createNotification } from './notificationActions.ts';
-import { ADD_STATS, REMOVE_STATS } from './actionConstants.ts';
+import { ADD_STATS, TOGGLE_VIRTUAL, REMOVE_STATS } from './actionConstants.ts';
 
 export const fetchStatsSuccess = (stats: Object) => ({
 	type: ADD_STATS,
@@ -11,6 +11,11 @@ export const fetchStatsSuccess = (stats: Object) => ({
 export const emptyStats = () => ({
 	type: REMOVE_STATS,
 });
+
+export const toggleVirtual = () => ({
+	type: TOGGLE_VIRTUAL,
+});
+
 
 export const getStats = (username: string) => async (dispatch: Dispatch) => {
 	if (!username || username.trim() === '') {

@@ -8,20 +8,22 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import './styling/Stats.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStats } from '../redux/actionCreators/statActions.ts';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-
-// Add toggle virtual level & loading indicator
+import { toggleVirtual } from '../redux/actionCreators/statActions.ts';
+import { virtualLevels, eliteVirtualLevels } from './constants/statConstants.ts';
 
 export const Stats = () => {
 	const [username, setUsername] = useState('');
 	const stats = useSelector((state) => state.stats.stats);
 	const name = useSelector((state) => state.stats.name);
 	const dispatch = useDispatch();
+	const virtual = useSelector((state) => state.stats.virtual);
 
 	useEffect(() => {
 		if (name) {
@@ -36,6 +38,47 @@ export const Stats = () => {
 	const handleInputChange = (event) => {
 		setUsername(event.target.value);
 	};
+
+	const handleAlignment = (event, newAlignment) => {
+		if (newAlignment !== null) {
+			dispatch(toggleVirtual());
+		}
+	};
+
+	const getVirtualLevel = (skill, level, experience) => {
+		const levels = skill === 'Invention' ? eliteVirtualLevels : virtualLevels;
+		if (skill === 'Overall') {
+			return 0;
+		}
+		for (let i = levels.length - 1; i >= 0; i--) {
+			if (experience >= levels[i].xp) {
+				return levels[i].level;
+			}
+		}
+		return level;
+	};
+
+	const updateStatsWithVirtualLevels = (stats) => {
+		return stats.map((skillrow) => ({
+			...skillrow,
+			level: getVirtualLevel(skillrow.skill.name, skillrow.level, skillrow.experience),
+		}));
+	};
+
+	const getTotalVirtualLevel = (stats) => {
+		const updatedStats = updateStatsWithVirtualLevels(stats);
+		return updatedStats.reduce((total, skillrow) => {
+			return total + parseInt(skillrow.level);
+		}, 0);
+	};
+
+	const updatedStats = virtual ? updateStatsWithVirtualLevels(stats) : stats;
+	const totalVirtualLevel = getTotalVirtualLevel(stats);
+
+	const overallIndex = updatedStats.findIndex((skillrow) => skillrow.skill.name === 'Overall');
+	if (overallIndex !== -1) {
+		updatedStats[overallIndex].level = virtual ? totalVirtualLevel : stats[overallIndex].level;
+	}
 
 	return (
 		<div className="stats-container">
@@ -80,6 +123,19 @@ export const Stats = () => {
 				>
 					Search stats
 				</Button>
+				<ToggleButtonGroup
+					value={virtual ? 'virtual' : 'normal'}
+					exclusive
+					onChange={handleAlignment}
+					aria-label="text alignment"
+				>
+					<ToggleButton value="normal" aria-label="left aligned">
+						<div>Normal levels</div>
+					</ToggleButton>
+					<ToggleButton value="virtual" aria-label="right aligned">
+						<div>Virtual levels</div>
+					</ToggleButton>
+				</ToggleButtonGroup>
 			</div>
 			<TableContainer component={Paper} className="table-container">
 				<Table
@@ -105,7 +161,7 @@ export const Stats = () => {
 						</TableHead>
 					)}
 					<TableBody>
-						{stats.map((skillrow, index) => (
+						{updatedStats.map((skillrow, index) => (
 							<TableRow className="table-row" key={index}>
 								<TableCell component="th" scope="row">
 									<img
@@ -115,9 +171,15 @@ export const Stats = () => {
 									/>
 									{skillrow.skill.name}
 								</TableCell>
-								<TableCell align="right">{skillrow.level}</TableCell>
-								<TableCell align="right">{skillrow.experience}</TableCell>
-								<TableCell align="right">{skillrow.rank}</TableCell>
+								<TableCell align="right">
+									{Number(skillrow.level).toLocaleString('en-US')}
+								</TableCell>
+								<TableCell align="right">
+									{Number(skillrow.experience).toLocaleString('en-US')}
+								</TableCell>
+								<TableCell align="right">
+									{Number(skillrow.rank).toLocaleString('en-US')}
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

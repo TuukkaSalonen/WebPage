@@ -16,6 +16,8 @@ const App = ({ visitorCount }) => {
 	return (
 		<div className="App">
 			<Navbar visitorCount={visitorCount} />
+			{/* Some other bar under navbar that contains notifications 
+			and login/logout/user details buttons etc. when implemented*/}
 			<div className="main-content">
 				<Notification />
 				<Routes>
@@ -28,7 +30,7 @@ const App = ({ visitorCount }) => {
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 11.1.2025</p>
+				<p className="last-update">Last update: 12.1.2025</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"

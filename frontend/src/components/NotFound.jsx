@@ -7,6 +7,13 @@ export const NotFound = () => {
 	const [seconds, setSeconds] = useState(5);
 
 	useEffect(() => {
+		const container = document.querySelector('.home-container');
+		setTimeout(() => {
+			container.classList.add('fade-in');
+		}, 100);
+	});
+
+	useEffect(() => {
 		if (seconds > 0) {
 			const timer = setTimeout(() => {
 				setSeconds((prev) => prev - 1);
@@ -20,9 +27,10 @@ export const NotFound = () => {
 
 	return (
 		<div className="home-container">
-			<div className="home-container-text">OOPS!</div>
-			<div>This page was not found.</div>
-			<div>Redirecting back to home page in {seconds} seconds.</div>
+			<div className="home-container-text">
+				<h1>404 OOPS!</h1>
+				<p>This page was not found. Redirecting back to home page in {seconds} seconds.</p>
+			</div>
 		</div>
 	);
 };

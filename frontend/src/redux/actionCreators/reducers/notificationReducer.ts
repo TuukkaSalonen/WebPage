@@ -6,7 +6,6 @@ const notificationReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case ADD_NOTIFICATION:
-        console.log(action);
       return {
         ...state,
         [action.payload.type]: {

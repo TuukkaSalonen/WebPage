@@ -7,7 +7,6 @@ export const getRsStats = async (username: string): Promise<Object> => {
 			},
 			credentials: 'include',
 		});
-		console.log(response);
 		if (!response.ok) {
             const data = await response.json();
 			if (data.message) {

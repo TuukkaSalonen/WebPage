@@ -9,14 +9,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import './styling/Stats.css';
+import '../styling/Stats.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStats } from '../redux/actionCreators/statActions.ts';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { toggleVirtual } from '../redux/actionCreators/statActions.ts';
-import { virtualLevels, eliteVirtualLevels } from './constants/statConstants.ts';
+import { toggleVirtual, getStats } from '../../redux/actionCreators/statActions.ts';
+import { virtualLevels, eliteVirtualLevels } from '../constants/statConstants.ts';
 
 export const Stats = () => {
 	const [username, setUsername] = useState('');

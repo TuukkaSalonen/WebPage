@@ -1,4 +1,4 @@
-import './styling/Snake.css';
+import '../styling/Snake.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,7 +11,7 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useRef, useEffect } from 'react';
-import { fetchScores, sendScore } from '../redux/actionCreators/snakeActions.ts';
+import { fetchScores, sendScore } from '../../redux/actionCreators/snakeActions.ts';
 
 export const Snake = () => {
 	const dispatch = useDispatch();

@@ -1,22 +1,30 @@
 export const metaData = {
     '/': {
-      title: 'Home - Tuukka Salonen',
+      title: 'Home | Tuukka Salonen',
       description: 'This is my personal website for testing web development techniques',
     },
     '/details': {
-      title: 'Details - Tuukka Salonen',
-      description: 'Learn more details about my background.',
+      title: 'Details | Tuukka Salonen',
+      description: 'Learn about my background.',
     },
     '/projects': {
-      title: 'Projects - Tuukka Salonen',
+      title: 'Projects | Tuukka Salonen',
       description: 'Browse through a some of projects for this site.',
     },
     '/projects/snake': {
-      title: 'Snake - Tuukka Salonen',
+      title: 'Snake | Tuukka Salonen',
       description: 'Play the Snake game I modified and added to this site.',
     },
     '/projects/rs': {
-      title: 'Stats - Tuukka Salonen',
+      title: 'Stats | Tuukka Salonen',
       description: 'View Runescape stats by username.',
+    },
+    '/login': {
+      title: 'Login | Tuukka Salonen',
+      description: 'Login to the site.',
+    },
+    '/register': {
+      title: 'Register | Tuukka Salonen',
+      description: 'Register to the site.',
     },
   };

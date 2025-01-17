@@ -1,4 +1,4 @@
-import './styling/Projects.css';
+import '../styling/Projects.css';
 import FloatingChat from './Chat';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';

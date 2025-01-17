@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '../redux/actionCreators/chatActions.ts';
-import './styling/Chat.css';
+import { sendMessage } from '../../redux/actionCreators/chatActions.ts';
+import '../styling/Chat.css';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const FloatingChat = ({isOpen, toggleChat, closeChat}) => {

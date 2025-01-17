@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import generalRoutes from './routes/generalRoutes';
 import cookieParser from 'cookie-parser';
-//import loginRoutes from './routes/loginRoutes';
+//import userRoutes from './routes/userRoutes';
 import setDefaultUser from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
 
@@ -23,4 +23,4 @@ app.use(morgan('combined')); // Log HTTP requests
 app.use(setDefaultUser); // Set default user cookie
 
 app.use('/api/general', generalRoutes);
-//app.use('/api/login', loginRoutes);
+//app.use('/api/user', userRoutes);

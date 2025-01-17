@@ -4,13 +4,15 @@ import { Helmet } from 'react-helmet';
 import Navbar from './components/Navbar.jsx';
 import { Home } from './components/Home.jsx';
 import { Details } from './components//Details.jsx';
-import { Projects } from './components/Projects.jsx';
+import { Projects } from './components/Projects/Projects.jsx';
+import { Login } from './components/Login.jsx';
+import { Register } from './components/Register.jsx';
 import { NotFound } from './components/NotFound.jsx';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { Snake } from './components/Snake.jsx';
-import { Stats } from './components/Stats.jsx';
+import { Snake } from './components/Projects/Snake.jsx';
+import { Stats } from './components/Projects/Stats.jsx';
 import { Notification } from './components/Notification.jsx';
 import { useLocation } from 'react-router-dom';
 import { metaData } from './components/constants/metaConstants.ts';
@@ -39,12 +41,13 @@ const App = ({ visitorCount }) => {
 					<Route path="/projects" element={<Projects />}></Route>
 					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/projects/rs" element={<Stats />}></Route>
+					<Route path="/login" element={<Login />}></Route>
+					<Route path="/register" element={<Register />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 			<footer>
-				<p className="last-update">Last update: 15.1.2025</p>
 				<div className="links">
 					<a
 						href="https://www.linkedin.com/in/tuukkasalonen/"

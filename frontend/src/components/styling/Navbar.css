@@ -20,35 +20,6 @@
 	padding: 0px 10px; /* Space between links */
 }
 
-.visitor-count {
-	color: white;
-	position: absolute; /* Absolute positioning */
-	right: 20px; /* Position it to the right corner */
-	white-space: nowrap; /* Prevent text from wrapping */
-}
-
-/* Media query for smaller screens */
-@media (max-width: 640px) {
-	.navbar {
-		flex-direction: column; /* Stack items vertically */
-		align-items: flex-start; /* Align items to the start */
-	}
-
-	.navbar-center {
-		order: 1; /* Ensure links are first */
-		width: 100%; /* Full width */
-		justify-content: center; /* Center links */
-		margin-bottom: 10px; /* Space below links */
-	}
-
-	.visitor-count {
-		position: static; /* Remove absolute positioning */
-		order: 2; /* Ensure visitor count is last */
-		text-align: center;
-		width: 100%; /* Full width */
-	}
-}
-
 .navbar-link .MuiButton-root {
 	background-color: #007bff; /* Primary button color */
 	color: #ffffff;
@@ -68,4 +39,42 @@
 
 .navbar-link .MuiButton-root.active {
 	background-color: #ff4136; /* Red color for active button */
+}
+
+.sidebar-icon {
+	font-size: 24px;
+	color: white;
+	cursor: pointer;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	transition: transform 0.3s ease-in-out; /* Smooth transition for the icon */
+}
+
+
+/* Media query for smaller screens */
+@media (max-width: 640px) {
+	.navbar {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start; /* Align items to the start */
+	}
+
+	.navbar-center {
+		order: 1; /* Ensure links are first */
+		width: 100%; /* Full width */
+		justify-content: center; /* Center links */
+	}
+
+	.navbar-link {
+		padding: 0px 5px; /* Space between links */
+	}
+	
+	.navbar-link .MuiButton-root {
+		padding: 5px 10px;
+	}
+
+	.sidebar-icon {
+		top: 15px;
+		left: 15px;
+	}
 }

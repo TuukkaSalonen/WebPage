@@ -2,13 +2,27 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './styling/Navbar.css';
 import Button from '@mui/material/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { Sidebar } from './Sidebar';
 
 const Navbar = ({ visitorCount }) => {
 	const location = useLocation();
+	const [isOpen, setIsOpen] = useState(false);
+
+	const toggleSidebar = () => {
+		setIsOpen(!isOpen);
+	};
 
 	return (
 		<nav className="navbar">
 			<div className="navbar-center">
+				<FontAwesomeIcon
+					icon={isOpen ? faTimes : faBars}
+					className="sidebar-icon"
+					onClick={toggleSidebar}
+				/>
 				<Link to="/" className="navbar-link">
 					<Button
 						variant="contained"
@@ -34,7 +48,7 @@ const Navbar = ({ visitorCount }) => {
 					</Button>
 				</Link>
 			</div>
-			<div className="visitor-count">{`Total visitors: ${visitorCount}`}</div>
+			<Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} visitorCount={visitorCount} />
 		</nav>
 	);
 };

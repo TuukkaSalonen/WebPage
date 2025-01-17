@@ -48,10 +48,17 @@ footer a:nth-child(3):hover {
 footer p {
 	margin: 0; /* Remove default margin */
 }
+
 footer .last-update {
 	position: absolute; /* Absolute positioning */
 	left: 20px; /* Position 20px from the left */
 	font-size: 1rem; /* Smaller font size for last update */
+}
+
+footer .visitor-count {
+	position: absolute; /* Absolute positioning */
+	right: 20px; /* Position 20px from the right */
+	font-size: 1rem; /* Smaller font size for visiotr count */
 }
 
 @media screen and (max-width: 500px) {
@@ -84,5 +91,13 @@ footer .last-update {
         text-align: center; /* Center align text */
         margin-top: 10px; /* Add top margin */
         order: 2; /* Ensure last-update goes second */
+    }
+
+    footer .visitor-count {
+        position: static; /* Remove absolute positioning */
+        width: 100%; /* Full width */
+        text-align: center; /* Center align text */
+        margin-top: 0px; /* Add top margin */
+        order: 3; /* Ensure visitor-count goes third */
     }
 }

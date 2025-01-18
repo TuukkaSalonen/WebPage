@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './styling/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { postRegister } from '../redux/actionCreators/thunks/login.ts';
 import { useDispatch } from 'react-redux';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export const Register = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+	const [recaptchaToken, setRecaptchaToken] = useState(null);
+	const recaptchaRef = useRef(null);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -20,7 +24,11 @@ export const Register = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(postRegister(username, password, confirmPassword, email, navigate));
+		dispatch(postRegister(username, password, confirmPassword, email, recaptchaToken, recaptchaRef, navigate));
+	};
+
+	const handleRecaptchaChange = (token) => {
+		setRecaptchaToken(token);
 	};
 
 	return (
@@ -70,6 +78,7 @@ export const Register = () => {
 						placeholder="Confirm your password"
 					/>
 				</div>
+				<ReCAPTCHA ref={recaptchaRef} sitekey="6Lct0rsqAAAAAJYlt--4RL4fKaa2r_FDgKs8zs7R" onChange={handleRecaptchaChange} />
 				<button type="submit" className="register-button">
 					Register
 				</button>

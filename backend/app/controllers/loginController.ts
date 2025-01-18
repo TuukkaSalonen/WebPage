@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { validateLoginCredentials, validateRegisterCredentials } from '../utils/validator';
 import { createUser, getUser } from '../../db/queries/user';
 import bcrypt from 'bcryptjs';
-import { createTokens, verifyToken } from '../services/loginServices';
+import { createTokens, verifyToken, verifyRecaptcha } from '../services/loginServices';
 
 const env = process.env;
 const cookie = env.COOKIE_NAME || 'token';
@@ -96,7 +96,12 @@ export const checkAndRefreshLogin = async (req: Request, res: Response): Promise
 
 export const register = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const { username, password, email } = req.body;
+		const { username, password, recaptchaToken, email } = req.body;
+		const recaptchaSuccess = await verifyRecaptcha(recaptchaToken);
+		if (!recaptchaSuccess) {
+			res.status(400).json({ status: 400, message: 'Invalid recaptcha' });
+			return;
+		}
 		if (validateRegisterCredentials(username, password, email)) {
 			const hashedPassword = await bcrypt.hash(password, parseInt(saltRounds));
 			const existingUser = await getUser(username);

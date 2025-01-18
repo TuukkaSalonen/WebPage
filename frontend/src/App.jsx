@@ -50,8 +50,8 @@ const App = ({ visitorCount }) => {
 					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/projects/rs" element={<Stats />}></Route>
 					<Route path="/login" element={<Login />}></Route>
-
-					{/*TODO: EXAMPLE! REMOVE */}
+					<Route path="/register" element={<Register />}></Route>
+					{/* TODO: EXAMPLE! REMOVE
 					<Route 
 						path="/register"
 						element={
@@ -59,7 +59,7 @@ const App = ({ visitorCount }) => {
 								<Register />
 							</ProtectedRoute>
 						}
-					/>
+					/> */}
 					<Route path="/unauthorized" element={<Unauthorized />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />

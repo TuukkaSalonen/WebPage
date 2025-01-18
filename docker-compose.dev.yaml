@@ -11,6 +11,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
+      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
       - ENV=development
     restart: always
     volumes:

@@ -1,5 +1,6 @@
 const env = process.env;
 
+// Database configuration
 const config = {
 	client: 'pg',
 	connection: {

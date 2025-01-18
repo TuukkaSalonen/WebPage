@@ -3,39 +3,24 @@ import './styling/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { postRegister } from '../redux/actionCreators/thunks/login.ts';
+import { useDispatch } from 'react-redux';
 
 export const Register = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const [error, setError] = useState('');
-	const [success, setSuccess] = useState('');
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleBackClick = () => {
-		navigate(-1); // Navigate to the previous page
+		navigate(-1);
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		if (!username || !email || !password || !confirmPassword) {
-			setError('All fields are required.');
-			setSuccess('');
-			return;
-		}
-
-		if (password !== confirmPassword) {
-			setError('Passwords do not match.');
-			setSuccess('');
-			return;
-		}
-
-		setError('');
-		setSuccess('Registration successful!');
-		console.log('Registered with:', { username, email, password });
-		// Handle registration logic here (e.g., API call)
+		dispatch(postRegister(username, password, confirmPassword, email, navigate));
 	};
 
 	return (
@@ -45,8 +30,6 @@ export const Register = () => {
 			</button>
 			<h2>Register</h2>
 			<form onSubmit={handleSubmit} className="register-form">
-				{error && <p className="error-message">{error}</p>}
-				{success && <p className="success-message">{success}</p>}
 				<div className="form-group">
 					<label htmlFor="username">Username</label>
 					<input
@@ -54,7 +37,7 @@ export const Register = () => {
 						id="username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
-						placeholder="Enter your username"
+						placeholder="Enter your username (length < 20)"
 					/>
 				</div>
 				<div className="form-group">
@@ -64,7 +47,7 @@ export const Register = () => {
 						id="email"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						placeholder="Enter your email"
+						placeholder="Enter your email (optional)"
 					/>
 				</div>
 				<div className="form-group">
@@ -74,7 +57,7 @@ export const Register = () => {
 						id="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						placeholder="Enter your password"
+						placeholder="Enter your password (length > 6)"
 					/>
 				</div>
 				<div className="form-group">

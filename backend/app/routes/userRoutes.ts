@@ -1,8 +1,11 @@
-// import express from 'express';
-// import { login } from '../controllers/loginController';
+import express from 'express';
+import { getAllUsers } from '../controllers/userController';
+import { authorizeRole } from '../middleware/user';
 
-// const userRoutes = express.Router({ mergeParams: true });
+const userRoutes = express.Router({ mergeParams: true });
 
-// userRoutes.post('/login', login);
+userRoutes.get('/', authorizeRole(['admin']), getAllUsers);
 
-// export default userRoutes;
+// userRoutes.post('/', authorizeRole(['user', 'admin']), getAllUsers);
+
+export default userRoutes;

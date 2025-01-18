@@ -59,13 +59,13 @@ const processStats = (data: string) => {
 		const highscores = lines.slice(0, skills.length).map((line, index) => {
 			const [rank, level, experience] = line.split(',');
 			const parsedRank = parseInt(rank, 10);
-            const parsedExperience = parseInt(experience, 10);
+			const parsedExperience = parseInt(experience, 10);
 			return {
-                skill: skills[index],
-                rank: parsedRank < 1 ? '0' : parsedRank,
-                level: parseInt(level, 10),
-                experience: parsedExperience < 1 ? '0' : parsedExperience,
-            };
+				skill: skills[index],
+				rank: parsedRank < 1 ? '0' : parsedRank,
+				level: parseInt(level, 10),
+				experience: parsedExperience < 1 ? '0' : parsedExperience,
+			};
 		});
 		return highscores;
 	} catch (error) {

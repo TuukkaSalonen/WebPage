@@ -4,6 +4,7 @@ import { up as upGeneral, down as downGeneral } from './migrations/init';
 
 const db = knex(config);
 
+// Check if the database connection is successful and return the connection
 export const initializeDb = async (retries = 5, delay = 2000): Promise<any> => {
     for (let i = 0; i < retries; i++) {
         try {
@@ -22,6 +23,7 @@ export const initializeDb = async (retries = 5, delay = 2000): Promise<any> => {
     }
 };
 
+// Create tables based on the migration files
 export async function createTables() {
 	console.log('Creating tables...');
 	try {
@@ -32,6 +34,7 @@ export async function createTables() {
 	}
 }
 
+// Delete tables based on the migration files
 export async function deleteTables() {
 	console.log('Deleting tables...');
 	try {
@@ -42,6 +45,7 @@ export async function deleteTables() {
 	}
 }
 
+// Check if the database connection is closed
 export async function isConnectionClosed(): Promise<boolean> {
 	try {
 		await db.raw('SELECT 1');
@@ -51,6 +55,7 @@ export async function isConnectionClosed(): Promise<boolean> {
 	}
 }
 
+// Close the database connection
 export async function closeConnection(knex: any) {
 	try {
 		await knex.destroy();

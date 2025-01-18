@@ -3,6 +3,7 @@ import db from '../dbConnection';
 const generalTable = 'app.general';
 const snakeTable = 'app.snake';
 
+// Select all records from general table
 export async function selectAll() {
     try {
         return await db(generalTable).select('*');
@@ -12,6 +13,7 @@ export async function selectAll() {
     }
 }
 
+// Increment visitor count
 export async function incrementVisitor() {
     try {
         await db(generalTable)
@@ -24,6 +26,7 @@ export async function incrementVisitor() {
     }
 }
 
+// Select visitor count
 export async function selectVisitors() {
     try {
         return await db(generalTable).select('data').where('name', 'visitors').first();
@@ -33,6 +36,7 @@ export async function selectVisitors() {
     }
 }
 
+// Get top 10 scores from snake table
 export async function getTopScores() {
     try {
         return await db(snakeTable).select('*').orderBy('score', 'desc').limit(10);
@@ -42,6 +46,7 @@ export async function getTopScores() {
     }
 }
 
+// Set score in snake table
 export async function setScore(name: string, score: number) {
     try {
         const [insertedRecord] = await db(snakeTable)

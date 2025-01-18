@@ -16,10 +16,20 @@ import { Stats } from './components/Projects/Stats.jsx';
 import { Notification } from './components/Notification.jsx';
 import { useLocation } from 'react-router-dom';
 import { metaData } from './components/constants/metaConstants.ts';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import { Unauthorized } from './components/Unauthorized.jsx';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { checkLogin } from './redux/actionCreators/thunks/login.ts';
 
 const App = ({ visitorCount }) => {
 	const location = useLocation();
-	const { title, description } = metaData[location.pathname];
+	const dispatch = useDispatch();
+	const { title, description } = metaData[location.pathname] || metaData.default;
+
+	useEffect(() => {
+		dispatch(checkLogin());
+	}, [dispatch]);
 
 	return (
 		<div className="App">
@@ -32,8 +42,6 @@ const App = ({ visitorCount }) => {
 				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 			</Helmet>
 			<Navbar visitorCount={visitorCount} />
-			{/* Some other bar under navbar that contains notifications 
-			and login/logout/user details buttons etc. when implemented*/}
 			<div className="main-content">
 				<Notification />
 				<Routes>
@@ -42,7 +50,17 @@ const App = ({ visitorCount }) => {
 					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/projects/rs" element={<Stats />}></Route>
 					<Route path="/login" element={<Login />}></Route>
-					<Route path="/register" element={<Register />}></Route>
+
+					{/*TODO: EXAMPLE! REMOVE */}
+					<Route 
+						path="/register"
+						element={
+							<ProtectedRoute roles={['admin']}>
+								<Register />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path="/unauthorized" element={<Unauthorized />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>

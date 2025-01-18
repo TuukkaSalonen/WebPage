@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import { setScore, getTopScores } from '../../db/queries/general';
 import { validateSnakeScore } from '../utils/validator';
+import { CustomRequest } from '../middleware/user';
 
 // Get snake leaderboard from database
 export const getSnakeLeaderboard = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const cookies = req.cookies;
-		console.log(cookies);
 		const response = await getTopScores();
 		res.status(200).json({ status: 200, message: response });
 	} catch (error) {
@@ -15,12 +14,12 @@ export const getSnakeLeaderboard = async (req: Request, res: Response): Promise<
 };
 
 // Post snake score to database
-export const postSnakeScore = async (req: Request, res: Response): Promise<void> => {
+export const postSnakeScore = async (req: CustomRequest, res: Response): Promise<void> => {
 	try {
 		const { score } = req.body;
-		const user = req.cookies.user ? JSON.parse(req.cookies.user) : { name: 'Guest' };
-		if (validateSnakeScore(user.name, score)) {
-			const scoreObject = await setScore(user.name, score);
+		const user = req.user;
+		if (validateSnakeScore(user.username, score)) {
+			const scoreObject = await setScore(user.username, score);
 			res.status(200).json({ status: 200, message: scoreObject });
 		} else {
 			res.status(400).json({ status: 400, message: 'Bad request' });

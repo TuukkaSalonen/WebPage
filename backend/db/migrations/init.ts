@@ -29,6 +29,20 @@ export async function up(knex: Knex): Promise<void> {
 				table.timestamps(true, true);
 			});
 		}
+
+		await knex.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
+
+		const userTableExists = await knex.schema.withSchema('app').hasTable('user');
+		if (!userTableExists) {
+			await knex.schema.withSchema('app').createTable('user', (table) => {
+				table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
+				table.string('username').unique();
+				table.string('password');
+				table.string('email').nullable();
+				table.enum('role', ['user', 'admin']).defaultTo('user');
+				table.timestamps(true, true);
+			});
+		}
 	} catch (error) {
 		console.error('Error running migration up:', error);
 		throw error; // Re-throw the error to ensure the migration fails
@@ -39,6 +53,7 @@ export async function down(knex: Knex): Promise<void> {
 	try {
 		await knex.schema.withSchema('app').dropTableIfExists('general');
 		await knex.schema.withSchema('app').dropTableIfExists('snake');
+		await knex.schema.withSchema('app').dropTableIfExists('user');
 	} catch (error) {
 		console.error('Error running migration down:', error);
 		throw error; // Re-throw the error to ensure the migration fails

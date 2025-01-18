@@ -18,7 +18,7 @@ const initialState: SnakeState = {
 	loading: false,
 	error: null,
 };
-
+// TODO: REMOVE UNUSED ACTIONS
 const snakeReducer = (state = initialState, action: any): SnakeState => {
 	switch (action.type) {
 		case ADD_SCORE:

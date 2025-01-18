@@ -1,6 +1,7 @@
 import { incrementVisitor, selectVisitors } from '../../db/queries/general';
 import { Request, Response } from 'express';
 
+// Get visitor count
 export const getVisitorCount = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -21,12 +22,14 @@ export const getVisitorCount = async (req: Request, res: Response): Promise<void
 	}
 };
 
+// Set visitor cookie to prevent visitor count increment on page refresh
 const setVisitorCookie = (req: Request, res: Response) => {
     if (!req.cookies.visitor) {
       res.cookie('visitor', 'true', { maxAge: 3600000, httpOnly: true, secure: true });
     }
 };
 
+// Check if visitor cookie is set
 const checkVisitorCookie = (req: Request, res: Response) => {
 	return req.cookies.visitor ? true : false;
 };

@@ -18,6 +18,7 @@ const initialState: ChatState = {
 	error: null,
 };
 
+// TODO: REMOVE UNUSED ACTIONS
 const chatReducer = (state = initialState, action: any): ChatState => {
 	switch (action.type) {
 		case ADD_MESSAGE:

@@ -4,9 +4,10 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import generalRoutes from './routes/generalRoutes';
 import cookieParser from 'cookie-parser';
-//import userRoutes from './routes/userRoutes';
-import setDefaultUser from './middleware/user';
+import loginRoutes from './routes/loginRoutes';
+import { /*setDefaultUser,*/ verifyToken } from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
+import userRoutes from './routes/userRoutes';
 
 export const app = express();
 
@@ -20,7 +21,9 @@ app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
 app.use(morgan('combined')); // Log HTTP requests
-app.use(setDefaultUser); // Set default user cookie
+//app.use(setDefaultUser); // Set default user cookie
+app.use(verifyToken); // Verify JWT token
 
 app.use('/api/general', generalRoutes);
-//app.use('/api/user', userRoutes);
+app.use('/api/login', loginRoutes);
+app.use('/api/user', userRoutes);

@@ -25,10 +25,8 @@ export const POST_SCORE_SUCCESS = 'POST_SCORE_SUCCESS';
 export const POST_SCORE_FAILURE = 'POST_SCORE_FAILURE';
 
 //Login actions (not yet implemented)
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const LOGOUT = 'LOGOUT';
+export const SET_AUTH = 'SET_AUTH';
+export const REMOVE_AUTH = 'REMOVE_AUTH';
 
 //Notification actions
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';

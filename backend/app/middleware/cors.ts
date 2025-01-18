@@ -1,6 +1,7 @@
 import rateLimit from 'express-rate-limit';
 
 const env = process.env;
+
 const frontendUrl =
 	env.ENV === 'production'
 		? `https://localhost:${env.FRONTEND_PORT_SSL}`

@@ -1,21 +1,45 @@
-import { SET_AUTH, REMOVE_AUTH } from '../actionConstants.ts';
+import { SET_AUTH, REMOVE_AUTH, UPDATE_USERNAME, UPDATE_EMAIL, LOGIN_LOADING } from '../actionConstants.ts';
 
 const initialState = {
 	isAuthenticated: false,
-	user: 'Guest',
+	id: null,
+	username: 'Guest',
+	email: null,
 	role: 'Guest',
+	loading: true
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any) => {
 	switch (action.type) {
+		case LOGIN_LOADING:
+			return {
+				...state,
+				loading: true,
+			};
 		case SET_AUTH:
 			return {
 				isAuthenticated: true,
-				user: action.payload.user,
+				id: action.payload.id,
+				username: action.payload.username,
+				email: action.payload.email,
 				role: action.payload.role,
+				loading: false
+			};
+		case UPDATE_USERNAME:
+			return {
+				...state,
+				username: action.payload.username,
+			};
+		case UPDATE_EMAIL:
+			return {
+				...state,
+				email: action.payload.email,
 			};
 		case REMOVE_AUTH:
-			return initialState;
+			return {
+				...initialState,
+				loading: false
+			};
 		default:
 			return state;
 	}

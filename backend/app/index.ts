@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import generalRoutes from './routes/generalRoutes';
 import cookieParser from 'cookie-parser';
 import loginRoutes from './routes/loginRoutes';
-import { /*setDefaultUser,*/ verifyToken } from './middleware/user';
+import { verifyToken } from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
 import userRoutes from './routes/userRoutes';
 
@@ -21,7 +21,6 @@ app.use(limiter); // Apply rate limiting
 app.use(cors(corsOptions)); // Enable CORS
 app.use(helmet()); // Apply security headers
 app.use(morgan('combined')); // Log HTTP requests
-//app.use(setDefaultUser); // Set default user cookie
 app.use(verifyToken); // Verify JWT token
 
 app.use('/api/general', generalRoutes);

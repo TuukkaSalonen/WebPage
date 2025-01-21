@@ -7,7 +7,7 @@ import { Details } from './components//Details.jsx';
 import { Projects } from './components/Projects/Projects.jsx';
 import { Login } from './components/Login.jsx';
 import { Register } from './components/Register.jsx';
-import { NotFound } from './components/NotFound.jsx';
+import { NotFound } from './components/SpecialRoutes/NotFound.jsx';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -16,11 +16,13 @@ import { Stats } from './components/Projects/Stats.jsx';
 import { Notification } from './components/Notification.jsx';
 import { useLocation } from 'react-router-dom';
 import { metaData } from './components/constants/metaConstants.ts';
-import ProtectedRoute from './components/ProtectedRoute.jsx';
-import { Unauthorized } from './components/Unauthorized.jsx';
+import ProtectedRoute from './components/SpecialRoutes/ProtectedRoute.jsx';
+import GuestRoute from './components/SpecialRoutes/GuestRoute.jsx';
+import { Profile } from './components/Profile.jsx';
+import { Unauthorized } from './components/SpecialRoutes/Unauthorized.jsx';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { checkLogin } from './redux/actionCreators/thunks/login.ts';
+import { getLogin } from './redux/actionCreators/thunks/login.ts';
 
 const App = ({ visitorCount }) => {
 	const location = useLocation();
@@ -28,7 +30,7 @@ const App = ({ visitorCount }) => {
 	const { title, description } = metaData[location.pathname] || metaData.default;
 
 	useEffect(() => {
-		dispatch(checkLogin());
+		dispatch(getLogin());
 	}, [dispatch]);
 
 	return (
@@ -49,17 +51,25 @@ const App = ({ visitorCount }) => {
 					<Route path="/projects" element={<Projects />}></Route>
 					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/projects/rs" element={<Stats />}></Route>
-					<Route path="/login" element={<Login />}></Route>
-					<Route path="/register" element={<Register />}></Route>
-					{/* TODO: EXAMPLE! REMOVE
-					<Route 
+					<Route path="/login" element=
+						{<GuestRoute>
+							<Login />
+						</GuestRoute>}>
+					</Route>
+					<Route
 						path="/register"
-						element={
-							<ProtectedRoute roles={['admin']}>
-								<Register />
-							</ProtectedRoute>
-						}
-					/> */}
+						element=
+						{<GuestRoute>
+							<Register />
+						</GuestRoute>}
+					></Route>
+					<Route
+						path="/profile"
+						element=
+						{<ProtectedRoute roles={['user', 'admin']}>
+							<Profile />
+						</ProtectedRoute>}
+					></Route>
 					<Route path="/unauthorized" element={<Unauthorized />}></Route>
 					<Route path="/" element={<Home />} />
 					<Route path="*" element={<NotFound />} />
@@ -67,18 +77,10 @@ const App = ({ visitorCount }) => {
 			</div>
 			<footer>
 				<div className="links">
-					<a
-						href="https://www.linkedin.com/in/tuukkasalonen/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a href="https://www.linkedin.com/in/tuukkasalonen/" target="_blank" rel="noopener noreferrer">
 						<FontAwesomeIcon icon={faLinkedin} size="2x" />
 					</a>
-					<a
-						href="https://www.github.com/TuukkaSalonen"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
+					<a href="https://www.github.com/TuukkaSalonen" target="_blank" rel="noopener noreferrer">
 						<FontAwesomeIcon icon={faGithub} size="2x" />
 					</a>
 					<a href="mailto:tuukkasalonen@outlook.com">

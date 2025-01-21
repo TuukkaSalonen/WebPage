@@ -1,11 +1,11 @@
 import { createNotification } from '../notificationActions.ts';
 import { Dispatch } from 'redux';
-import { jwtDecode } from 'jwt-decode';
 import { loginSuccess, logout } from '../loginActions.ts';
 
-const emailRegex = '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$';
+export const emailRegex = '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$';
 
-export const checkLogin = () => async (dispatch: Dispatch) => {
+export const getLogin = () => async (dispatch: Dispatch) => {
+
 	try {
 		const response = await fetch('/api/login/check', {
 			method: 'GET',
@@ -20,12 +20,22 @@ export const checkLogin = () => async (dispatch: Dispatch) => {
 				dispatch(logout());
 				return;
 			}
-			const decoded: { username: string; role: string } = jwtDecode(data.accessToken);
-			dispatch(loginSuccess({ user: decoded.username, role: decoded.role }));
+			const profileResponse = await fetch(`/api/login/profile`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+			});
+			const userData = await profileResponse.json();
+			if (profileResponse.ok && userData.message) {
+				dispatch(loginSuccess(userData.message));
+			}
 		} else {
 			dispatch(logout());
 		}
 	} catch (error) {
+		dispatch(logout()); // Clear user state even if server error
 		console.log('Login check error: ', error.message);
 	}
 };
@@ -45,16 +55,31 @@ export const postLogin = (username: string, password: string, navigate: Function
 		});
 		const data = await response.json();
 		if (response.ok) {
-			const decoded: { username: string; role: string } = jwtDecode(data.accessToken);
-			dispatch(loginSuccess({ user: decoded.username, role: decoded.role }));
-			dispatch(createNotification('login', `Welcome, ${decoded.username}!`, 'success'));
-			navigate(-1);
+			if (!data.accessToken) {
+				dispatch(logout());
+				return;
+			}
+			const profileResponse = await fetch(`/api/login/profile`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+			});
+			const userData = await profileResponse.json();
+			if (profileResponse.ok && userData.message) {
+				const user = userData.message;
+				dispatch(loginSuccess(user));
+				dispatch(createNotification('login', `Welcome, ${user.username}!`, 'success'));
+				navigate(-1);
+			}
 		} else {
-			console.log('Login fail: ', data.message);
 			dispatch(createNotification('login', `${data.message}`, 'error'));
+			dispatch(logout());
 		}
 	} catch (error) {
-		dispatch(createNotification('register', `Error during login: ${error.message}`, 'error'));
+		dispatch(logout()); // Clear user state even if server error
+		dispatch(createNotification('login', `Error during login: ${error.message}`, 'error'));
 	}
 };
 
@@ -102,7 +127,6 @@ export const postRegister =
 				dispatch(createNotification('register', 'Registration successful', 'success'));
 				navigate('/login');
 			} else {
-				console.log('Login fail: ', data.message);
 				recaptchaRef.current.reset();
 				dispatch(createNotification('register', `${data.message}`, 'error'));
 			}

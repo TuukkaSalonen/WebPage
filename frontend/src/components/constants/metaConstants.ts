@@ -27,6 +27,10 @@ export const metaData = {
 		title: 'Register | Tuukka Salonen',
 		description: 'Register to the site.',
 	},
+	'/profile': {
+		title: 'Profile | Tuukka Salonen',
+		description: 'View your profile.',
+	},
 	'/unauthorized': {
 		title: 'Unauthorized | Tuukka Salonen',
 		description: 'You are not authorized.',

@@ -8,15 +8,16 @@ import { useRef, useEffect, useCallback } from 'react';
 
 export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 	const loggedIn = useSelector((state) => state.auth.isAuthenticated);
-	const user = useSelector((state) => state.auth.user);
+	const user = useSelector((state) => state.auth.username);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const sidebarRef = useRef(null);
 
 	const handleLogout = () => {
-		dispatch(postLogout());
-		toggleSidebar();
-		navigate('/');
+		dispatch(postLogout()).then(() => {
+			navigate('/');
+			toggleSidebar();
+		});
 	};
 
 	const handleClickOutside = useCallback(
@@ -41,29 +42,33 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 		<div className={isOpen ? 'sidebar open' : 'sidebar'} ref={sidebarRef}>
 			<FontAwesomeIcon icon={faTimes} className="close-icon" onClick={toggleSidebar} />
 			<ul>
-				{loggedIn && (
-					<li>
-						<p>Logged in as: {user}</p>
-					</li>
-				)}
-				{!loggedIn && (
-					<li>
-						<Link to="/login" onClick={toggleSidebar}>
-							Login
-						</Link>
-					</li>
-				)}
-				{!loggedIn && (
-					<li>
-						<Link to="/register" onClick={toggleSidebar}>
-							Register
-						</Link>
-					</li>
-				)}
-				{loggedIn && (
-					<li>
-						<Link onClick={handleLogout}>Log out</Link>
-					</li>
+				{loggedIn ? (
+					<>
+						<li>
+							<p>Logged in as: {user}</p>
+						</li>
+						<li>
+							<Link to="/profile" onClick={toggleSidebar}>
+								Profile
+							</Link>
+						</li>
+						<li>
+							<Link onClick={handleLogout}>Log out</Link>
+						</li>
+					</>
+				) : (
+					<>
+						<li>
+							<Link to="/login" onClick={toggleSidebar}>
+								Login
+							</Link>
+						</li>
+						<li>
+							<Link to="/register" onClick={toggleSidebar}>
+								Register
+							</Link>
+						</li>
+					</>
 				)}
 			</ul>
 			<div className="site-info">

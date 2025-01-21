@@ -9,6 +9,7 @@ export const getSnakeLeaderboard = async (req: Request, res: Response): Promise<
 		const response = await getTopScores();
 		res.status(200).json({ status: 200, message: response });
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };
@@ -25,6 +26,7 @@ export const postSnakeScore = async (req: CustomRequest, res: Response): Promise
 			res.status(400).json({ status: 400, message: 'Bad request' });
 		}
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };

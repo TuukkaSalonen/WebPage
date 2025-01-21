@@ -1,4 +1,4 @@
-import './styling/Home.css';
+import '../styling/Home.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

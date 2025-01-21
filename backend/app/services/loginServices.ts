@@ -7,11 +7,11 @@ const expiration = env.COOKIE_EXPIRATION || '1h';
 const refreshExpiration = env.REFRESH_COOKIE_EXPIRATION || '7d';
 
 export const createTokens = (user: any) => {
-	const accessToken = jwt.sign({ username: user.username, role: user.role }, secret, {
+	const accessToken = jwt.sign({ id: user.id, role: user.role }, secret, {
 		expiresIn: expiration,
 	});
 
-	const refreshToken = jwt.sign({ username: user.username, role: user.role }, secret, {
+	const refreshToken = jwt.sign({ id: user.id, role: user.role }, secret, {
 		expiresIn: refreshExpiration,
 	});
 
@@ -30,15 +30,16 @@ export const verifyToken = (token: string) => {
 };
 
 export const verifyRecaptcha = async (token: string) => {
-	const response = await fetch(
-		`https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${token}`,
-		{
+	try {
+		const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${token}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-		}
-	);
-	const data = await response.json();
-	return data.success;
+		});
+		const data = await response.json();
+		return data.success;
+	} catch (error) {
+		return false;
+	}
 };

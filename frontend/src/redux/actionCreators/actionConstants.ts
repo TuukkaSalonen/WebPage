@@ -27,6 +27,9 @@ export const POST_SCORE_FAILURE = 'POST_SCORE_FAILURE';
 //Login actions (not yet implemented)
 export const SET_AUTH = 'SET_AUTH';
 export const REMOVE_AUTH = 'REMOVE_AUTH';
+export const UPDATE_USERNAME = 'UPDATE_USERNAME';
+export const UPDATE_EMAIL = 'UPDATE_EMAIL';
+export const LOGIN_LOADING = 'LOGIN_LOADING';
 
 //Notification actions
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';

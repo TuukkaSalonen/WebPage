@@ -7,8 +7,8 @@ export const getRsStats = async (username: string): Promise<Object> => {
 			},
 			credentials: 'include',
 		});
+		const data = await response.json();
 		if (!response.ok) {
-            const data = await response.json();
 			if (data.message) {
 				return data.message;
 			} else {
@@ -16,7 +16,6 @@ export const getRsStats = async (username: string): Promise<Object> => {
 			}
 		}
         else {
-            const data = await response.json();
             return data.message;
         }
 	} catch (error) {

@@ -29,6 +29,7 @@ export const getRsStats = async (req: Request, res: Response): Promise<void> => 
 		const response = { status: 200, message: processStats(apiResponse.message) };
 		res.status(200).json(response);
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };
@@ -48,6 +49,7 @@ const rsApiRequest = async (username: string): Promise<ApiResponse> => {
 			return { status: 200, message: data };
 		}
 	} catch (error) {
+		console.log(error);
 		throw new Error('Internal server error');
 	}
 };
@@ -69,6 +71,7 @@ const processStats = (data: string) => {
 		});
 		return highscores;
 	} catch (error) {
+		console.log(error);
 		throw new Error('Error processing stats');
 	}
 };

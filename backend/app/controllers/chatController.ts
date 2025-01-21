@@ -12,6 +12,7 @@ export const getChatResponse = async (req: Request, res: Response): Promise<void
 		const response = await generateAIResponse(message);
 		res.status(200).json({ message: response });
 	} catch (error) {
+		console.log(error);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };

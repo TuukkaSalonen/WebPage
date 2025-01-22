@@ -100,8 +100,8 @@
 .warning-text {
     color: #dc3545;
     font-size: 14px;
-    margin-top: -10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 0px;
 }
 
 .show-password-label {

@@ -19,6 +19,11 @@ export const updateLoginEmail = (email: string) => ({
 	payload: { email },
 });
 
+export const removeLoginEmail = () => ({
+	type: UPDATE_EMAIL,
+	payload: { email: null },
+});
+
 export const logout = () => ({
 	type: REMOVE_AUTH,
 });

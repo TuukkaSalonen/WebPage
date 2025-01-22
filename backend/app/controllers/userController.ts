@@ -8,6 +8,7 @@ import {
 	updateUsername,
 	getUserByUsername,
 	getUserPasswordById,
+	deleteUserEmail
 } from '../../db/queries/user';
 import { CustomRequest } from '../middleware/user';
 import bcrypt from 'bcryptjs';
@@ -166,6 +167,32 @@ export const updateUserRoleById = async (req: CustomRequest, res: Response): Pro
 			const updatedUser = await updateUserRole(userId, role);
 			if (updatedUser) {
 				res.status(200).json({ status: 200, message: 'Role updated' });
+			} else {
+				res.status(400).json({ status: 400, message: 'User not found' });
+			}
+		} else {
+			res.status(403).json({ status: 403, message: 'Access denied' });
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ status: 500, message: 'Internal server error' });
+	}
+};
+
+// Delete user email by id
+export const deleteUserEmailById = async (req: CustomRequest, res: Response): Promise<void> => {
+	try {
+		const userId = req.params.id;
+		const reqUser = req.user;
+
+		if (!validateId(userId)) {
+			res.status(400).json({ status: 400, message: 'Invalid request' });
+			return;
+		}
+		if (reqUser && (reqUser.id === req.params.id || reqUser.role === 'admin')) {
+			const updatedUser = await deleteUserEmail(userId);
+			if (updatedUser) {
+				res.status(200).json({ status: 200, message: 'Email deleted' });
 			} else {
 				res.status(400).json({ status: 400, message: 'User not found' });
 			}

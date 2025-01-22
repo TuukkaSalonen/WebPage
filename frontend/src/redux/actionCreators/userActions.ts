@@ -1,20 +1,7 @@
 import { Dispatch } from 'redux';
 import { createNotification } from './notificationActions.ts';
-import { /*fetchProfile,*/ putEmail, putPassword, putUsername } from './thunks/user.ts';
-import { updateLoginEmail, updateLoginUsername } from './loginActions.ts';
-
-// Not currently used
-
-// export const getProfile = (id: string) => async (dispatch: Dispatch) => {
-// 	try {
-// 		dispatch(createNotification('user', 'Fetching profile...', 'loading'));
-// 		const response = await fetchProfile(id);
-// 		dispatch(createNotification('user', 'Profile fetched successfully', 'success'));
-// 		return response;
-// 	} catch (error) {
-// 		dispatch(createNotification('snake', `Error fetching profile: ${error.message}`, 'error'));
-// 	}
-// };
+import { putEmail, putPassword, putUsername, deleteEmail } from './thunks/user.ts';
+import { removeLoginEmail, updateLoginEmail, updateLoginUsername } from './loginActions.ts';
 
 export const updateUsername = (id: string, username: string) => async (dispatch: Dispatch) => {
 	try {
@@ -50,3 +37,15 @@ export const updatePassword = (id: string, oldPassword: string, newPassword: str
 	}
 };
 
+export const removeEmail = (id: string) => async (dispatch: Dispatch): Promise<boolean> => {
+	try {
+		dispatch(createNotification('user', 'Deleting email...', 'loading'));
+		await deleteEmail(id);
+		dispatch(removeLoginEmail());
+		dispatch(createNotification('user', 'Email deleted successfully', 'success'));
+		return true;
+	} catch (error) {
+		dispatch(createNotification('user', `${error.message}`, 'error'));
+		return false;
+	}
+};

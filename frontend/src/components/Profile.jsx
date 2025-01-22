@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateUsername, updateEmail, updatePassword } from '../redux/actionCreators/userActions.ts';
+import { updateUsername, updateEmail, updatePassword, removeEmail } from '../redux/actionCreators/userActions.ts';
 import { validateUsername, validateEmail, validatePassword } from '../redux/actionCreators/validator.ts';
 import './styling/Profile.css';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextField, InputAdornment } from '@mui/material';
+import ConfirmationDialog from './ConfirmationDialog.jsx';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -31,6 +32,10 @@ export const Profile = () => {
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false);
 	const [showNewPassword, setShowNewPassword] = useState(false);
 	const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+	const [openConfirmEmailDeleteDialog, setOpenConfirmEmailDeleteDialog] = useState(false);
+	const [openConfirmEmailDialog, setOpenConfirmEmailDialog] = useState(false);
+	const [openConfirmPasswordDialog, setOpenConfirmPasswordDialog] = useState(false);
+	const [openConfirmUsernameDialog, setOpenConfirmUsernameDialog] = useState(false);
 
 	useEffect(() => {
 		if (!loading) {
@@ -41,6 +46,7 @@ export const Profile = () => {
 
 	const handleUsernameSubmit = (e) => {
 		e.preventDefault();
+		handleCloseConfirmUsernameDialog();
 		if (validateUsername(dispatch, username, newUsername, confirmNewUsername)) {
 			dispatch(updateUsername(userId, newUsername)).then(() => {
 				setIsEditingUsername(false);
@@ -50,6 +56,7 @@ export const Profile = () => {
 
 	const handleEmailSubmit = (e) => {
 		e.preventDefault();
+		handleCloseConfirmEmailDialog();
 		if (validateEmail(dispatch, email, newEmail)) {
 			dispatch(updateEmail(userId, newEmail)).then(() => {
 				setIsEditingEmail(false);
@@ -57,12 +64,16 @@ export const Profile = () => {
 		}
 	};
 
-	const handleEmailRemove = (e) => {
-		console.log('remove email');
+	const handleEmailRemove = () => {
+		handleCloseConfirmEmailDeleteDialog();
+		dispatch(removeEmail(userId)).then(() => {
+			setIsEditingEmail(false);
+		});
 	};
 
 	const handlePasswordSubmit = async (e) => {
 		e.preventDefault();
+		handleCloseConfirmPasswordDialog();
 		if (validatePassword(dispatch, currentPassword, newPassword, confirmNewPassword)) {
 			const success = await dispatch(updatePassword(userId, currentPassword, newPassword));
 			if (success) {
@@ -93,6 +104,41 @@ export const Profile = () => {
 		navigate(-1);
 	};
 
+	const handleOpenConfirmEmailDialog = (e) => {
+		e.preventDefault();
+		setOpenConfirmEmailDialog(true);
+	};
+
+	const handleCloseConfirmEmailDialog = () => {
+		setOpenConfirmEmailDialog(false);
+	};
+
+	const handleOpenConfirmEmailDeleteDialog = () => {
+		setOpenConfirmEmailDeleteDialog(true);
+	};
+
+	const handleCloseConfirmEmailDeleteDialog = () => {
+		setOpenConfirmEmailDeleteDialog(false);
+	};
+
+	const handleOpenConfirmUsernameDialog = (e) => {
+		e.preventDefault();
+		setOpenConfirmUsernameDialog(true);
+	};
+
+	const handleCloseConfirmUsernameDialog = () => {
+		setOpenConfirmUsernameDialog(false);
+	};
+
+	const handleOpenConfirmPasswordDialog = (e) => {
+		e.preventDefault();
+		setOpenConfirmPasswordDialog(true);
+	};
+
+	const handleCloseConfirmPasswordDialog = () => {
+		setOpenConfirmPasswordDialog(false);
+	};
+
 	return (
 		<div className="profile-container">
 			<button onClick={handleBackClick} className="snake-back-button">
@@ -102,7 +148,7 @@ export const Profile = () => {
 			<div className="profile-detail">
 				<h3>Username</h3>
 				{isEditingUsername ? (
-					<form onSubmit={handleUsernameSubmit} className="profile-form">
+					<form onSubmit={handleOpenConfirmUsernameDialog} className="profile-form">
 						<div className="form-group">
 							<TextField
 								type="text"
@@ -145,7 +191,7 @@ export const Profile = () => {
 			<div className="profile-detail">
 				<h3>Email</h3>
 				{isEditingEmail ? (
-					<form onSubmit={handleEmailSubmit} className="profile-form">
+					<form onSubmit={handleOpenConfirmEmailDialog} className="profile-form">
 						<div className="form-group">
 							<TextField
 								type="email"
@@ -160,7 +206,12 @@ export const Profile = () => {
 						<button type="submit" className="profile-button save-button">
 							Save
 						</button>
-						<button type="button" className="profile-button remove-button" onClick={handleEmailRemove}>
+						<button
+							type="button"
+							disabled={email === null}
+							className="profile-button remove-button"
+							onClick={handleOpenConfirmEmailDeleteDialog}
+						>
 							Remove email
 						</button>
 						<button type="button" className="profile-button cancel-button" onClick={handleCancelEmail}>
@@ -179,7 +230,7 @@ export const Profile = () => {
 			<div className="profile-detail">
 				<h3>Password</h3>
 				{isEditingPassword ? (
-					<form onSubmit={handlePasswordSubmit} className="profile-form">
+					<form onSubmit={handleOpenConfirmPasswordDialog} className="profile-form">
 						<div className="form-group">
 							<TextField
 								type={showCurrentPassword ? 'text' : 'password'}
@@ -194,7 +245,7 @@ export const Profile = () => {
 										endAdornment: (
 											<InputAdornment position="end">
 												<IconButton
-													aria-label={showCurrentPassword ? 'hide the password' : 'display the password'}
+													label={showCurrentPassword ? 'hide the password' : 'display the password'}
 													onClick={() => setShowCurrentPassword(!showCurrentPassword)}
 												>
 													{showCurrentPassword ? <VisibilityOff /> : <Visibility />}
@@ -219,7 +270,7 @@ export const Profile = () => {
 										endAdornment: (
 											<InputAdornment position="end">
 												<IconButton
-													aria-label={showNewPassword ? 'hide the password' : 'display the password'}
+													label={showNewPassword ? 'hide the password' : 'display the password'}
 													onClick={() => setShowNewPassword(!showNewPassword)}
 												>
 													{showNewPassword ? <VisibilityOff /> : <Visibility />}
@@ -244,7 +295,7 @@ export const Profile = () => {
 										endAdornment: (
 											<InputAdornment position="end">
 												<IconButton
-													aria-label={showConfirmNewPassword ? 'hide the password' : 'display the password'}
+													label={showConfirmNewPassword ? 'hide the password' : 'display the password'}
 													onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
 												>
 													{showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
@@ -255,9 +306,6 @@ export const Profile = () => {
 								}}
 							/>
 						</div>
-						{/* <label className="show-password-label">
-                            <input type="checkbox" id="showPassword" onChange={() => setShowPasswordInput(!showPasswordInput)} /> Show password input
-                        </label> */}
 						<button type="submit" className="profile-button save-button">
 							Save
 						</button>
@@ -268,11 +316,39 @@ export const Profile = () => {
 				) : (
 					<div className="password-update-container">
 						<button type="button" className="profile-button" onClick={() => setIsEditingPassword(true)}>
-							Update Password
+							Update
 						</button>
 					</div>
 				)}
 			</div>
+			<ConfirmationDialog
+				open={openConfirmEmailDeleteDialog}
+				onClose={handleCloseConfirmEmailDeleteDialog}
+				onConfirm={handleEmailRemove}
+				title="Confirm Email Removal"
+				description="Are you sure you want to remove your email?"
+			/>
+			<ConfirmationDialog
+				open={openConfirmEmailDialog}
+				onClose={handleCloseConfirmEmailDialog}
+				onConfirm={handleEmailSubmit}
+				title="Confirm Email change"
+				description="Are you sure you want to change your email?"
+			/>
+			<ConfirmationDialog
+				open={openConfirmPasswordDialog}
+				onClose={handleCloseConfirmPasswordDialog}
+				onConfirm={handlePasswordSubmit}
+				title="Confirm Password Change"
+				description="Are you sure you want to change your password?"
+			/>
+			<ConfirmationDialog
+				open={openConfirmUsernameDialog}
+				onClose={handleCloseConfirmUsernameDialog}
+				onConfirm={handleUsernameSubmit}
+				title="Confirm Username Change"
+				description="Are you sure you want to change your username? You will login with your new username."
+			/>
 		</div>
 	);
 };

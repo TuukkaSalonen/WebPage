@@ -102,3 +102,13 @@ export const updateUserRole = async (id: string, role: string) => {
 		throw new Error('Error updating user username');
 	}
 };
+
+// Set user email to null by id
+export const deleteUserEmail = async (id: string) => {
+	try {
+		return await db(userTable).where('id', id).update({ email: null }).returning(['id']);
+	} catch (error) {
+		console.error('Error deleting user email:', error);
+		throw new Error('Error deleting user email');
+	}
+};

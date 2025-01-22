@@ -23,7 +23,7 @@ export const validateUsername = (dispatch: Dispatch, username: string, newUserna
 };
 
 export const validateEmail = (dispatch: Dispatch, email: string, newEmail: string): boolean => {
-	if (!email || email.trim().length < 1) {
+	if (!newEmail || newEmail.trim().length < 1) {
 		dispatch(createNotification('profile', 'Email is required!', 'error'));
 		return false;
 	}

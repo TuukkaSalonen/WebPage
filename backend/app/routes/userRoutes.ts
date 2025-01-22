@@ -1,5 +1,13 @@
 import express from 'express';
-import { getAllUsers, updateUserEmailById, updateUserPasswordById, updateUsernameById, updateUserRoleById, getUserById } from '../controllers/userController';
+import {
+	getAllUsers,
+	updateUserEmailById,
+	updateUserPasswordById,
+	updateUsernameById,
+	updateUserRoleById,
+	getUserById,
+	deleteUserEmailById,
+} from '../controllers/userController';
 import { authorizeRole } from '../middleware/user';
 
 const userRoutes = express.Router({ mergeParams: true });
@@ -11,5 +19,7 @@ userRoutes.put('/:id/email', authorizeRole(['user', 'admin']), updateUserEmailBy
 userRoutes.put('/:id/username', authorizeRole(['user', 'admin']), updateUsernameById);
 userRoutes.put('/:id/password', authorizeRole(['user', 'admin']), updateUserPasswordById);
 userRoutes.put('/:id/role', authorizeRole(['admin']), updateUserRoleById);
+
+userRoutes.delete('/:id/email', authorizeRole(['user', 'admin']), deleteUserEmailById);
 
 export default userRoutes;

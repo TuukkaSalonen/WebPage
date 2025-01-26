@@ -38,10 +38,25 @@ export async function up(knex: Knex): Promise<void> {
 				table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
 				table.string('username').unique();
 				table.string('password');
-				table.string('email').nullable();
+				table.string('email').unique().nullable();
 				table.enum('role', ['user', 'admin']).defaultTo('user');
 				table.timestamps(true, true);
 			});
+		}
+
+		const tokenTableExists = await knex.schema.withSchema('app').hasTable('refresh_token');
+		if (!tokenTableExists) {
+			await knex.schema.withSchema('app').createTable('refresh_token', (table) => {
+				table.increments('id').primary();
+				table.string('token').unique().notNullable();
+				table.uuid('user_id').notNullable().references('id').inTable('app.user').onDelete('CASCADE');
+				table.timestamp('expires_at').notNullable();
+				table.boolean('is_revoked').defaultTo(false);
+				table.timestamp('created_at').defaultTo(knex.fn.now());
+			});
+			await knex.raw('CREATE INDEX idx_user ON refresh_token(user_id)');
+			await knex.raw('CREATE INDEX idx_expires ON refresh_token(expires_at)');
+			await knex.raw('CREATE INDEX idx_token ON refresh_token(token)');
 		}
 	} catch (error) {
 		console.error('Error running migration up:', error);

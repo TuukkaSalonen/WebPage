@@ -5,7 +5,6 @@ import { loginSuccess, logout } from '../loginActions.ts';
 export const emailRegex = '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$';
 
 export const getLogin = () => async (dispatch: Dispatch) => {
-
 	try {
 		const response = await fetch('/api/login/check', {
 			method: 'GET',
@@ -30,6 +29,8 @@ export const getLogin = () => async (dispatch: Dispatch) => {
 			const userData = await profileResponse.json();
 			if (profileResponse.ok && userData.message) {
 				dispatch(loginSuccess(userData.message));
+			} else {
+				dispatch(logout());
 			}
 		} else {
 			dispatch(logout());

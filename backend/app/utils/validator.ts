@@ -60,9 +60,11 @@ export const validateLoginCredentials = (username: string, password: string): bo
 	}
 	return false;
 };
+
+// Validate register credentials with minimum password length of 6 and optional email
 export const validateRegisterCredentials = (username: string, password: string, email: string): boolean => {
 	if (validateLoginCredentials(username, password)) {
-		if (!validateEmail(email)) {
+		if (email && !validateEmail(email)) {
 			return false;
 		}
 		return true;

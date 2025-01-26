@@ -94,3 +94,26 @@ export const deleteEmail = async (id: string): Promise<void> => {
 		throw new Error(error.message);
 	}
 };
+
+export const deleteUser = async (id: string): Promise<void> => {
+	try {
+		const response = await fetch(`/api/user/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			credentials: 'include',
+		});
+		const data = await response.json();
+		if (data.message) {
+			if (!response.ok) {
+				throw new Error(data.message);
+			}
+		} else {
+			throw new Error('No message in response');
+		}
+	} catch (error) {
+		console.error('There was a problem with fetch operation:', error);
+		throw new Error(error.message);
+	}
+};

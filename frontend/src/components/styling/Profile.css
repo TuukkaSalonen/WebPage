@@ -88,8 +88,13 @@
     background-color: #5db851;
 }
 
+.delete-button {
+    margin: 5px;
+    background-color: #550000;
+}
+
 .cancel-button:hover {
-    background-color: #c82333;
+    background-color: #550000;
 }
 
 .password-update-container {

@@ -7,6 +7,7 @@ import {
 	updateUserRoleById,
 	getUserById,
 	deleteUserEmailById,
+	deleteUserById,
 } from '../controllers/userController';
 import { authorizeRole } from '../middleware/user';
 
@@ -21,5 +22,6 @@ userRoutes.put('/:id/password', authorizeRole(['user', 'admin']), updateUserPass
 userRoutes.put('/:id/role', authorizeRole(['admin']), updateUserRoleById);
 
 userRoutes.delete('/:id/email', authorizeRole(['user', 'admin']), deleteUserEmailById);
+userRoutes.delete('/:id', authorizeRole(['user', 'admin']), deleteUserById);
 
 export default userRoutes;

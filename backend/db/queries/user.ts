@@ -12,6 +12,16 @@ export async function getUserByUsername(username: string) {
 	}
 }
 
+// Get user by email. Case insensitive.
+export async function getUserByEmail(email: string) {
+	try {
+		return await db(userTable).select('id').whereRaw('LOWER(email) = ?', [email.toLowerCase()]).first();
+	} catch (error) {
+		console.error('Error selecting all records:', error);
+		throw new Error('Error selecting all records');
+	}
+}
+
 // Get user by id excluding password
 export async function getUser(id: string) {
 	try {
@@ -110,5 +120,16 @@ export const deleteUserEmail = async (id: string) => {
 	} catch (error) {
 		console.error('Error deleting user email:', error);
 		throw new Error('Error deleting user email');
+	}
+};
+
+// Delete user by id
+export const deleteUser = async (id: string) => {
+	try {
+		return await db(userTable).where('id', id).del();
+	}
+	catch (error) {
+		console.error('Error deleting user:', error);
+		throw new Error('Error deleting user');
 	}
 };

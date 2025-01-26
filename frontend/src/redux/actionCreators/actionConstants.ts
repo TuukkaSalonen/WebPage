@@ -1,10 +1,6 @@
 // Constants for action types for redux reducers
-
-//Chat Actions
-export const ADD_MESSAGE = 'ADD_MESSAGE';
-export const FETCH_MESSAGE_REQUEST = 'FETCH_MESSAGE_REQUEST';
-export const FETCH_MESSAGE_SUCCESS = 'FETCH_MESSAGE_SUCCESS';
-export const FETCH_MESSAGE_FAILURE = 'FETCH_MESSAGE_FAILURE';
+export const ADMIN_ROLE = 'admin';
+export const USER_ROLE = 'user';
 
 export interface Message {
 	text: string;
@@ -15,6 +11,12 @@ export interface Stats {
 	name: string;
 	stats: [];
 }
+
+//Chat Actions
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const FETCH_MESSAGE_REQUEST = 'FETCH_MESSAGE_REQUEST';
+export const FETCH_MESSAGE_SUCCESS = 'FETCH_MESSAGE_SUCCESS';
+export const FETCH_MESSAGE_FAILURE = 'FETCH_MESSAGE_FAILURE';
 
 //Snake Actions
 export const ADD_SCORE = 'ADD_SCORE';

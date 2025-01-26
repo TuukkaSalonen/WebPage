@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateUsername, updateEmail, updatePassword, removeEmail } from '../redux/actionCreators/userActions.ts';
+import { updateUsername, updateEmail, updatePassword, removeEmail, removeUser } from '../redux/actionCreators/userActions.ts';
 import { validateUsername, validateEmail, validatePassword } from '../redux/actionCreators/validator.ts';
 import './styling/Profile.css';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -36,6 +36,7 @@ export const Profile = () => {
 	const [openConfirmEmailDialog, setOpenConfirmEmailDialog] = useState(false);
 	const [openConfirmPasswordDialog, setOpenConfirmPasswordDialog] = useState(false);
 	const [openConfirmUsernameDialog, setOpenConfirmUsernameDialog] = useState(false);
+	const [openConfirmUserDeleteDialog, setOpenConfirmUserDeleteDialog] = useState(false);
 
 	useEffect(() => {
 		if (!loading) {
@@ -80,6 +81,13 @@ export const Profile = () => {
 				handleCancelPassword();
 			}
 		}
+	};
+
+	const handleUserDeleteSubmit = () => {
+		handleCloseConfirmUserDeleteDialog();
+		dispatch(removeUser(userId)).then(() => {
+			navigate('/');
+		});
 	};
 
 	const handleCancelUsername = () => {
@@ -137,6 +145,15 @@ export const Profile = () => {
 
 	const handleCloseConfirmPasswordDialog = () => {
 		setOpenConfirmPasswordDialog(false);
+	};
+
+	const handleOpenConfirmUserDeleteDialog = (e) => {
+		e.preventDefault();
+		setOpenConfirmUserDeleteDialog(true);
+	};
+
+	const handleCloseConfirmUserDeleteDialog = () => {
+		setOpenConfirmUserDeleteDialog(false);
 	};
 
 	return (
@@ -320,6 +337,12 @@ export const Profile = () => {
 						</button>
 					</div>
 				)}
+				<div className="profile-detail">
+					<h3>Delete account</h3>
+					<button type="button" className='profile-button delete-button' onClick={handleOpenConfirmUserDeleteDialog}>
+						Delete
+					</button>
+				</div>
 			</div>
 			<ConfirmationDialog
 				open={openConfirmEmailDeleteDialog}
@@ -348,6 +371,13 @@ export const Profile = () => {
 				onConfirm={handleUsernameSubmit}
 				title="Confirm Username Change"
 				description="Are you sure you want to change your username? You will login with your new username."
+			/>
+			<ConfirmationDialog
+				open={openConfirmUserDeleteDialog}
+				onClose={handleCloseConfirmUserDeleteDialog}
+				onConfirm={handleUserDeleteSubmit}
+				title="Confirm User Deletion"
+				description="Are you sure you want to delete your account? Your user data will be deleted."
 			/>
 		</div>
 	);

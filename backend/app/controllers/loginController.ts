@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { validateLoginCredentials, validateRegisterCredentials } from '../utils/validator';
-import { createUser, getUserByUsername } from '../../db/queries/user';
+import { createUser, getUserByUsername, getUserByEmail } from '../../db/queries/user';
+import { revokeRefreshToken } from '../../db/queries/token';
 import bcrypt from 'bcryptjs';
-import { createTokens, verifyToken, verifyRecaptcha } from '../services/loginServices';
+import { createTokens, verifyToken, verifyRecaptcha, verifyRefreshToken } from '../services/loginServices';
 import { getUser } from '../../db/queries/user';
 import { CustomRequest } from '../middleware/user';
 
@@ -17,7 +18,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 		if (validateLoginCredentials(username, password)) {
 			const user = await getUserByUsername(username);
 			if (user && (await bcrypt.compare(password, user.password))) {
-				const { accessToken, refreshToken } = createTokens(user);
+				const { accessToken, refreshToken } = await createTokens(user);
 				res.cookie(cookie, accessToken, {
 					httpOnly: true,
 					secure: isProduction,
@@ -47,6 +48,10 @@ export const logOut = async (req: Request, res: Response): Promise<void> => {
 	try {
 		res.clearCookie(cookie);
 		res.clearCookie('refresh_token');
+		const refreshToken = req.cookies['refresh_token'];
+		if (refreshToken) {
+			await revokeRefreshToken(refreshToken);
+		}
 		res.status(200).json({ status: 200, message: 'Logout successful' });
 	} catch (error) {
 		console.log(error);
@@ -75,9 +80,9 @@ export const checkAndRefreshLogin = async (req: Request, res: Response): Promise
 			}
 		}
 		if (refreshToken) {
-			const user = await verifyToken(refreshToken);
+			const user = await verifyRefreshToken(refreshToken);
 			if (user) {
-				const { accessToken, refreshToken: newRefreshToken } = createTokens(user);
+				const { accessToken, refreshToken: newRefreshToken } = await createTokens(user);
 				res.cookie(cookie, accessToken, {
 					httpOnly: true,
 					secure: isProduction,
@@ -111,9 +116,14 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 		}
 		if (validateRegisterCredentials(username, password, email)) {
 			const hashedPassword = await bcrypt.hash(password, parseInt(saltRounds));
-			const existingUser = await getUserByUsername(username);
-			if (existingUser) {
-				res.status(409).json({ status: 409, message: 'User already exists' });
+			const existingUsername = await getUserByUsername(username);
+			if (existingUsername) {
+				res.status(409).json({ status: 409, message: 'Username already in use' });
+				return;
+			}
+			const existingEmail = await getUserByEmail(email);
+			if (existingEmail) {
+				res.status(409).json({ status: 409, message: 'Email already in use' });
 				return;
 			}
 			const user = await createUser(username, hashedPassword, email);

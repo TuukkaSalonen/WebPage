@@ -7,9 +7,17 @@ import cookieParser from 'cookie-parser';
 import loginRoutes from './routes/loginRoutes';
 import { verifyToken } from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
+import { clearExpiredRefreshTokens } from '../db/queries/token';
 import userRoutes from './routes/userRoutes';
+import schedule from 'node-schedule';
 
 export const app = express();
+
+// Clear expired refresh tokens every day at midnight
+schedule.scheduleJob('0 0 * * *', async () => {
+	console.log('Clearing expired refresh tokens');
+	await clearExpiredRefreshTokens();
+});
 
 // Trust the first proxy
 app.set('trust proxy', 1);

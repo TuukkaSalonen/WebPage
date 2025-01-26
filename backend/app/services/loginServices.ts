@@ -1,4 +1,6 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { getRefreshToken, insertRefreshToken } from '../../db/queries/token';
+import { getUser } from '../../db/queries/user';
 
 const env = process.env;
 const secret = env.JWT_SECRET || 'secret';
@@ -6,18 +8,25 @@ const recaptchaSecret = env.RECAPTCHA_SECRET_KEY || 'recaptchaSecret';
 const expiration = env.COOKIE_EXPIRATION || '1h';
 const refreshExpiration = env.REFRESH_COOKIE_EXPIRATION || '7d';
 
-export const createTokens = (user: any) => {
-	const accessToken = jwt.sign({ id: user.id, role: user.role }, secret, {
-		expiresIn: expiration,
-	});
+// Create token and refresh token
+export const createTokens = async (user: any): Promise<any> => {
+	try {
+		const accessToken = jwt.sign({ id: user.id, role: user.role }, secret, {
+			expiresIn: expiration,
+		});
 
-	const refreshToken = jwt.sign({ id: user.id, role: user.role }, secret, {
-		expiresIn: refreshExpiration,
-	});
-
-	return { accessToken, refreshToken };
+		const refreshToken = jwt.sign({ id: user.id, role: user.role }, secret, {
+			expiresIn: refreshExpiration,
+		});
+		await insertRefreshToken(user.id, refreshToken);
+		return { accessToken, refreshToken };
+	} catch (error) {
+		console.error('Error creating tokens:', error);
+		throw new Error('Error creating tokens');
+	}
 };
 
+// Verify token
 export const verifyToken = (token: string) => {
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, secret, (err, user) => {
@@ -27,6 +36,26 @@ export const verifyToken = (token: string) => {
 			resolve(user);
 		});
 	});
+};
+
+// Verify refresh token and check database for validity
+export const verifyRefreshToken = async (refreshToken: string): Promise<any | null> => {
+	try {
+		const decoded = jwt.verify(refreshToken, secret) as JwtPayload;
+
+		const tokenRecord = await getRefreshToken(refreshToken);
+		if (!tokenRecord || tokenRecord.is_revoked) {
+			return null;
+		}
+		const user = await getUser(decoded.id);
+		if (user) {
+			return null;
+		}
+		return user;
+	} catch (error) {
+		console.error('Refresh token verification failed:', error);
+		return null;
+	}
 };
 
 export const verifyRecaptcha = async (token: string) => {

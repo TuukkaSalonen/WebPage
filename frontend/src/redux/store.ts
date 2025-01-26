@@ -10,7 +10,7 @@ import loginReducer from './actionCreators/reducers/loginReducer.ts';
 /*
     Reducers here
 */
-export const reducers = combineReducers({
+const reducers = combineReducers({
     chat: chatReducer,
     snake: snakeReducer,
     notification: notificationReducer,
@@ -19,5 +19,7 @@ export const reducers = combineReducers({
 });
 
 const store = legacy_createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
+
+export type RootState = ReturnType<typeof reducers>;
 
 export default store;

@@ -59,7 +59,7 @@ export const Register = () => {
 					<label htmlFor="register-email">Email*</label>
 					<TextField
 						id="register-email"
-						value={username}
+						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder="Enter email (optional)"
 						variant="outlined"

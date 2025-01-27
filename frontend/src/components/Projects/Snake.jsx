@@ -1,14 +1,8 @@
 import '../styling/Snake.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faArrowLeft,
-	faArrowUp,
-	faArrowRight,
-	faArrowDown,
-	faArrowCircleLeft,
-} from '@fortawesome/free-solid-svg-icons';
-
+import { faArrowLeft, faArrowUp, faArrowRight, faArrowDown, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useRef, useEffect } from 'react';
 import { fetchScores, sendScore } from '../../redux/actionCreators/snakeActions.ts';
@@ -17,6 +11,7 @@ export const Snake = () => {
 	const dispatch = useDispatch();
 	const leaderboard = useSelector((state) => state.snake.scores);
 	const loading = useSelector((state) => state.snake.loading);
+	const username = useSelector((state) => state.auth.username);
 	const [score, setScore] = useState(0);
 	const [highScore, setHighScore] = useState(0);
 
@@ -104,9 +99,7 @@ export const Snake = () => {
 		};
 
 		// Calling changeDirection on each key click and passing key dataset value as an object
-		controls.forEach((button) =>
-			button.addEventListener('click', () => changeDirection({ key: button.dataset.key }))
-		);
+		controls.forEach((button) => button.addEventListener('click', () => changeDirection({ key: button.dataset.key })));
 
 		const initGame = () => {
 			if (gameOverRef.current) return handleGameOver();
@@ -146,11 +139,7 @@ export const Snake = () => {
 				// Adding a div for each part of the snake's body
 				html += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
 				// Checking if the snake head hit the body, if so set gameOver to true
-				if (
-					i !== 0 &&
-					snakeBody[0][1] === snakeBody[i][1] &&
-					snakeBody[0][0] === snakeBody[i][0]
-				) {
+				if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
 					gameOverRef.current = true;
 				}
 			}
@@ -213,7 +202,9 @@ export const Snake = () => {
 					</div>
 					<ul>
 						{loading ? (
-							<li className="scorePlaceholder">Loading...</li>
+							<div className="loading-container">
+								<CircularProgress />
+							</div>
 						) : leaderboard && leaderboard.length === 0 ? (
 							<li className="scorePlaceholder">No scores yet!</li>
 						) : (
@@ -226,6 +217,7 @@ export const Snake = () => {
 							))
 						)}
 					</ul>
+					<p>Playing as: {username}</p>
 				</div>
 			</div>
 		</div>

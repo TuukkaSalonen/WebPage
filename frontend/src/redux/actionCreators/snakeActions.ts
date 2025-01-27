@@ -50,12 +50,10 @@ export const sendScore = (score: number) => async (dispatch: Dispatch) => {
 };
 
 export const fetchScores = () => async (dispatch: Dispatch) => {
-	dispatch(createNotification('snake', 'Fetching scores...', 'loading'));
 	dispatch(fetchScoreRequest());
 	try {
 		const scores = await getSnakeLeaderboard();
 		dispatch(fetchScoresSuccess(scores));
-		dispatch(createNotification('snake', 'Scores fetched successfully', 'success'));
 	} catch (error) {
 		dispatch(fetchScoresFailure(error.message));
 		dispatch(createNotification('snake', `Error fetching scores: ${error.message}`, 'error'));

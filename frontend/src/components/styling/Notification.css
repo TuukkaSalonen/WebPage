@@ -37,6 +37,10 @@
     color: #007bff;
 }
 
+.notification-circular {
+    margin-left: 0.5rem;
+}
+
 .notification-success {
     border-color: #28a745;
     background-color: #e6f4ea;

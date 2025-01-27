@@ -44,7 +44,7 @@ export const getLogin = () => async (dispatch: Dispatch) => {
 export const postLogin = (username: string, password: string, navigate: Function) => async (dispatch: Dispatch) => {
 	const valid = await checkLoginInput(username, password)(dispatch);
 	if (!valid) return;
-	dispatch(createNotification('login', `Logging in...`, 'loading'));
+	dispatch(createNotification('login', `Logging in`, 'loading'));
 	try {
 		const response = await fetch('/api/login', {
 			method: 'POST',
@@ -85,6 +85,7 @@ export const postLogin = (username: string, password: string, navigate: Function
 };
 
 export const postLogout = () => async (dispatch: Dispatch) => {
+	dispatch(createNotification('logout', 'Logging out', 'loading'));
 	try {
 		const response = await fetch('/api/login/logout', {
 			method: 'POST',
@@ -140,27 +141,27 @@ export const postRegister =
 const checkRegisterInput =
 	(username: string, password: string, confirmPassword: string, email: string, recaptchaToken: string) => async (dispatch: Dispatch) => {
 		if (!username || !password || !confirmPassword) {
-			dispatch(createNotification('register', 'Please enter required fields', 'error'));
+			dispatch(createNotification('register', 'Please enter the required fields!', 'error'));
 			return false;
 		}
 		if (confirmPassword !== password) {
-			dispatch(createNotification('register', 'Passwords do not match', 'error'));
+			dispatch(createNotification('register', 'Passwords do not match!', 'error'));
 			return false;
 		}
 		if (password.length < 6) {
-			dispatch(createNotification('register', 'Password is not long enough (< 6 characters)', 'error'));
+			dispatch(createNotification('register', 'Password is not long enough! (< 6 characters)', 'error'));
 			return false;
 		}
 		if (username.length > 20) {
-			dispatch(createNotification('register', 'Username is too long (> 20 characters)', 'error'));
+			dispatch(createNotification('register', 'Username is too long! (> 20 characters)', 'error'));
 			return false;
 		}
 		if (email && !email.match(emailRegex)) {
-			dispatch(createNotification('register', 'Invalid email', 'error'));
+			dispatch(createNotification('register', 'Invalid email!', 'error'));
 			return false;
 		}
 		if (!recaptchaToken) {
-			dispatch(createNotification('register', 'Please complete the reCAPTCHA', 'error'));
+			dispatch(createNotification('register', 'Please complete the reCAPTCHA!', 'error'));
 			return false;
 		}
 		return true;
@@ -168,11 +169,11 @@ const checkRegisterInput =
 
 const checkLoginInput = (username: string, password: string) => async (dispatch: Dispatch) => {
 	if (!username || !password) {
-		dispatch(createNotification('login', 'Please enter required fields', 'error'));
+		dispatch(createNotification('login', 'Please enter the required fields!', 'error'));
 		return false;
 	}
 	if (password.length < 6) {
-		dispatch(createNotification('register', 'Password is not long enough (< 6 characters)', 'error'));
+		dispatch(createNotification('register', 'Password is not long enough! (< 6 characters)', 'error'));
 		return false;
 	}
 	return true;

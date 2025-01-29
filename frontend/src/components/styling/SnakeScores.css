@@ -1,0 +1,126 @@
+.snake-scores-container {
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border: 1px solid #ddd;
+	max-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+	color: #333;
+}
+
+.snake-scores-container h2 {
+	margin-bottom: 30px;
+}
+
+.user-scores-loading-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.content-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.statistics-container,
+.scores-container {
+	flex: 1;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.statistics-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.statistics-container h4,
+.scores-container h4 {
+	font-weight: bold;
+	text-decoration: underline;
+	margin: 0px 10px 20px 10px;
+}
+
+.statistics-container p {
+	margin: 5px 0;
+}
+
+.statistics {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+}
+
+.statistics-item {
+	margin: 10px;
+}
+
+.statistics-item p:first-child {
+    font-weight: bold;
+}
+
+.table-container {
+	display: flex;
+	flex-direction: column;
+	max-height: 400px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.scores-list {
+	list-style: none;
+	padding: 0;
+}
+
+.score-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.score-item:nth-child(odd) {
+	background-color: #f1f1f1;
+}
+
+.score-rank {
+	font-weight: bold;
+}
+
+.score-username {
+	flex: 1;
+	text-align: left;
+	margin-left: 10px;
+}
+
+.score-value {
+	font-weight: bold;
+	color: #007bff;
+}
+
+@media screen and (max-width: 550px) {
+	.content-container {
+		flex-direction: column;
+	}
+
+	.statistics-container {
+		text-align: center;
+	}
+
+	.table-container {
+		max-height: 600px;
+	}
+}

@@ -2,11 +2,9 @@ const usernameRegex = /^[a-zA-Z0-9]+$/;
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 // Validate snake score to have a valid user and score
-export const validateSnakeScore = (user: string, score: number): boolean => {
-	if (validateUsername(user)) {
-		if (typeof score === 'number' && score >= 0 && score <= 9999) {
-			return true;
-		}
+export const validateSnakeScore = (score: number): boolean => {
+	if (typeof score === 'number' && score >= 0 && score <= 9999) {
+		return true;
 	}
 	return false;
 };

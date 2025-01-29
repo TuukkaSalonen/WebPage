@@ -10,9 +10,6 @@ generalRoutes.get('/visitor', getVisitorCount);
 
 generalRoutes.post('/chat', getChatResponse);
 
-generalRoutes.get('/snake', getSnakeLeaderboard);
-generalRoutes.post('/snake', postSnakeScore);
-
 generalRoutes.get('/rs/:username', getRsStats);
 
 export default generalRoutes;

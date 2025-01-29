@@ -32,3 +32,5 @@ export const skills = [
 	{ name: 'Archaeology', imageUrl: '/images/skills/Archaeology.png' },
 	{ name: 'Necromancy', imageUrl: '/images/skills/Necromancy.png' },
 ];
+
+export const Guest = 'Guest';

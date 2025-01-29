@@ -7,7 +7,7 @@ import {
 	POST_SCORE_FAILURE,
 	POST_SCORE_SUCCESS,
 } from './actionConstants.ts';
-import { getSnakeLeaderboard, postSnakeScore } from './thunks/snake.ts';
+import { getSnakeLeaderboard, postSnakeScore, getUserSnakeScores } from './thunks/snake.ts';
 import { createNotification } from './notificationActions.ts';
 
 export const addScore = (scoreObject: Object) => ({
@@ -57,5 +57,15 @@ export const fetchScores = () => async (dispatch: Dispatch) => {
 	} catch (error) {
 		dispatch(fetchScoresFailure(error.message));
 		dispatch(createNotification('snake', `Error fetching scores: ${error.message}`, 'error'));
+	}
+};
+
+export const fetchUserScores = (userId: string) => async (dispatch: Dispatch): Promise<any> => {
+	try {
+		const scores = await getUserSnakeScores(userId);
+		return scores;
+	} catch (error) {
+		dispatch(createNotification('snake', `Error fetching scores: ${error.message}`, 'error'));
+		return [];
 	}
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { updateUsername, updateEmail, updatePassword, removeEmail, removeUser } from '../redux/actionCreators/userActions.ts';
 import { validateUsername, validateEmail, validatePassword } from '../redux/actionCreators/validator.ts';
 import './styling/Profile.css';
@@ -158,9 +158,9 @@ export const Profile = () => {
 
 	return (
 		<div className="profile-container">
-			<button onClick={handleBackClick} className="snake-back-button">
+			<Link onClick={handleBackClick} className="login-back-button"> 
 				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
-			</button>
+			</Link>
 			<h2>Edit Profile</h2>
 			<div className="profile-detail">
 				<h3>Username</h3>

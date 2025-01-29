@@ -31,6 +31,10 @@ export const metaData = {
 		title: 'Profile | Tuukka Salonen',
 		description: 'View your profile.',
 	},
+	'/scores': {
+		title: 'Scores | Tuukka Salonen',
+		description: 'View your snake scores.',
+	},
 	'/unauthorized': {
 		title: 'Unauthorized | Tuukka Salonen',
 		description: 'You are not authorized.',

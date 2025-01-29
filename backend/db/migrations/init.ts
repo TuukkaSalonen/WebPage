@@ -24,6 +24,7 @@ export async function up(knex: Knex): Promise<void> {
 		if (!snakeTableExists) {
 			await knex.schema.withSchema('app').createTable('snake', (table) => {
 				table.increments('id').primary();
+				table.uuid('user_id').nullable().references('id').inTable('app.user').onDelete('CASCADE');
 				table.string('name');
 				table.integer('score');
 				table.timestamps(true, true);

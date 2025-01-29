@@ -9,6 +9,7 @@ import { verifyToken } from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
 import { clearExpiredRefreshTokens } from '../db/queries/token';
 import userRoutes from './routes/userRoutes';
+import snakeRoutes from './routes/snakeRoutes';
 import schedule from 'node-schedule';
 
 export const app = express();
@@ -32,5 +33,6 @@ app.use(morgan('combined')); // Log HTTP requests
 app.use(verifyToken); // Verify JWT token
 
 app.use('/api/general', generalRoutes);
+app.use('/api/snake', snakeRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/user', userRoutes);

@@ -121,10 +121,12 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 				res.status(409).json({ status: 409, message: 'Username already in use' });
 				return;
 			}
-			const existingEmail = await getUserByEmail(email);
-			if (existingEmail) {
-				res.status(409).json({ status: 409, message: 'Email already in use' });
-				return;
+			if (email) {
+				const existingEmail = await getUserByEmail(email);
+				if (existingEmail) {
+					res.status(409).json({ status: 409, message: 'Email already in use' });
+					return;
+				}
 			}
 			const user = await createUser(username, hashedPassword, email);
 			res.status(200).json({ status: 200, message: 'User created', user });

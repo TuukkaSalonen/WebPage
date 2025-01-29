@@ -8,7 +8,7 @@
 	color: white;
 	padding: 20px;
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-	z-index: 1000;
+	z-index: 2000;
 	overflow-y: auto;
 	transition: left 0.3s ease-in-out; /* Smooth slide animation */
 }

@@ -23,6 +23,7 @@ import { Unauthorized } from './components/SpecialRoutes/Unauthorized.jsx';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getLogin } from './redux/actionCreators/thunks/login.ts';
+import SnakeScores from './components/SnakeScores.jsx';
 
 const App = ({ visitorCount }) => {
 	const location = useLocation();
@@ -51,24 +52,37 @@ const App = ({ visitorCount }) => {
 					<Route path="/projects" element={<Projects />}></Route>
 					<Route path="/projects/snake" element={<Snake />}></Route>
 					<Route path="/projects/rs" element={<Stats />}></Route>
-					<Route path="/login" element=
-						{<GuestRoute>
-							<Login />
-						</GuestRoute>}>
-					</Route>
+					<Route
+						path="/login"
+						element={
+							<GuestRoute>
+								<Login />
+							</GuestRoute>
+						}
+					></Route>
 					<Route
 						path="/register"
-						element=
-						{<GuestRoute>
-							<Register />
-						</GuestRoute>}
+						element={
+							<GuestRoute>
+								<Register />
+							</GuestRoute>
+						}
 					></Route>
 					<Route
 						path="/profile"
-						element=
-						{<ProtectedRoute roles={['user', 'admin']}>
-							<Profile />
-						</ProtectedRoute>}
+						element={
+							<ProtectedRoute roles={['user', 'admin']}>
+								<Profile />
+							</ProtectedRoute>
+						}
+					></Route>
+					<Route
+						path="/scores"
+						element={
+							<ProtectedRoute roles={['user', 'admin']}>
+								<SnakeScores />
+							</ProtectedRoute>
+						}
 					></Route>
 					<Route path="/unauthorized" element={<Unauthorized />}></Route>
 					<Route path="/" element={<Home />} />

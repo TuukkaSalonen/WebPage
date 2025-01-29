@@ -162,7 +162,7 @@ export const Snake = () => {
 			document.removeEventListener('keyup', changeDirection);
 			window.removeEventListener('keydown', preventArrowScroll);
 		};
-	}, [dispatch]);
+	}, [dispatch, username]);
 
 	return (
 		<div className="snake-container">
@@ -200,23 +200,25 @@ export const Snake = () => {
 						<span>Name</span>
 						<span>Score</span>
 					</div>
-					<ul>
-						{loading ? (
-							<div className="loading-container">
-								<CircularProgress />
-							</div>
-						) : leaderboard && leaderboard.length === 0 ? (
+					{loading ? (
+						<div className="loading-container">
+							<CircularProgress />
+						</div>
+					) : leaderboard && leaderboard.length === 0 ? (
+						<ul>
 							<li className="scorePlaceholder">No scores yet!</li>
-						) : (
-							leaderboard.map((entry, index) => (
+						</ul>
+					) : (
+						<ul>
+							{leaderboard.map((entry, index) => (
 								<li key={index}>
 									<span>{index + 1}.</span>
 									<span>{entry.name}</span>
 									<span>{entry.score}</span>
 								</li>
-							))
-						)}
-					</ul>
+							))}
+						</ul>
+					)}
 					<p>Playing as: {username}</p>
 				</div>
 			</div>

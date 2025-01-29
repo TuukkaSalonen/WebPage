@@ -12,6 +12,27 @@ export async function getUserByUsername(username: string) {
 	}
 }
 
+// Get user password by id. Only used in backend for authentication check.
+export async function getUserPasswordById(id: string) {
+	try {
+		const user = await db(userTable).select('password').where('id', id).first();
+		return user.password;
+	} catch (error) {
+		console.error('Error selecting all records:', error);
+		throw new Error('Error selecting all records');
+	}
+}
+
+// Get user by id excluding password
+export async function getUser(id: string) {
+	try {
+		return await db(userTable).select('id', 'username', 'email', 'created_at').where('id', id).first();
+	} catch (error) {
+		console.error('Error selecting all records:', error);
+		throw new Error('Error selecting all records');
+	}
+}
+
 // Get user by email. Case insensitive.
 export async function getUserByEmail(email: string) {
 	try {
@@ -22,31 +43,10 @@ export async function getUserByEmail(email: string) {
 	}
 }
 
-// Get user by id excluding password
-export async function getUser(id: string) {
-	try {
-		return await db(userTable).select('id', 'username', 'email', 'role').where('id', id).first();
-	} catch (error) {
-		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
-	}
-}
-
 // Get all users
 export async function getUsers() {
 	try {
-		return await db(userTable).select('id', 'username', 'email', 'role');
-	} catch (error) {
-		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
-	}
-}
-
-// Get user password by id. Only used in backend for authentication check.
-export async function getUserPasswordById(id: string) {
-	try {
-		const user = await db(userTable).select('password').where('id', id).first();
-		return user.password;
+		return await db(userTable).select('id', 'username', 'email', 'role', 'created_at', 'updated_at');
 	} catch (error) {
 		console.error('Error selecting all records:', error);
 		throw new Error('Error selecting all records');

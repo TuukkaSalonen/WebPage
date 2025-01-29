@@ -1,6 +1,6 @@
 import { createNotification } from '../notificationActions.ts';
 import { Dispatch } from 'redux';
-import { loginSuccess, logout } from '../loginActions.ts';
+import { loginLoading, loginSuccess, logout } from '../loginActions.ts';
 
 export const emailRegex = '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$';
 
@@ -42,6 +42,7 @@ export const getLogin = () => async (dispatch: Dispatch) => {
 };
 
 export const postLogin = (username: string, password: string, navigate: Function) => async (dispatch: Dispatch) => {
+	dispatch(loginLoading());
 	const valid = await checkLoginInput(username, password)(dispatch);
 	if (!valid) return;
 	dispatch(createNotification('login', `Logging in`, 'loading'));
@@ -85,6 +86,7 @@ export const postLogin = (username: string, password: string, navigate: Function
 };
 
 export const postLogout = () => async (dispatch: Dispatch) => {
+	dispatch(loginLoading());
 	dispatch(createNotification('logout', 'Logging out', 'loading'));
 	try {
 		const response = await fetch('/api/login/logout', {
@@ -115,6 +117,7 @@ export const postRegister =
 			recaptchaRef.current.reset();
 			return;
 		}
+		dispatch(createNotification('register', `Registering`, 'loading'));
 		try {
 			const response = await fetch('/api/login/register', {
 				method: 'POST',

@@ -48,7 +48,7 @@ export const verifyRefreshToken = async (refreshToken: string): Promise<any | nu
 			return null;
 		}
 		const user = await getUser(decoded.id);
-		if (user) {
+		if (!user) {
 			return null;
 		}
 		return user;

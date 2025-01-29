@@ -53,6 +53,11 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 							</Link>
 						</li>
 						<li>
+							<Link to="/scores" onClick={toggleSidebar}>
+								Snake scores
+							</Link>
+						</li>
+						<li>
 							<Link onClick={handleLogout}>Log out</Link>
 						</li>
 					</>
@@ -73,7 +78,7 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 			</ul>
 			<div className="site-info">
 				<p>Visitor count: {visitorCount}</p>
-				<p>Last update: 26.1.2025</p>
+				<p>Last update: 30.1.2025</p>
 			</div>
 		</div>
 	);

@@ -114,20 +114,10 @@ export const Stats = () => {
 						}
 					}}
 				/>
-				<Button
-					className="search-button"
-					variant="contained"
-					sx={{ margin: '10px' }}
-					onClick={() => handleSend()}
-				>
+				<Button className="search-button" variant="contained" sx={{ margin: '10px' }} onClick={() => handleSend()}>
 					Search stats
 				</Button>
-				<ToggleButtonGroup
-					value={virtual ? 'virtual' : 'normal'}
-					exclusive
-					onChange={handleAlignment}
-					aria-label="text alignment"
-				>
+				<ToggleButtonGroup value={virtual ? 'virtual' : 'normal'} exclusive onChange={handleAlignment} aria-label="text alignment">
 					<ToggleButton value="normal" aria-label="left aligned">
 						<div>Normal levels</div>
 					</ToggleButton>
@@ -137,12 +127,7 @@ export const Stats = () => {
 				</ToggleButtonGroup>
 			</div>
 			<TableContainer component={Paper} className="table-container">
-				<Table
-					className="skill-table"
-					size="small"
-					sx={{ maxWidth: 900 }}
-					aria-label="simple table"
-				>
+				<Table className="skill-table" size="small" sx={{ maxWidth: 900 }} aria-label="simple table">
 					{stats.length > 0 && (
 						<TableHead>
 							<TableRow>
@@ -163,22 +148,12 @@ export const Stats = () => {
 						{updatedStats.map((skillrow, index) => (
 							<TableRow className="table-row" key={index}>
 								<TableCell component="th" scope="row">
-									<img
-										src={skillrow.skill.imageUrl}
-										alt={skillrow.skill.name}
-										className="skill-icon"
-									/>
+									<img src={skillrow.skill.imageUrl} alt={skillrow.skill.name} className="skill-icon" />
 									{skillrow.skill.name}
 								</TableCell>
-								<TableCell align="right">
-									{Number(skillrow.level).toLocaleString('en-US')}
-								</TableCell>
-								<TableCell align="right">
-									{Number(skillrow.experience).toLocaleString('en-US')}
-								</TableCell>
-								<TableCell align="right">
-									{Number(skillrow.rank).toLocaleString('en-US')}
-								</TableCell>
+								<TableCell align="right">{Number(skillrow.level).toLocaleString('en-US')}</TableCell>
+								<TableCell align="right">{Number(skillrow.experience).toLocaleString('en-US')}</TableCell>
+								<TableCell align="right">{Number(skillrow.rank).toLocaleString('en-US')}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

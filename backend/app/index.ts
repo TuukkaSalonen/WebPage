@@ -7,17 +7,23 @@ import cookieParser from 'cookie-parser';
 import loginRoutes from './routes/loginRoutes';
 import { verifyToken } from './middleware/user';
 import { corsOptions, limiter } from './middleware/cors';
-import { clearExpiredRefreshTokens } from '../db/queries/token';
+import { clearExpiredRefreshTokens, clearExpiredPasswordTokens } from '../db/queries/token';
 import userRoutes from './routes/userRoutes';
 import snakeRoutes from './routes/snakeRoutes';
+import resetRoutes from './routes/resetRoutes';
 import schedule from 'node-schedule';
 
 export const app = express();
 
 // Clear expired refresh tokens every day at midnight
 schedule.scheduleJob('0 0 * * *', async () => {
-	console.log('Clearing expired refresh tokens');
-	await clearExpiredRefreshTokens();
+	try {
+		console.log('Clearing expired tokens');
+		await clearExpiredRefreshTokens();
+		await clearExpiredPasswordTokens();
+	} catch (error) {
+		console.error('Error clearing expired tokens:', error);
+	}
 });
 
 // Trust the first proxy
@@ -36,3 +42,4 @@ app.use('/api/general', generalRoutes);
 app.use('/api/snake', snakeRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/reset', resetRoutes);

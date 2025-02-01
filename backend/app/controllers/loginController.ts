@@ -6,10 +6,10 @@ import bcrypt from 'bcryptjs';
 import { createTokens, verifyToken, verifyRecaptcha, verifyRefreshToken } from '../services/loginServices';
 import { getUser } from '../../db/queries/user';
 import { CustomRequest } from '../middleware/user';
+import { saltRounds } from '../utils/constants';
 
 const env = process.env;
 const cookie = env.COOKIE_NAME || 'token';
-const saltRounds = env.SALT_ROUNDS || '10';
 const isProduction = process.env.ENV === 'production';
 
 export const login = async (req: Request, res: Response): Promise<void> => {

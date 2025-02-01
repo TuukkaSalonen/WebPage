@@ -10,7 +10,7 @@ import {
 	getUserByUsername,
 	getUserPasswordById,
 	deleteUserEmail,
-	deleteUser
+	deleteUser,
 } from '../../db/queries/user';
 import { CustomRequest } from '../middleware/user';
 import bcrypt from 'bcryptjs';

@@ -39,7 +39,7 @@ export const Register = () => {
 
 	return (
 		<div className="register-container">
-			<Link onClick={handleBackClick} className="login-back-button"> 
+			<Link onClick={handleBackClick} className="login-back-button">
 				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
 			</Link>
 			<h2>Register</h2>
@@ -73,7 +73,7 @@ export const Register = () => {
 						type={showPassword ? 'text' : 'password'}
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						placeholder="Enter password (length > 6"
+						placeholder="Enter password (length > 6)"
 						variant="outlined"
 						fullWidth
 						slotProps={{
@@ -123,8 +123,7 @@ export const Register = () => {
 					Register
 				</button>
 			</form>
-			{/* TODO: Add password recovery */}
-			{/* <p>*Email is optional but if you want to recover the account, it is needed.</p> */}
+			<p>*Email is optional but for a possible password reset, it is required.</p>
 			<Link to="/login" className="login-link">
 				Registered already? Login
 			</Link>

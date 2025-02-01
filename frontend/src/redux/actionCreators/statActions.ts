@@ -24,7 +24,7 @@ export const getStats = (username: string) => async (dispatch: Dispatch) => {
 	}
 	if (username.length > 12) {
 		dispatch(createNotification('stats', 'Username is too long (max 12 characters)', 'error'));
-		return
+		return;
 	}
 	dispatch(createNotification('stats', 'Fetching stats', 'loading'));
 	try {

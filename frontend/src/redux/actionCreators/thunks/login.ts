@@ -99,13 +99,13 @@ export const postLogout = () => async (dispatch: Dispatch) => {
 		const data = await response.json();
 		if (response.ok) {
 			dispatch(logout());
-			dispatch(createNotification('logout', 'Logged out successfully', 'success'));
+			dispatch(createNotification('login', 'Logged out successfully', 'success'));
 		} else {
-			dispatch(createNotification('logout', `${data.message}`, 'error'));
+			dispatch(createNotification('login', `${data.message}`, 'error'));
 		}
 	} catch (error) {
 		dispatch(logout()); // Clear user state even if server error
-		dispatch(createNotification('logout', `Error during logout: ${error.message}`, 'error'));
+		dispatch(createNotification('login', `Error during logout: ${error.message}`, 'error'));
 	}
 };
 
@@ -176,7 +176,7 @@ const checkLoginInput = (username: string, password: string) => async (dispatch:
 		return false;
 	}
 	if (password.length < 6) {
-		dispatch(createNotification('register', 'Password is not long enough! (< 6 characters)', 'error'));
+		dispatch(createNotification('login', 'Password is not long enough! (< 6 characters)', 'error'));
 		return false;
 	}
 	return true;

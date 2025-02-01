@@ -58,6 +58,7 @@ export const verifyRefreshToken = async (refreshToken: string): Promise<any | nu
 	}
 };
 
+// Verify recaptcha token
 export const verifyRecaptcha = async (token: string) => {
 	try {
 		const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${token}`, {

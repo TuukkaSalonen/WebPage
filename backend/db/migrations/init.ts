@@ -59,6 +59,18 @@ export async function up(knex: Knex): Promise<void> {
 			await knex.raw('CREATE INDEX idx_expires ON refresh_token(expires_at)');
 			await knex.raw('CREATE INDEX idx_token ON refresh_token(token)');
 		}
+
+		const passwordResetTableExists = await knex.schema.withSchema('app').hasTable('password_reset');
+		if (!passwordResetTableExists) {
+			await knex.schema.withSchema('app').createTable('password_reset', (table) => {
+				table.increments('id').primary();
+				table.string('token').unique().notNullable();
+				table.uuid('user_id').notNullable().references('id').inTable('app.user').onDelete('CASCADE');
+				table.timestamp('expires_at').notNullable();
+				table.boolean('is_used').defaultTo(false);
+				table.timestamp('created_at').defaultTo(knex.fn.now());
+			});
+		}
 	} catch (error) {
 		console.error('Error running migration up:', error);
 		throw error; // Re-throw the error to ensure the migration fails

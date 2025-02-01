@@ -39,6 +39,14 @@ export const metaData = {
 		title: 'Unauthorized | Tuukka Salonen',
 		description: 'You are not authorized.',
 	},
+	'/forgot-password': {
+		title: 'Forgot password | Tuukka Salonen',
+		description: 'Get a password reset email.',
+	},
+	'/reset-password': {
+		title: 'Reset password | Tuukka Salonen',
+		description: 'Reset your password.',
+	},
   default: {
     title: 'Not Found | Tuukka Salonen',
     description: 'Page not found.',

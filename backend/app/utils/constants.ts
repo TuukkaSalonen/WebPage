@@ -34,3 +34,5 @@ export const skills = [
 ];
 
 export const Guest = 'Guest';
+
+export const saltRounds = process.env.SALT_ROUNDS || '10';

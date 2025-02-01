@@ -58,17 +58,17 @@ export const getUserSnakeScores = async (userId: string): Promise<[Object]> => {
 			},
 			credentials: 'include',
 		});
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
 		const data = await response.json();
 		if (data.message) {
-			return data.message;
+			if (response.ok) {
+				return data.message;
+			}
+			throw new Error(data.message);
 		} else {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
 		console.error('There was a problem with fetch operation:', error);
-		throw new Error('Internal server error');
+		throw new Error(error.message);
 	}
 };

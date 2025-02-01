@@ -15,7 +15,6 @@ import { Snake } from './components/Projects/Snake.jsx';
 import { Stats } from './components/Projects/Stats.jsx';
 import { Notification } from './components/Notification.jsx';
 import { useLocation } from 'react-router-dom';
-import { metaData } from './components/constants/metaConstants.ts';
 import ProtectedRoute from './components/SpecialRoutes/ProtectedRoute.jsx';
 import GuestRoute from './components/SpecialRoutes/GuestRoute.jsx';
 import { Profile } from './components/Profile.jsx';
@@ -24,11 +23,14 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getLogin } from './redux/actionCreators/thunks/login.ts';
 import SnakeScores from './components/SnakeScores.jsx';
+import ForgotPassword from './components/ForgotPassword.jsx';
+import { ResetPassword } from './components/ResetPassword.jsx';
+import { setMetaTags } from './components/constants/utils.ts';
 
 const App = ({ visitorCount }) => {
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const { title, description } = metaData[location.pathname] || metaData.default;
+	const { title, description } = setMetaTags(location.pathname);
 
 	useEffect(() => {
 		dispatch(getLogin());
@@ -65,6 +67,22 @@ const App = ({ visitorCount }) => {
 						element={
 							<GuestRoute>
 								<Register />
+							</GuestRoute>
+						}
+					></Route>
+					<Route
+						path="/forgot-password"
+						element={
+							<GuestRoute>
+								<ForgotPassword />
+							</GuestRoute>
+						}
+					></Route>
+					<Route
+						path="/reset-password/:token"
+						element={
+							<GuestRoute>
+								<ResetPassword />
 							</GuestRoute>
 						}
 					></Route>

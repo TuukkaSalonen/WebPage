@@ -12,6 +12,10 @@ services:
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
       - ENV=production
+      - FRONTEND_URL_PROD=https://tuukkasalonen.fi
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_HOST=${EMAIL_HOST}
     restart: always
     depends_on:
       - db

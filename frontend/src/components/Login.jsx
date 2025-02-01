@@ -77,6 +77,9 @@ export const Login = () => {
 			<Link to="/register" className="register-link">
 				Haven't registered yet? Register
 			</Link>
+			<Link to="/forgot-password" className="register-link">
+				Forgot your password?
+			</Link>
 		</div>
 	);
 };

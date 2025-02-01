@@ -26,7 +26,7 @@ export async function getUserPasswordById(id: string) {
 // Get user by id excluding password
 export async function getUser(id: string) {
 	try {
-		return await db(userTable).select('id', 'username', 'email', 'created_at').where('id', id).first();
+		return await db(userTable).select('id', 'username', 'email', 'created_at', 'role').where('id', id).first();
 	} catch (error) {
 		console.error('Error selecting all records:', error);
 		throw new Error('Error selecting all records');

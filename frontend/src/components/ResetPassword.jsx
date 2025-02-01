@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { TextField, Button, Container } from '@mui/material';
 import { validateResetToken, resetPassword } from '../redux/actionCreators/thunks/reset.ts';
 import { useDispatch } from 'react-redux';
-
-//import './styling/ResetPassword.css';
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './styling/ResetPassword.css';
 
 export const ResetPassword = () => {
     const { token } = useParams();
@@ -14,12 +15,9 @@ export const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
-        console.log("checking token");
         async function checkToken() {
-            console.log("check");
             const isValid = await dispatch(validateResetToken(token));
             if (!isValid) {
-                console.log(isValid);
                 navigate('/forgot-password');
             }
         }
@@ -33,9 +31,10 @@ export const ResetPassword = () => {
 
     return (
         <Container maxWidth="sm" className="reset-password-container">
-            <Typography variant="h4" component="h1" gutterBottom>
-                Reset Password
-            </Typography>
+            <Link to={'/login'} className="login-back-button"> 
+				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
+			</Link>
+            <h2>Reset Password</h2>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         label="New Password"

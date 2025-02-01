@@ -47,7 +47,7 @@ export const Snake = () => {
 
 		const handleGameOver = async () => {
 			clearInterval(intervalIdRef.current);
-			alert('Game Over! Press OK to replay...');
+			alert('Game Over! Your score is: ' + scoreRef.current);
 			dispatch(sendScore(scoreRef.current));
 			resetGame();
 		};

@@ -56,7 +56,7 @@ export const Register = () => {
 					/>
 				</div>
 				<div className="form-group">
-					<label htmlFor="register-email">Email*</label>
+					<label htmlFor="register-email">Email (optional*)</label>
 					<TextField
 						id="register-email"
 						value={email}
@@ -118,12 +118,14 @@ export const Register = () => {
 						}}
 					/>
 				</div>
-				<ReCAPTCHA ref={recaptchaRef} sitekey="6Lct0rsqAAAAAJYlt--4RL4fKaa2r_FDgKs8zs7R" onChange={handleRecaptchaChange} />
+				<div className="recaptcha-container">
+                    <ReCAPTCHA ref={recaptchaRef} sitekey="6Lct0rsqAAAAAJYlt--4RL4fKaa2r_FDgKs8zs7R" onChange={handleRecaptchaChange} />
+                </div>
 				<button type="submit" className="register-button">
 					Register
 				</button>
 			</form>
-			<p>*Email is optional but for a possible password reset, it is required.</p>
+			<p>*Email is is required to reset password if forgotten.</p>
 			<Link to="/login" className="login-link">
 				Registered already? Login
 			</Link>

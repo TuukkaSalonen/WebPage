@@ -87,7 +87,7 @@ export const postLogin = (username: string, password: string, navigate: Function
 
 export const postLogout = () => async (dispatch: Dispatch) => {
 	dispatch(loginLoading());
-	dispatch(createNotification('logout', 'Logging out', 'loading'));
+	dispatch(createNotification('login', 'Logging out', 'loading'));
 	try {
 		const response = await fetch('/api/login/logout', {
 			method: 'POST',

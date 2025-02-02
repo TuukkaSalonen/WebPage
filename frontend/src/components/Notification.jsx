@@ -10,27 +10,35 @@ export const Notification = () => {
 	const [visibleNotifications, setVisibleNotifications] = useState({});
 
 	useEffect(() => {
-		const timeoutIds = Object.keys(notifications).map((type) => {
-			setVisibleNotifications((prev) => ({
-				...prev,
-				[type]: true,
-			}));
+        const timeoutIds = Object.keys(notifications).map((type) => {
+            if (notifications[type].status === 'loading') {
+                setVisibleNotifications((prev) => ({
+                    ...prev,
+                    [type]: true,
+                }));
+                return null;
+            }
 
-			return setTimeout(() => {
-				setVisibleNotifications((prev) => ({
-					...prev,
-					[type]: false,
-				}));
-				setTimeout(() => {
-					dispatch(removeNotification(type));
-				}, 500);
-			}, 2500);
-		});
+            setVisibleNotifications((prev) => ({
+                ...prev,
+                [type]: true,
+            }));
 
-		return () => {
-			timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
-		};
-	}, [notifications, dispatch]);
+            return setTimeout(() => {
+                setVisibleNotifications((prev) => ({
+                    ...prev,
+                    [type]: false,
+                }));
+                setTimeout(() => {
+                    dispatch(removeNotification(type));
+                }, 500);
+            }, 2500);
+        }).filter(Boolean);
+
+        return () => {
+            timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
+        };
+    }, [notifications, dispatch]);
 
 	return (
 		<>

@@ -47,8 +47,8 @@ const App = ({ visitorCount }) => {
 				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 			</Helmet>
 			<Navbar visitorCount={visitorCount} />
+			<Notification />
 			<div className="main-content">
-				<Notification />
 				<Routes>
 					<Route path="/details" element={<Details />}></Route>
 					<Route path="/projects" element={<Projects />}></Route>

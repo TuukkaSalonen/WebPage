@@ -1,3 +1,4 @@
+// API request to send snake score
 export const postSnakeScore = async (score: number): Promise<Object> => {
 	try {
 		const response = await fetch('/api/snake', {
@@ -24,6 +25,7 @@ export const postSnakeScore = async (score: number): Promise<Object> => {
 	}
 };
 
+// API request to fetch snake leaderboard
 export const getSnakeLeaderboard = async (): Promise<[Object]> => {
 	try {
 		const response = await fetch('/api/snake', {
@@ -48,6 +50,7 @@ export const getSnakeLeaderboard = async (): Promise<[Object]> => {
 	}
 };
 
+// API request to fetch user snake scores
 export const getUserSnakeScores = async (userId: string): Promise<[Object]> => {
 	try {
 		const endpoint = userId ? `/api/snake/user/${userId}` : '/api/snake/user';

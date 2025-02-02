@@ -1,4 +1,4 @@
-import { ADD_STATS, TOGGLE_VIRTUAL, REMOVE_STATS } from '../actionConstants.ts';
+import { ADD_STATS, TOGGLE_VIRTUAL, REMOVE_STATS } from '../actionCreators/actionConstants.ts';
 
 interface StatState {
 	name: string;
@@ -12,6 +12,7 @@ const initialState: StatState = {
 	virtual: false,
 };
 
+// Reducer for rs stats
 const statReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_STATS:

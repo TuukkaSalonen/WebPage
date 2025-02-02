@@ -1,15 +1,13 @@
 import { legacy_createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { thunk } from 'redux-thunk';
-import chatReducer from './actionCreators/reducers/chatReducer.ts';
-import snakeReducer from './actionCreators/reducers/snakeReducer.ts';
-import notificationReducer from './actionCreators/reducers/notificationReducer.ts';
-import statReducer from './actionCreators/reducers/statReducer.ts';
-import loginReducer from './actionCreators/reducers/loginReducer.ts';
+import chatReducer from './reducers/chatReducer.ts';
+import snakeReducer from './reducers/snakeReducer.ts';
+import notificationReducer from './reducers/notificationReducer.ts';
+import statReducer from './reducers/statReducer.ts';
+import loginReducer from './reducers/loginReducer.ts';
 
-/*
-    Reducers here
-*/
+// Reducers for states
 const reducers = combineReducers({
     chat: chatReducer,
     snake: snakeReducer,

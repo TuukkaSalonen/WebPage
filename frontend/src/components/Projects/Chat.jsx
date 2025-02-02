@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '../../redux/actionCreators/chatActions.ts';
+import { sendMessage } from '../../redux/thunks/chat.ts';
 import '../styling/Chat.css';
 import CircularProgress from '@mui/material/CircularProgress';
 

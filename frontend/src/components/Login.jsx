@@ -3,7 +3,7 @@ import './styling/Login.css';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, Link } from 'react-router-dom';
-import { postLogin } from '../redux/actionCreators/thunks/login.ts';
+import { sendLogin } from '../redux/thunks/login.ts';
 import { useDispatch } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
@@ -23,7 +23,7 @@ export const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(postLogin(username, password, navigate));
+		dispatch(sendLogin(username, password, navigate));
 	};
 
 	return (

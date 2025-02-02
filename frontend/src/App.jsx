@@ -21,7 +21,7 @@ import { Profile } from './components/Profile.jsx';
 import { Unauthorized } from './components/SpecialRoutes/Unauthorized.jsx';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getLogin } from './redux/actionCreators/thunks/login.ts';
+import { checkLogin } from './redux/thunks/login.ts';
 import SnakeScores from './components/SnakeScores.jsx';
 import ForgotPassword from './components/ForgotPassword.jsx';
 import { ResetPassword } from './components/ResetPassword.jsx';
@@ -33,7 +33,7 @@ const App = ({ visitorCount }) => {
 	const { title, description } = setMetaTags(location.pathname);
 
 	useEffect(() => {
-		dispatch(getLogin());
+		dispatch(checkLogin());
 	}, [dispatch]);
 
 	return (

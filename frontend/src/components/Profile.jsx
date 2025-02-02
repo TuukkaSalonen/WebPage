@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { updateUsername, updateEmail, updatePassword, removeEmail, removeUser } from '../redux/actionCreators/userActions.ts';
-import { validateUsername, validateEmail, validatePassword } from '../redux/actionCreators/validator.ts';
-import './styling/Profile.css';
+import { updateUsername, updateEmail, updatePassword, removeEmail, removeUser } from '../redux/thunks/user.ts';
+import { validateUsername, validateEmail, validatePasswordUpdate } from '../redux/thunks/validator.ts';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextField, InputAdornment } from '@mui/material';
@@ -11,6 +10,7 @@ import ConfirmationDialog from './ConfirmationDialog.jsx';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import './styling/Profile.css';
 
 export const Profile = () => {
 	const dispatch = useDispatch();
@@ -75,7 +75,7 @@ export const Profile = () => {
 	const handlePasswordSubmit = async (e) => {
 		e.preventDefault();
 		handleCloseConfirmPasswordDialog();
-		if (validatePassword(dispatch, currentPassword, newPassword, confirmNewPassword)) {
+		if (validatePasswordUpdate(dispatch, currentPassword, newPassword, confirmNewPassword)) {
 			const success = await dispatch(updatePassword(userId, currentPassword, newPassword));
 			if (success) {
 				handleCancelPassword();
@@ -106,10 +106,6 @@ export const Profile = () => {
 		setNewPassword('');
 		setConfirmNewPassword('');
 		setIsEditingPassword(false);
-	};
-
-	const handleBackClick = () => {
-		navigate(-1);
 	};
 
 	const handleOpenConfirmEmailDialog = (e) => {
@@ -158,7 +154,7 @@ export const Profile = () => {
 
 	return (
 		<div className="profile-container">
-			<Link onClick={handleBackClick} className="login-back-button"> 
+			<Link to={'/'} className="login-back-button">
 				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
 			</Link>
 			<h2>Edit Profile</h2>
@@ -339,7 +335,7 @@ export const Profile = () => {
 				)}
 				<div className="profile-detail">
 					<h3>Delete account</h3>
-					<button type="button" className='profile-button delete-button' onClick={handleOpenConfirmUserDeleteDialog}>
+					<button type="button" className="profile-button delete-button" onClick={handleOpenConfirmUserDeleteDialog}>
 						Delete
 					</button>
 				</div>

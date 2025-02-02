@@ -1,4 +1,5 @@
-export const fetchChatRequest = async (message: string): Promise<string> => {
+// API request to post chatbot message
+export const postChatMessage = async (message: string): Promise<string> => {
 	try {
 		const response = await fetch('/api/general/chat', {
 			method: 'POST',

@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { resetPasswordEmail } from '../redux/actionCreators/thunks/reset.ts';
+import { resetPasswordEmail } from '../redux/thunks/reset.ts';
 import './styling/ForgotPassword.css';
 
 const ForgotPassword = () => {

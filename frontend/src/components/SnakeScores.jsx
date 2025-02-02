@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
-import { fetchUserScores } from '../redux/actionCreators/snakeActions.ts';
+import { Link } from 'react-router-dom';
+import { fetchUserScores } from '../redux/thunks/snake.ts';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDate } from './constants/utils.ts';
@@ -10,7 +10,6 @@ import './styling/SnakeScores.css';
 
 export const SnakeScores = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 	const username = useSelector((state) => state.auth.username);
 	const [scores, setScores] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -40,13 +39,9 @@ export const SnakeScores = () => {
 		fetchScores();
 	}, [dispatch]);
 
-	const handleBackClick = () => {
-		navigate(-1);
-	};
-
 	return (
 		<div className="snake-scores-container">
-			<Link onClick={handleBackClick} className="login-back-button">
+			<Link to={'/'} className="login-back-button">
 				<FontAwesomeIcon icon={faArrowCircleLeft} size="2x" />
 			</Link>
 			<h2>Your Snake Game Scores</h2>

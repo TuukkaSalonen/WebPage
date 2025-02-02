@@ -1,3 +1,4 @@
+// API request to update username
 export const putUsername = async (id: string, username: string): Promise<string> => {
 	try {
 		const response = await fetch(`/api/user/${id}/username`, {
@@ -23,6 +24,7 @@ export const putUsername = async (id: string, username: string): Promise<string>
 	}
 };
 
+// API request to update email
 export const putEmail = async (id: string, email: string): Promise<string> => {
 	try {
 		const response = await fetch(`/api/user/${id}/email`, {
@@ -48,6 +50,7 @@ export const putEmail = async (id: string, email: string): Promise<string> => {
 	}
 };
 
+// API request to update password
 export const putPassword = async (id: string, oldPassword: string, newPassword: string): Promise<void> => {
 	try {
 		const response = await fetch(`/api/user/${id}/password`, {
@@ -72,6 +75,7 @@ export const putPassword = async (id: string, oldPassword: string, newPassword: 
 	}
 };
 
+// API request to delete email
 export const deleteEmail = async (id: string): Promise<void> => {
 	try {
 		const response = await fetch(`/api/user/${id}/email`, {
@@ -95,6 +99,7 @@ export const deleteEmail = async (id: string): Promise<void> => {
 	}
 };
 
+// API request to delete user
 export const deleteUser = async (id: string): Promise<void> => {
 	try {
 		const response = await fetch(`/api/user/${id}`, {

@@ -14,7 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { toggleVirtual, getStats } from '../../redux/actionCreators/statActions.ts';
+import { toggleVirtual } from '../../redux/actionCreators/statActions.ts';
+import { fetchStats } from '../../redux/thunks/stats.ts';
 import { virtualLevels, eliteVirtualLevels } from '../constants/statConstants.ts';
 
 export const Stats = () => {
@@ -31,7 +32,7 @@ export const Stats = () => {
 	}, [name]);
 
 	const handleSend = () => {
-		dispatch(getStats(username));
+		dispatch(fetchStats(username));
 	};
 
 	const handleInputChange = (event) => {
@@ -126,7 +127,7 @@ export const Stats = () => {
 					</ToggleButton>
 				</ToggleButtonGroup>
 			</div>
-			<TableContainer component={Paper} className="table-container">
+			<TableContainer component={Paper}>
 				<Table className="skill-table" size="small" sx={{ maxWidth: 900 }} aria-label="simple table">
 					{stats.length > 0 && (
 						<TableHead>

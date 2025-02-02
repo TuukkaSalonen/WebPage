@@ -5,7 +5,7 @@ import {
 	FETCH_SCORES_SUCCESS,
 	POST_SCORE_FAILURE,
 	POST_SCORE_SUCCESS,
-} from '../actionConstants.ts';
+} from '../actionCreators/actionConstants.ts';
 
 interface SnakeState {
 	scores: number[];
@@ -19,7 +19,7 @@ const initialState: SnakeState = {
 	error: null,
 };
 
-// TODO: REMOVE UNUSED ACTIONS
+// Reducer for snake game
 const snakeReducer = (state = initialState, action: any): SnakeState => {
 	switch (action.type) {
 		case ADD_SCORE:
@@ -27,7 +27,6 @@ const snakeReducer = (state = initialState, action: any): SnakeState => {
 				...state,
 				scores: [...state.scores, action.payload].sort((a, b) => b.score - a.score).slice(0, 10),
 			};
-		// Doesnt do anything at the moment
 		case FETCH_SCORES_REQUEST:
 			return {
 				...state,
@@ -38,7 +37,7 @@ const snakeReducer = (state = initialState, action: any): SnakeState => {
 			return {
 				...state,
 				loading: false,
-				scores: action.payload.sort((a, b) => b.score - a.score)
+				scores: action.payload.sort((a, b) => b.score - a.score),
 			};
 		case FETCH_SCORES_FAILURE:
 			return {

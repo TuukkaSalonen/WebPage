@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import './styling/Sidebar.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { postLogout } from '../redux/actionCreators/thunks/login.ts';
+import { sendLogout } from '../redux/thunks/login.ts';
 import { useRef, useEffect, useCallback } from 'react';
 
 export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
@@ -14,7 +14,7 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 	const sidebarRef = useRef(null);
 
 	const handleLogout = () => {
-		dispatch(postLogout()).then(() => {
+		dispatch(sendLogout()).then(() => {
 			navigate('/');
 			toggleSidebar();
 		});

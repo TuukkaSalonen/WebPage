@@ -1,10 +1,5 @@
-import {
-	ADD_MESSAGE,
-	FETCH_MESSAGE_REQUEST,
-	FETCH_MESSAGE_SUCCESS,
-	FETCH_MESSAGE_FAILURE,
-} from '../actionConstants.ts';
-import { Message } from '../actionConstants.ts';
+import { ADD_MESSAGE, FETCH_MESSAGE_REQUEST, FETCH_MESSAGE_SUCCESS, FETCH_MESSAGE_FAILURE } from '../actionCreators/actionConstants.ts';
+import { Message } from '../interfaces.ts';
 
 interface ChatState {
 	messages: Message[];
@@ -18,7 +13,7 @@ const initialState: ChatState = {
 	error: null,
 };
 
-// TODO: REMOVE UNUSED ACTIONS
+// Chat reducer
 const chatReducer = (state = initialState, action: any): ChatState => {
 	switch (action.type) {
 		case ADD_MESSAGE:

@@ -1,4 +1,5 @@
-export const getRsStats = async (username: string): Promise<Object> => {
+// API request to fetch rs stats
+export const getStats = async (username: string): Promise<Object> => {
 	try {
 		const response = await fetch(`/api/general/rs/${username}`, {
 			method: 'GET',

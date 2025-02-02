@@ -5,7 +5,7 @@ import { faArrowLeft, faArrowUp, faArrowRight, faArrowDown, faArrowCircleLeft } 
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useRef, useEffect } from 'react';
-import { fetchScores, sendScore } from '../../redux/actionCreators/snakeActions.ts';
+import { fetchScores, sendScore } from '../../redux/thunks/snake.ts';
 
 export const Snake = () => {
 	const dispatch = useDispatch();

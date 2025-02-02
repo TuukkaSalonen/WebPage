@@ -1,5 +1,4 @@
-import { validatePasswords, validateEmail } from "../thunks/validator.ts";
-
+// API request to validate reset token
 export const postValidateResetToken = async (token: string): Promise<boolean> => {
     try {
         const response = await fetch(`/api/reset/validate/${token}`, {
@@ -15,10 +14,8 @@ export const postValidateResetToken = async (token: string): Promise<boolean> =>
     }
 }
 
+// API request to reset password with token
 export const postResetPassword = async (token: string, password: string, confirmPassword: string): Promise<any> => {
-    if (!validatePasswords(password, confirmPassword)) {
-        throw new Error('Passwords do not match or are too short!');
-    }
     try {
         const response = await fetch('/api/reset/password', {
             method: 'POST',
@@ -43,12 +40,9 @@ export const postResetPassword = async (token: string, password: string, confirm
     }
 }
 
+// API request to send reset password email
 export const postResetPasswordEmail = async (email: string) => {
 	try {
-		const valid = validateEmail(email);
-		if (!valid) {
-			throw new Error('Invalid email');
-		}
 		const response = await fetch('/api/reset/forgot', {
 			method: 'POST',
 			headers: {

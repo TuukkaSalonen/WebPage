@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { TextField, Button, Container } from '@mui/material';
-import { validateResetToken, resetPassword } from '../redux/actionCreators/thunks/reset.ts';
+import { validateResetToken, resetPassword } from '../redux/thunks/reset.ts';
 import { useDispatch } from 'react-redux';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

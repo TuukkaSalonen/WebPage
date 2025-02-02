@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import './styling/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconButton from '@mui/material/IconButton';
@@ -7,9 +6,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { TextField, InputAdornment } from '@mui/material';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { postRegister } from '../redux/actionCreators/thunks/login.ts';
+import { sendRegister } from '../redux/thunks/login.ts';
 import { useDispatch } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
+import './styling/Register.css';
 
 export const Register = () => {
 	const [username, setUsername] = useState('');
@@ -30,7 +30,7 @@ export const Register = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(postRegister(username, password, confirmPassword, email, recaptchaToken, recaptchaRef, navigate));
+		dispatch(sendRegister(username, password, confirmPassword, email, recaptchaToken, recaptchaRef, navigate));
 	};
 
 	const handleRecaptchaChange = (token) => {

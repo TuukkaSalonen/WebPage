@@ -74,10 +74,10 @@ export const Login = () => {
 					Login
 				</button>
 			</form>
-			<Link to="/register" className="register-link">
+			<Link to="/register" className="login-link">
 				Haven't registered yet? Register
 			</Link>
-			<Link to="/forgot-password" className="register-link">
+			<Link to="/forgot-password" className="login-link">
 				Forgot your password?
 			</Link>
 		</div>

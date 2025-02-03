@@ -46,12 +46,22 @@
     background-color: #004080;
   }
   
-  .register-link {
+  .login-link {
     display: block;
     text-align: center;
     margin-top: 10px;
     text-decoration: none;
+    color: #333;
+    transition: transform 0.1s, color 0.1s;
+    filter: none;
+    color: #004080;
   }
+
+  .login-link:hover {
+    font-weight: bold;
+    transform: scale(1.02);
+    color: #001f3f;
+}
 
   .login-back-button {
     display: inline-block;

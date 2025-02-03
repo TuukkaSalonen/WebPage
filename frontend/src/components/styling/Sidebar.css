@@ -28,6 +28,15 @@
 	text-align: center;
 }
 
+.sidebar ul.logged-in-links li:first-of-type {
+    margin-bottom: 50px;
+}
+
+.sidebar ul.logged-out-links li:first-of-type {
+    margin-top: 50px;
+}
+
+
 .sidebar ul li a {
 	color: white;
 	text-decoration: none;

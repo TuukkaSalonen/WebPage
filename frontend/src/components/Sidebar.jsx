@@ -41,7 +41,7 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 	return (
 		<div className={isOpen ? 'sidebar open' : 'sidebar'} ref={sidebarRef}>
 			<FontAwesomeIcon icon={faTimes} className="close-icon" onClick={toggleSidebar} />
-			<ul>
+			<ul className={loggedIn ?  'logged-in-links' : 'logged-out-links'}>
 				{loggedIn ? (
 					<>
 						<li>
@@ -78,7 +78,7 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 			</ul>
 			<div className="site-info">
 				<p>Visitor count: {visitorCount}</p>
-				<p>Last update: 30.1.2025</p>
+				<p>Last update: 3.2.2025</p>
 			</div>
 		</div>
 	);

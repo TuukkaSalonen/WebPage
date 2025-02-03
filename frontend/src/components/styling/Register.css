@@ -55,10 +55,3 @@
   .register-button:hover {
     background-color: #004080;
   }
-  
-  .login-link {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-    text-decoration: none;
-  }

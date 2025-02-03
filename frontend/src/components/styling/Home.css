@@ -1,64 +1,101 @@
 .home-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	background-color: #f0f0f0;
-	padding: 20px;
-	text-align: center;
-	opacity: 0;
-	transform: translateY(20px);
-	transition:
-		opacity 0.6s ease-out,
-		transform 0.6s ease-out;
-	color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.6s ease-out,
+        transform 0.6s ease-out;
+    color: #333;
 }
 
 .home-container.fade-in {
-	opacity: 1;
-	transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .home-container-text {
-	margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
 }
 
-.home-container-text h1 {
-	font-size: 2.5rem;
-	margin-bottom: 75px;
+.home-container h1 {
+    font-size: 2.5rem;
+    margin: 10px 0px 20px 0px;
+    color: #001f3f;
+}
+
+.site-news, .site-purpose, .site-about {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.site-news {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.site-purpose {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.site-about {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    margin-bottom: 20px;
+}
+
+.site-news h2, .site-purpose h2, .site-about h2{
+    font-size: 1.8rem;
+    color: #001f3f;
+    margin: 10px 0px 20px 0px;
+}
+
+.site-news .MuiList-root {
+    padding: 0;
+}
+
+.site-news .MuiListItem-root {
+    border-bottom: 1px solid #ddd;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+.site-news .MuiListItem-root:last-child {
+    border-bottom: none;
 }
 
 .home-container-text p {
-	font-size: 1.3rem;
-	color: #555;
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
-.home-container-social {
-	display: flex;
-	gap: 20px;
-}
+@media screen and (max-width: 700px) {
+    .home-container-text {
+        display: flex;
+        flex-direction: column;
+    }
 
-.home-container-social a {
-	color: #333;
-	transition: color 0.3s;
-}
+    .home-container-text h1 {
+        font-size: 2rem;
+    }
 
-.home-container-social a:hover {
-	color: #0073b1; /* LinkedIn color */
-}
-
-.home-container-social a:nth-child(2):hover {
-	color: #000000; /* GitHub color */
-}
-
-.home-container-social a:nth-child(3):hover {
-	color: #d44638; /* Email color */
-}
-
-@media screen and (max-width: 600px) {
-	.home-container {
-		padding: 10px;
-		height: auto; /* Adjust height to auto for smaller screens */
-	}
+    .MuiListItemText-primary {
+        text-align: center;
+    }
 }

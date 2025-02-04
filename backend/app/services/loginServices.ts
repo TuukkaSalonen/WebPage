@@ -1,7 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { getRefreshToken, insertRefreshToken } from '../../db/queries/token';
 import { getUser } from '../../db/queries/user';
-import { UserToken } from '../utils/constants';
 
 const env = process.env;
 const secret = env.JWT_SECRET || 'secret';
@@ -26,18 +25,6 @@ export const createTokens = async (user: any): Promise<any> => {
 		throw new Error('Error creating tokens');
 	}
 };
-
-// Verify token
-// export const verifyToken = (token: string) => {
-// 	return new Promise((resolve, reject) => {
-// 		jwt.verify(token, secret, (err, decoded) => {
-// 			if (err) {
-// 				reject(err);
-// 			}
-// 			resolve(decoded as UserToken);
-// 		});
-// 	});
-// };
 
 // Verify refresh token and check database for validity
 export const verifyRefreshToken = async (refreshToken: string): Promise<any | null> => {
@@ -72,6 +59,7 @@ export const verifyRecaptcha = async (token: string) => {
 		const data = await response.json();
 		return data.success;
 	} catch (error) {
+		console.error('Recaptcha verification failed:', error);
 		return false;
 	}
 };

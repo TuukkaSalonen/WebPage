@@ -10,18 +10,19 @@ import {
 	deleteUserById,
 } from '../controllers/userController';
 import { authorizeRole } from '../middleware/user';
+import { User, Admin } from '../utils/constants';
 
 const userRoutes = express.Router({ mergeParams: true });
 
-userRoutes.get('/', authorizeRole(['admin']), getAllUsers);
-userRoutes.get('/:id', authorizeRole(['user', 'admin']), getUserById);
+userRoutes.get('/', authorizeRole([Admin]), getAllUsers);
+userRoutes.get('/:id', authorizeRole([User, Admin]), getUserById);
 
-userRoutes.put('/:id/email', authorizeRole(['user', 'admin']), updateUserEmailById);
-userRoutes.put('/:id/username', authorizeRole(['user', 'admin']), updateUsernameById);
-userRoutes.put('/:id/password', authorizeRole(['user', 'admin']), updateUserPasswordById);
-userRoutes.put('/:id/role', authorizeRole(['admin']), updateUserRoleById);
+userRoutes.put('/:id/email', authorizeRole([User, Admin]), updateUserEmailById);
+userRoutes.put('/:id/username', authorizeRole([User, Admin]), updateUsernameById);
+userRoutes.put('/:id/password', authorizeRole([User, Admin]), updateUserPasswordById);
+userRoutes.put('/:id/role', authorizeRole([Admin]), updateUserRoleById);
 
-userRoutes.delete('/:id/email', authorizeRole(['user', 'admin']), deleteUserEmailById);
-userRoutes.delete('/:id', authorizeRole(['user', 'admin']), deleteUserById);
+userRoutes.delete('/:id/email', authorizeRole([User, Admin]), deleteUserEmailById);
+userRoutes.delete('/:id', authorizeRole([User, Admin]), deleteUserById);
 
 export default userRoutes;

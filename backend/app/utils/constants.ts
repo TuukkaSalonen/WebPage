@@ -35,13 +35,10 @@ export const skills = [
 	{ name: 'Necromancy', imageUrl: '/images/skills/Necromancy.png' },
 ];
 
-export const Guest = 'Guest';
+// User roles
+export const Guest = 'guest';
+export const User = 'user';
+export const Admin = 'admin';
 
+//Amount of salt rounds for hashing
 export const saltRounds = process.env.SALT_ROUNDS || '10';
-
-export interface UserToken {
-	id: string;
-	role: string;
-	iat: number;
-	exp: number;
-}

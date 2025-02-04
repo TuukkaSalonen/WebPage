@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { Guest } from '../utils/constants';
 
 const env = process.env;
 const secret = env.JWT_SECRET || 'secret';
@@ -13,13 +14,13 @@ export interface CustomRequest extends Request {
 export const verifyToken = (req: CustomRequest, res: Response, next: NextFunction): void => {
 	const token = req.cookies[cookie];
 	if (!token) {
-		req.user = { id: null, role: 'Guest' };
+		req.user = { id: null, role: Guest };
 		next();
 		return;
 	}
 	jwt.verify(token, secret, (err: jwt.VerifyErrors | null, user: any) => {
 		if (err) {
-			req.user = { id: null, role: 'Guest' };
+			req.user = { id: null, role: Guest };
 			next();
 			return;
 		}

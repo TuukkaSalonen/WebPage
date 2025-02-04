@@ -1,5 +1,6 @@
 import express from 'express';
 import { login, logOut, register, checkAndRefreshLogin, getUserProfile } from '../controllers/loginController';
+import { authorizeRole } from '../middleware/user';
 
 const loginRoutes = express.Router({ mergeParams: true });
 
@@ -11,6 +12,6 @@ loginRoutes.post('/register', register);
 
 loginRoutes.get('/check', checkAndRefreshLogin);
 
-loginRoutes.get('/profile', getUserProfile);
+loginRoutes.get('/profile', authorizeRole(['user', 'admin']), getUserProfile);
 
 export default loginRoutes;

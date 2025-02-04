@@ -1,5 +1,7 @@
 // List of skills used in RS stats
 
+import { Interface } from "readline";
+
 export const skills = [
 	{ name: 'Overall', imageUrl: '/images/skills/Overall.png' },
 	{ name: 'Attack', imageUrl: '/images/skills/Attack.png' },
@@ -36,3 +38,10 @@ export const skills = [
 export const Guest = 'Guest';
 
 export const saltRounds = process.env.SALT_ROUNDS || '10';
+
+export interface UserToken {
+	id: string;
+	role: string;
+	iat: number;
+	exp: number;
+}

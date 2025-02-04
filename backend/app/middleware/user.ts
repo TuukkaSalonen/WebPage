@@ -9,6 +9,7 @@ export interface CustomRequest extends Request {
 	user?: any;
 }
 
+// Verify token and set user object in request
 export const verifyToken = (req: CustomRequest, res: Response, next: NextFunction): void => {
 	const token = req.cookies[cookie];
 	if (!token) {
@@ -27,6 +28,7 @@ export const verifyToken = (req: CustomRequest, res: Response, next: NextFunctio
 	});
 };
 
+// Authorize role for protected routes (admin, user, guest)
 export const authorizeRole = (roles: string[]) => {
 	return (req: CustomRequest, res: Response, next: NextFunction): void => {
 		if (!req.user || !roles.includes(req.user.role)) {

@@ -56,7 +56,7 @@ export async function getUsers() {
 // Create user
 export async function createUser(username: string, password: string, email: string) {
 	try {
-		const [insertedRecord] = await db(userTable).insert({ username, password, email }).returning(['username']);
+		const [insertedRecord] = await db(userTable).insert({ username, password, email }).returning(['id', 'username']);
 
 		return insertedRecord;
 	} catch (error) {
@@ -106,7 +106,7 @@ export const updateUsername = async (id: string, username: string) => {
 // Update user role by id
 export const updateUserRole = async (id: string, role: string) => {
 	try {
-		return await db(userTable).where('id', id).update({ role }).returning(['role']);
+		return await db(userTable).where('id', id).update({ role }).returning(['id', 'role']).first();
 	} catch (error) {
 		console.error('Error updating user username:', error);
 		throw new Error('Error updating user username');
@@ -116,7 +116,7 @@ export const updateUserRole = async (id: string, role: string) => {
 // Set user email to null by id
 export const deleteUserEmail = async (id: string) => {
 	try {
-		return await db(userTable).where('id', id).update({ email: null }).returning(['id']);
+		return await db(userTable).where('id', id).update({ email: null }).returning(['id']).first();
 	} catch (error) {
 		console.error('Error deleting user email:', error);
 		throw new Error('Error deleting user email');

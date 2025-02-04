@@ -12,11 +12,15 @@ services:
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
       - ENV=production
-      - FRONTEND_URL_PROD=https://tuukkasalonen.fi
+      - FRONTEND_URL_PROD=${FRONTEND_URL_PROD}
       - EMAIL_USER=${EMAIL_USER}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
       - EMAIL_HOST=${EMAIL_HOST}
+      - ERROR_LOG=${ERROR_LOG}
+      - COMBINED_LOG=${COMBINED_LOG}
     restart: always
+    volumes:
+      - ./backend/app/logs:/app/logs
     depends_on:
       - db
     ports:

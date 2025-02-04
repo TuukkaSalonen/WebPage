@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { validateUsername } from '../utils/validator';
 import { skills } from '../utils/constants';
+import logger from '../logger';
 
 // Interface for Runescape API response
 interface ApiResponse {
@@ -12,23 +13,27 @@ interface ApiResponse {
 export const getRsStats = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const { username } = req.params;
-
 		if (!username || !validateUsername(username)) {
+			logger.warn('Stats: Invalid username');
 			res.status(400).json({ status: 400, message: 'Invalid username' });
 			return;
 		}
 		const apiResponse = await rsApiRequest(username);
 		if (apiResponse.status === 404) {
+			logger.warn(`Stats: Player ${username} not found`);
 			res.status(404).json(apiResponse);
 			return;
 		}
 		if (apiResponse.status === 500) {
+			logger.error('Stats: Error in RuneScape API');
 			res.status(500).json(apiResponse);
 			return;
 		}
 		const response = { status: 200, message: processStats(apiResponse.message) };
+		logger.info(`Stats: Player ${username} stats fetched`);
 		res.status(200).json(response);
 	} catch (error) {
+		logger.error(`Stats: ${error}`);
 		console.log(error);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
@@ -49,6 +54,7 @@ const rsApiRequest = async (username: string): Promise<ApiResponse> => {
 			return { status: 200, message: data };
 		}
 	} catch (error) {
+		logger.error(`Stats API request: ${error}`);
 		console.log(error);
 		throw new Error('Internal server error');
 	}

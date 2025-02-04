@@ -1,23 +1,23 @@
 import { incrementVisitor, selectVisitors } from '../../db/queries/general';
 import { Request, Response } from 'express';
+import logger from '../logger';
 
 // Get visitor count
 export const getVisitorCount = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    	console.log(`Request IP: ${ip}`);
-
-		if (!checkVisitorCookie(req, res)) {
+		if (!checkVisitorCookie(req)) {
 			await incrementVisitor();
 			setVisitorCookie(req, res);
 		}
 		const visitors = await selectVisitors();
 		if (!visitors.data) {
+			logger.warn('Visitor count: No visitors found - Returning 0');
 			res.status(200).json({ status: 200, visitorCount: 0 });
 		} else {
 			res.status(200).json({ status: 200, visitorCount: visitors.data });
 		}
 	} catch (error) {
+		logger.error(`Visitor count: ${error}`);
 		res.status(500).json({ status: 500, message: 'Internal server error' });
 	}
 };
@@ -30,6 +30,6 @@ const setVisitorCookie = (req: Request, res: Response) => {
 };
 
 // Check if visitor cookie is set
-const checkVisitorCookie = (req: Request, res: Response) => {
+const checkVisitorCookie = (req: Request) => {
 	return req.cookies.visitor ? true : false;
 };

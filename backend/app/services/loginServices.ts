@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { getRefreshToken, insertRefreshToken } from '../../db/queries/token';
 import { getUser } from '../../db/queries/user';
+import { UserToken } from '../utils/constants';
 
 const env = process.env;
 const secret = env.JWT_SECRET || 'secret';
@@ -27,16 +28,16 @@ export const createTokens = async (user: any): Promise<any> => {
 };
 
 // Verify token
-export const verifyToken = (token: string) => {
-	return new Promise((resolve, reject) => {
-		jwt.verify(token, secret, (err, user) => {
-			if (err) {
-				reject(err);
-			}
-			resolve(user);
-		});
-	});
-};
+// export const verifyToken = (token: string) => {
+// 	return new Promise((resolve, reject) => {
+// 		jwt.verify(token, secret, (err, decoded) => {
+// 			if (err) {
+// 				reject(err);
+// 			}
+// 			resolve(decoded as UserToken);
+// 		});
+// 	});
+// };
 
 // Verify refresh token and check database for validity
 export const verifyRefreshToken = async (refreshToken: string): Promise<any | null> => {
@@ -44,13 +45,14 @@ export const verifyRefreshToken = async (refreshToken: string): Promise<any | nu
 		const decoded = jwt.verify(refreshToken, secret) as JwtPayload;
 
 		const tokenRecord = await getRefreshToken(refreshToken);
-		if (!tokenRecord || tokenRecord.is_revoked) {
+		if (!tokenRecord || tokenRecord.is_revoked || tokenRecord.expires_at < new Date(Date.now())) {
 			return null;
 		}
 		const user = await getUser(decoded.id);
 		if (!user) {
 			return null;
 		}
+
 		return user;
 	} catch (error) {
 		console.error('Refresh token verification failed:', error);

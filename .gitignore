@@ -8,3 +8,4 @@ ssl/ca.cert
 ssl/fullchain.pem
 ssl/privkey.pem
 ssl/ssl-dhparams.pem
+backend/app/logs/

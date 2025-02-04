@@ -16,10 +16,13 @@ services:
       - EMAIL_USER=${EMAIL_USER}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
       - EMAIL_HOST=${EMAIL_HOST}
-      - FRONTEND_URL_DEV=http://localhost:3000
+      - FRONTEND_URL_DEV=${FRONTEND_URL_DEV}
+      - ERROR_LOG=${ERROR_LOG}
+      - COMBINED_LOG=${COMBINED_LOG}
     restart: always
     volumes:
       - ./backend:/app
+      - ./backend/app/logs:/app/logs
     depends_on:
       - db
     ports:

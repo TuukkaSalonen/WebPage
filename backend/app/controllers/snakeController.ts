@@ -6,6 +6,7 @@ import { validateId } from '../utils/validator';
 import { getUser } from '../../db/queries/user';
 import { Guest } from '../utils/constants';
 import logger from '../logger';
+import { Admin } from '../utils/constants';
 
 // Get snake leaderboard from database
 export const getSnakeLeaderboard = async (req: Request, res: Response): Promise<void> => {
@@ -25,10 +26,10 @@ export const postSnakeScore = async (req: CustomRequest, res: Response): Promise
 	try {
 		const { score } = req.body;
 		const user = req.user;
-		if (validateSnakeScore(score)) {
+		if (!score || validateSnakeScore(score)) {
 			let scoreObject;
 			if (user.role === Guest) {
-				scoreObject = await setScore(Guest, null, score);
+				scoreObject = await setScore("Guest", null, score);
 			} else {
 				const dbUser = await getUser(user.id);
 				if (!dbUser) {
@@ -63,7 +64,7 @@ export const getUserSnakeScores = async (req: CustomRequest, res: Response): Pro
 			return;
 		}
 		let userId = user.id;
-		if (id && user.role === 'admin') {
+		if (id && user.role === Admin) {
 			if (!validateId(id)) {
 				logger.warn('Snake: Get user snake scores - Admin request - Invalid params id');
 				res.status(400).json({ status: 400, message: 'Invalid request' });

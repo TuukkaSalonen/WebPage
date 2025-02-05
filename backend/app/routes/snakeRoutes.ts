@@ -6,9 +6,7 @@ import { User, Admin } from '../utils/constants';
 const snakeRoutes = express.Router({ mergeParams: true });
 
 snakeRoutes.get('/', getSnakeLeaderboard);
-
 snakeRoutes.get('/user/:id', authorizeRole([User, Admin]), getUserSnakeScores);
-
 snakeRoutes.get('/user', authorizeRole([User, Admin]), getUserSnakeScores);
 
 snakeRoutes.post('/', postSnakeScore);

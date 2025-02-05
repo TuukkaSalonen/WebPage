@@ -6,9 +6,9 @@ import { getRsStats } from '../controllers/statController';
 const generalRoutes = express.Router({ mergeParams: true });
 
 generalRoutes.get('/visitor', getVisitorCount);
+generalRoutes.get('/rs/:username', getRsStats);
 
 generalRoutes.post('/chat', getChatResponse);
 
-generalRoutes.get('/rs/:username', getRsStats);
 
 export default generalRoutes;

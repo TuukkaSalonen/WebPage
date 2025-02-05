@@ -17,18 +17,19 @@ import bcrypt from 'bcryptjs';
 import { validateEmail, validateId, validatePassword, validateRole, validateUsername } from '../utils/validator';
 import { saltRounds } from '../utils/constants';
 import logger from '../logger';
+import { Admin } from '../utils/constants';
 
 // Get all users from database
 export const getAllUsers = async (req: CustomRequest, res: Response): Promise<void> => {
 	try {
 		const reqUser = req.user;
-		if (reqUser.id && reqUser.role === 'admin') {
+		if (reqUser.id && reqUser.role === Admin) {
 			const users = await getUsers();
 			if (users) {
-				logger.info('Users: All users fetched - Admin access');
+				logger.info('Users: All users fetched - Admin access - Requester: ' + reqUser.id);
 				res.status(200).json({ status: 200, message: users });
 			} else {
-				logger.warn('Users: No users found - Admin access');
+				logger.warn('Users: No users found - Admin access - Requester: ' + reqUser.id);
 				res.status(200).json({ status: 200, message: [] });
 			}
 		} else {
@@ -48,17 +49,18 @@ export const getUserById = async (req: CustomRequest, res: Response): Promise<vo
 		const id = req.params.id;
 		const reqUser = req.user;
 		if (!validateId(id)) {
-			logger.warn('User: Invalid request - Invalid id');
+			logger.warn(`User: Invalid request - Invalid id - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
+			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const user = await getUser(id);
 			if (user) {
-				logger.info(`User: User ${user.id} fetched`);
+				logger.info(`User: User ${user.id} fetched - Requester: ${reqUser.id}`);
 				res.status(200).json({ status: 200, message: user });
 			} else {
-				logger.warn(`User: User ${id} not found`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				logger.warn(`User: User ${id} not found - Requester: ${reqUser.id ? reqUser.id : 'Guest'}`);
+				res.status(400).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`User: Access denied - Requester: ${reqUser.id} - Target: ${id}`);
@@ -78,24 +80,25 @@ export const updateUserEmailById = async (req: CustomRequest, res: Response): Pr
 		const userId = req.params.id;
 		const reqUser = req.user;
 
-		if (!validateEmail(email) || !validateId(userId)) {
-			logger.warn('Update user email: Invalid request - Invalid email or id');
+		if (!email || !validateEmail(email) || !validateId(userId)) {
+			logger.warn(`Update user email: Invalid request - Invalid email or id - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
+			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const existingUser = await getUserByEmail(email);
 			if (existingUser) {
-				logger.warn('Update user email: Email already in use');
+				logger.warn(`Update user email: Email already in use - Requester: ${reqUser.id} - Target: ${userId}`);
 				res.status(400).json({ status: 409, message: 'Email already in use' });
 				return;
 			}
 			const updatedUser = await updateUserEmail(userId, email);
 			if (updatedUser) {
-				logger.info(`Update user email: User ${updatedUser.id} email updated`);
+				logger.info(`Update user email: User ${updatedUser.id} email updated - Requester: ${reqUser.id}`);
 				res.status(200).json({ status: 200, message: updatedUser.email });
 			} else {
-				logger.warn(`Update user email: User ${userId} not found`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				logger.warn(`Update user email: User ${userId} not found - Requester: ${reqUser.id}`);
+				res.status(400).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Update user email: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -114,21 +117,28 @@ export const updateUserPasswordById = async (req: CustomRequest, res: Response):
 		const { oldPassword, newPassword } = req.body;
 		const userId = req.params.id;
 		const reqUser = req.user;
-		if (!validateId(userId) || !validatePassword(oldPassword) || !validatePassword(newPassword)) {
-			logger.warn('Update user password: Invalid request - Invalid id or password');
+		if (!oldPassword || !newPassword || !validateId(userId) || !validatePassword(oldPassword) || !validatePassword(newPassword)) {
+			logger.warn(`Update user password: Invalid request - Invalid id or password - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
+			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const password = await getUserPasswordById(userId);
-			if (password && (await bcrypt.compare(oldPassword, password))) {
+			if (!password) {
+				logger.warn(`Update user password: User ${userId} not found - Requester: ${reqUser.id}`);
+				res.status(400).json({ status: 404, message: 'User not found' });
+				return;
+			}
+			if (await bcrypt.compare(oldPassword, password.password)) {
 				const hashedPassword = await bcrypt.hash(newPassword, parseInt(saltRounds));
+				console.log(hashedPassword);
 				const updatedUser = await updateUserPassword(userId, hashedPassword);
 				if (updatedUser) {
 					logger.info(`Update user password: User ${userId} password updated - Requester: ${reqUser.id}`);
 					res.status(200).json({ status: 200, message: 'Password updated' });
 				} else {
 					logger.warn(`Update user password: User ${userId} not found - Requester: ${reqUser.id}`);
-					res.status(400).json({ status: 400, message: 'User not found' });
+					res.status(400).json({ status: 404, message: 'User not found' });
 				}
 			} else {
 				logger.warn(`Update user password: Invalid password - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -152,25 +162,25 @@ export const updateUsernameById = async (req: CustomRequest, res: Response): Pro
 		const userId = req.params.id;
 		const reqUser = req.user;
 
-		if (!validateUsername(username) || !validateId(userId)) {
-			logger.warn('Update username: Invalid request - Invalid username or id');
+		if (!username || !validateUsername(username) || !validateId(userId)) {
+			logger.warn(`Update username: Invalid request - Invalid username or id - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
 			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const existingUser = await getUserByUsername(username);
 			if (existingUser) {
-				logger.warn(`Update username: Username ${username} already exists`);
+				logger.warn(`Update username: Username ${username} already exists - Requester: ${reqUser.id} - Target: ${userId}`);
 				res.status(400).json({ status: 400, message: 'Username already exists' });
 				return;
 			}
 			const updatedUser = await updateUsername(userId, username);
 			if (updatedUser) {
-				logger.info(`Update username: User ${updatedUser.id} username updated - Requester: ${reqUser.id} - Target: ${userId}`);
+				logger.info(`Update username: User ${updatedUser.id} username updated - Requester: ${reqUser.id}`);
 				res.status(200).json({ status: 200, message: updatedUser.username });
 			} else {
 				logger.warn(`Update username: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				res.status(400).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Update username: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -190,15 +200,15 @@ export const updateUserRoleById = async (req: CustomRequest, res: Response): Pro
 		const userId = req.params.id;
 		const reqUser = req.user;
 
-		if (!validateId(userId) || !validateRole(role)) {
-			logger.warn('Update user role: Invalid request - Invalid id or role');
+		if (!role || !validateId(userId) || !validateRole(role)) {
+			logger.warn(`Update user role: Invalid request - Invalid id or role - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
 			return;
 		}
-		if (reqUser.id && reqUser.role === 'admin') {
+		if (reqUser.id && reqUser.role === Admin) {
 			const updatedUser = await updateUserRole(userId, role);
-			if (updatedUser) {
-				logger.info(`Update user role: User ${updatedUser.id} role updated to ${updatedUser.role} - Requester: ${reqUser.id}`);
+			if (updatedUser.length > 0) {
+				logger.info(`Update user role: User ${updatedUser[0].id} role updated to ${updatedUser[0].role} - Requester: ${reqUser.id}`);
 				res.status(200).json({ status: 200, message: 'Role updated' });
 			} else {
 				logger.warn(`Update user role: User ${userId} not found - Requester: ${reqUser.id}`);
@@ -222,14 +232,14 @@ export const deleteUserEmailById = async (req: CustomRequest, res: Response): Pr
 		const reqUser = req.user;
 
 		if (!validateId(userId)) {
-			logger.warn('Delete user email: Invalid request - Invalid id');
+			logger.warn(`Delete user email: Invalid request - Invalid id - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
 			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const updatedUser = await deleteUserEmail(userId);
-			if (updatedUser) {
-				logger.info(`Delete user email: User ${updatedUser.id} email deleted - Requester: ${reqUser.id}`);
+			if (updatedUser.length > 0) {
+				logger.info(`Delete user email: User ${userId} email deleted - Requester: ${reqUser.id}`);
 				res.status(200).json({ status: 200, message: 'Email deleted' });
 			} else {
 				logger.warn(`Delete user email: User ${userId} not found - Requester: ${reqUser.id}`);
@@ -253,10 +263,11 @@ export const deleteUserById = async (req: CustomRequest, res: Response): Promise
 		const reqUser = req.user;
 
 		if (!validateId(userId)) {
+			logger.warn(`Delete user: Invalid request (id) - Requester: ${reqUser.id}`);
 			res.status(400).json({ status: 400, message: 'Invalid request' });
 			return;
 		}
-		if (reqUser.id === req.params.id || reqUser.role === 'admin') {
+		if (reqUser.id === req.params.id || reqUser.role === Admin) {
 			const deletedUser = await deleteUser(userId);
 			if (deletedUser) {
 				logger.info(`Delete user: User ${userId} deleted - Requester: ${reqUser.id}`);

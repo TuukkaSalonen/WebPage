@@ -8,18 +8,17 @@ export async function getUserByUsername(username: string) {
 		return await db(userTable).select('*').whereRaw('LOWER(username) = ?', [username.toLowerCase()]).first();
 	} catch (error) {
 		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
+		throw new Error(`DB error - Error selecting all user records: ${error}`);
 	}
 }
 
 // Get user password by id. Only used in backend for authentication check.
 export async function getUserPasswordById(id: string) {
 	try {
-		const user = await db(userTable).select('password').where('id', id).first();
-		return user.password;
+		return await db(userTable).select('password').where('id', id).first();
 	} catch (error) {
 		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
+		throw new Error(`DB error - Error selecting user password by id: ${error}`);
 	}
 }
 
@@ -29,7 +28,7 @@ export async function getUser(id: string) {
 		return await db(userTable).select('id', 'username', 'email', 'created_at', 'role').where('id', id).first();
 	} catch (error) {
 		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
+		throw new Error(`DB error - Error selecting user record by id: ${error}`);
 	}
 }
 
@@ -39,7 +38,7 @@ export async function getUserByEmail(email: string) {
 		return await db(userTable).select('id').whereRaw('LOWER(email) = ?', [email.toLowerCase()]).first();
 	} catch (error) {
 		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
+		throw new Error(`DB error - Error selecting user by email: ${error}`);
 	}
 }
 
@@ -49,7 +48,7 @@ export async function getUsers() {
 		return await db(userTable).select('id', 'username', 'email', 'role', 'created_at', 'updated_at');
 	} catch (error) {
 		console.error('Error selecting all records:', error);
-		throw new Error('Error selecting all records');
+		throw new Error(`DB error - Error selecting all user records: ${error}`);
 	}
 }
 
@@ -61,7 +60,7 @@ export async function createUser(username: string, password: string, email: stri
 		return insertedRecord;
 	} catch (error) {
 		console.error('Error creating user:', error);
-		throw new Error('Error creating user');
+		throw new Error(`DB error - Error creating user: ${error}`);
 	}
 }
 
@@ -75,7 +74,7 @@ export const updateUserEmail = async (id: string, email: string) => {
 			.then((rows) => rows[0]);
 	} catch (error) {
 		console.error('Error updating user email:', error);
-		throw new Error('Error updating user email');
+		throw new Error(`DB error - Error updating user email by id: ${error}`);
 	}
 };
 
@@ -85,7 +84,7 @@ export const updateUserPassword = async (id: string, password: string) => {
 		return await db(userTable).where('id', id).update({ password }).returning(['username']);
 	} catch (error) {
 		console.error('Error updating user password:', error);
-		throw new Error('Error updating user password');
+		throw new Error(`DB error - Error updating user password by id: ${error}`);
 	}
 };
 
@@ -99,27 +98,28 @@ export const updateUsername = async (id: string, username: string) => {
 			.then((rows) => rows[0]);
 	} catch (error) {
 		console.error('Error updating username:', error);
-		throw new Error('Error updating username');
+		throw new Error(`DB error - Error updating user username by id: ${error}`);
 	}
 };
 
 // Update user role by id
 export const updateUserRole = async (id: string, role: string) => {
 	try {
-		return await db(userTable).where('id', id).update({ role }).returning(['id', 'role']).first();
+		return await db(userTable).where('id', id).first().update({ role }).returning(['id', 'role']);
 	} catch (error) {
-		console.error('Error updating user username:', error);
-		throw new Error('Error updating user username');
+		console.error('Error updating user role:', error);
+		throw new Error(`DB error - Error updating user role by id: ${error}`);
 	}
 };
 
 // Set user email to null by id
-export const deleteUserEmail = async (id: string) => {
+export const deleteUserEmail = async (id: string): Promise<{ id: string }[]> => {
 	try {
-		return await db(userTable).where('id', id).update({ email: null }).returning(['id']).first();
+		const result = await db(userTable).where('id', id).first().update({ email: null }).returning(['id']);
+		return result;
 	} catch (error) {
 		console.error('Error deleting user email:', error);
-		throw new Error('Error deleting user email');
+		throw new Error(`DB error - Error deleting user email by id: ${error}`);
 	}
 };
 
@@ -130,6 +130,6 @@ export const deleteUser = async (id: string) => {
 	}
 	catch (error) {
 		console.error('Error deleting user:', error);
-		throw new Error('Error deleting user');
+		throw new Error(`DB error - Error deleting user by id: ${error}`);
 	}
 };

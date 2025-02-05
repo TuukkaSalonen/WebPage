@@ -33,7 +33,7 @@ export const verifyToken = (req: CustomRequest, res: Response, next: NextFunctio
 export const authorizeRole = (roles: string[]) => {
 	return (req: CustomRequest, res: Response, next: NextFunction): void => {
 		if (!req.user || !roles.includes(req.user.role)) {
-			res.status(403).json({ message: 'Access denied' });
+			res.status(403).json({ status: 403, message: 'Access denied' });
 			return;
 		}
 		next();

@@ -9,7 +9,7 @@ const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 // Get response from AI model and return response to user
 export const getChatResponse = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const message = req.body.message.toString();
+		const message = req.body.message;
 		if (!message || message.trim().length < 1) {
 			logger.warn('Chat: Invalid input - No message provided');
 			res.status(400).json({ status: 400, message: 'Invalid input' });

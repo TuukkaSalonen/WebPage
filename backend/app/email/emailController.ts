@@ -25,7 +25,7 @@ export const resetPasswordEmail = async (req: CustomRequest, res: Response): Pro
 	try {
 		const email = req.body.email;
 		const user = req.user;
-		if (!validateEmail(email)) {
+		if (!email || !validateEmail(email)) {
 			logger.warn('Reset password email: Invalid email');
 			res.status(400).json({ status: 400, message: 'Invalid email' });
 			return;

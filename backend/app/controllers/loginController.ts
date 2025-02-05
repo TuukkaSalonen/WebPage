@@ -11,7 +11,6 @@ import logger from '../logger';
 
 const env = process.env;
 const cookie = env.COOKIE_NAME || 'token';
-const isProduction = process.env.ENV === 'production';
 
 // Log user in and add access token and refresh token to cookies
 export const login = async (req: Request, res: Response): Promise<void> => {
@@ -23,13 +22,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 				const { accessToken, refreshToken } = await createTokens(user);
 				res.cookie(cookie, accessToken, {
 					httpOnly: true,
-					secure: isProduction,
+					secure: true,
 					sameSite: 'strict',
 					maxAge: 3600000,
 				});
 				res.cookie('refresh_token', refreshToken, {
 					httpOnly: true,
-					secure: isProduction,
+					secure: true,
 					sameSite: 'strict',
 					maxAge: 604800000,
 				});
@@ -105,13 +104,13 @@ export const checkAndRefreshLogin = async (req: CustomRequest, res: Response): P
 				const { accessToken, refreshToken: newRefreshToken } = await createTokens(user);
 				res.cookie(cookie, accessToken, {
 					httpOnly: true,
-					secure: isProduction,
+					secure: true,
 					sameSite: 'strict',
 					maxAge: 3600000,
 				});
 				res.cookie('refresh_token', newRefreshToken, {
 					httpOnly: true,
-					secure: isProduction,
+					secure: true,
 					sameSite: 'strict',
 					maxAge: 604800000,
 				});
@@ -179,10 +178,12 @@ export const getUserProfile = async (req: CustomRequest, res: Response): Promise
 				res.status(200).json({ status: 200, message: user });
 			} else {
 				logger.warn(`Get user profile: User ${reqUser.id} not found`);
+				res.clearCookie(cookie);
+				res.clearCookie('refresh_token'); // Shouldn't get here but clear cookies to logout just in case
 				res.status(400).json({ status: 400, message: 'User not found' });
 			}
 		} else {
-			logger.warn(`Get user profile: Not logged in`);
+			logger.warn(`Get user profile: Not logged in`); // Shouldnt get here either due to middleware
 			res.status(403).json({ status: 403, message: 'Access denied' });
 		}
 	} catch (error) {

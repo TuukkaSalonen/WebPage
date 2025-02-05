@@ -7,7 +7,8 @@ export async function getTopScores() {
 		return await db(snakeTable).select('name', 'score').orderBy('score', 'desc').limit(10);
 	} catch (error) {
 		console.error('Error getting top scores:', error);
-		throw new Error('Error getting top scores');
+		throw new Error(`DB error - Error getting top scores: ${error}`);
+		
 	}
 }
 
@@ -19,7 +20,7 @@ export async function setScore(name: string, id: string | null, score: number) {
 		return insertedRecord;
 	} catch (error) {
 		console.error('Error setting score:', error);
-		throw new Error('Error setting score');
+		throw new Error(`DB error - Error setting score: ${error}`);
 	}
 }
 
@@ -31,6 +32,6 @@ export async function getScoresById(id: string) {
 		return await db(snakeTable).select('*').from(subquery).where('user_id', id).orderBy('score', 'desc').limit(25);
 	} catch (error) {
 		console.error('Error getting scores by id:', error);
-		throw new Error('Error getting scores by id');
+		throw new Error(`DB error - Error getting scores by id: ${error}`);
 	}
 }

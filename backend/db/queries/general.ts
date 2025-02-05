@@ -8,7 +8,7 @@ export async function selectAll() {
         return await db(generalTable).select('*');
     } catch (error) {
         console.error('Error selecting all records:', error);
-        throw new Error('Error selecting all records');
+        throw new Error(`DB error - Error selecting all records ${error}`);
     }
 }
 
@@ -21,7 +21,7 @@ export async function incrementVisitor() {
             .update({ updated_at: db.fn.now() });
     } catch (error) {
         console.error('Error incrementing visitor count:', error);
-        throw new Error('Error incrementing visitor count');
+        throw new Error(`DB error - Error incrementing visitor count: ${error}`);
     }
 }
 
@@ -31,6 +31,6 @@ export async function selectVisitors() {
         return await db(generalTable).select('data').where('name', 'visitors').first();
     } catch (error) {
         console.error('Error selecting visitors:', error);
-        throw new Error('Error selecting visitors');
+        throw new Error(`DB error - Error selecting visitors: ${error}`);
     }
 }

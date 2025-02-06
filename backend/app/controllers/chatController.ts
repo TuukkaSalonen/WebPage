@@ -12,7 +12,7 @@ export const getChatResponse = async (req: Request, res: Response): Promise<void
 		const message = req.body.message;
 		if (!message || message.trim().length < 1) {
 			logger.warn('Chat: Invalid input - No message provided');
-			res.status(400).json({ status: 400, message: 'Invalid input' });
+			res.status(400).json({ status: 400, message: 'Invalid input!' });
 			return;
 		}
 		const response = await generateAIResponse(message);

@@ -15,7 +15,7 @@ export const getRsStats = async (req: Request, res: Response): Promise<void> => 
 		const { username } = req.params;
 		if (!username || !validateUsername(username)) {
 			logger.warn('Stats: Invalid username');
-			res.status(400).json({ status: 400, message: 'Invalid username' });
+			res.status(400).json({ status: 400, message: 'Invalid username!' });
 			return;
 		}
 		const apiResponse = await rsApiRequest(username);
@@ -46,7 +46,7 @@ const rsApiRequest = async (username: string): Promise<ApiResponse> => {
 			`https://secure.runescape.com/m=hiscore/index_lite.ws?player=${username}`
 		);
 		if (response.status === 404) {
-			return { status: 404, message: 'Player not found' };
+			return { status: 404, message: 'Player not found!' };
 		} else if (!response.ok) {
 			return { status: 500, message: 'Error in RuneScape API' };
 		} else {

@@ -34,7 +34,7 @@ export const postSnakeScore = async (req: CustomRequest, res: Response): Promise
 				const dbUser = await getUser(user.id);
 				if (!dbUser) {
 					logger.warn('Snake: Add snake score - User not found');
-					res.status(404).json({ status: 404, message: 'User not found' });
+					res.status(404).json({ status: 404, message: 'User not found!' });
 					return;
 				}
 				scoreObject = await setScore(dbUser.username, user.id, score);
@@ -43,7 +43,7 @@ export const postSnakeScore = async (req: CustomRequest, res: Response): Promise
 			res.status(200).json({ status: 200, message: scoreObject });
 		} else {
 			logger.warn('Snake: Add snake score - Invalid request');
-			res.status(400).json({ status: 400, message: 'Bad request' });
+			res.status(400).json({ status: 400, message: 'Invalid request!' });
 		}
 	} catch (error) {
 		logger.error(`Snake: ${error}`);
@@ -60,14 +60,14 @@ export const getUserSnakeScores = async (req: CustomRequest, res: Response): Pro
 		const { id } = req.params;
 		if (!user.id) {
 			logger.warn('Snake: Get user snake scores - User not logged in');
-			res.status(401).json({ status: 401, message: 'Unauthorized' });
+			res.status(401).json({ status: 401, message: 'Unauthorized!' });
 			return;
 		}
 		let userId = user.id;
 		if (id && user.role === Admin) {
 			if (!validateId(id)) {
 				logger.warn('Snake: Get user snake scores - Admin request - Invalid params id');
-				res.status(400).json({ status: 400, message: 'Invalid request' });
+				res.status(400).json({ status: 400, message: 'Invalid request!' });
 				return;
 			}
 			userId = id;

@@ -13,23 +13,23 @@ export const validatePasswordToken = async (req: CustomRequest, res: Response): 
 		const token = req.params.token;
 		if (req.user.id) {
 			logger.warn('Password reset: User already logged in');
-			res.status(400).json({ status: 400, message: 'User already logged in' });
+			res.status(400).json({ status: 400, message: 'User already logged in!' });
 			return;
 		}
 		if (!token) {
 			logger.warn('Password reset: Invalid request - No token provided');
-			res.status(400).json({ status: 400, message: 'Invalid request' });
+			res.status(400).json({ status: 400, message: 'Invalid request!' });
 			return;
 		}
 		const dbToken = await getPasswordReset(token);
 		if (!dbToken || dbToken.is_used) {
 			logger.warn('Password reset: Invalid token - Token not found or already used');
-			res.status(404).json({ status: 404, message: 'Token not found or already used' });
+			res.status(404).json({ status: 404, message: 'Token not found or already used!' });
 			return;
 		}
 		if (dbToken.expires_at < new Date(Date.now())) {
 			logger.warn(`Password reset: Token expired`);
-			res.status(401).json({ status: 401, message: 'Token expired' });
+			res.status(401).json({ status: 401, message: 'Token expired!' });
 			return;
 		}
 		logger.info(`Password reset: Token valid`);
@@ -47,23 +47,23 @@ export const updateUserPasswordByToken = async (req: CustomRequest, res: Respons
 		const { token, password } = req.body;
 		if (req.user.id) {
 			logger.warn('Password reset: User already logged in');
-			res.status(400).json({ status: 400, message: 'User already logged in' });
+			res.status(400).json({ status: 400, message: 'User already logged in!' });
 			return;
 		}
 		if (!password || !validatePassword(password) || !token) {
 			logger.warn('Password reset: Invalid request - No password/token or invalid password provided');
-			res.status(400).json({ status: 400, message: 'Invalid request' });
+			res.status(400).json({ status: 400, message: 'Invalid request!' });
 			return;
 		}
 		const dbToken = await getPasswordReset(token);
 		if (!dbToken || dbToken.is_used) {
 			logger.warn('Password reset: Invalid token - Token not found or already used');
-			res.status(404).json({ status: 404, message: 'Token not found or already used' });
+			res.status(404).json({ status: 404, message: 'Reset link not found or already used!' });
 			return;
 		}
 		if (dbToken.expires_at < new Date(Date.now())) {
 			logger.warn('Password reset: Token expired');
-			res.status(401).json({ status: 401, message: 'Expired token' });
+			res.status(401).json({ status: 401, message: 'Expired link!' });
 			return;
 		}
 		const hashedPassword = await bcrypt.hash(password, parseInt(saltRounds));
@@ -74,7 +74,7 @@ export const updateUserPasswordByToken = async (req: CustomRequest, res: Respons
 			res.status(200).json({ status: 200, message: 'Password updated' });
 		} else {
 			logger.warn(`Password reset: User ${dbToken.user_id} not found`);
-			res.status(404).json({ status: 404, message: 'User not found' });
+			res.status(404).json({ status: 404, message: 'User not found!' });
 		}
 	} catch (error) {
 		logger.error(`Password reset: ${error}`);

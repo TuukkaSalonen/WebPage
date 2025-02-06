@@ -6,11 +6,11 @@ import { fetchStatsSuccess } from '../actionCreators/statActions.ts';
 // Thunk for fetching rs stats from the backend
 export const fetchStats = (username: string) => async (dispatch: Dispatch) => {
 	if (!username || username.trim() === '') {
-		dispatch(createNotification('stats', 'Please enter a valid username', 'error'));
+		dispatch(createNotification('stats', 'Please enter a valid username!', 'error'));
 		return;
 	}
 	if (username.length > 12) {
-		dispatch(createNotification('stats', 'Username is too long (max 12 characters)', 'error'));
+		dispatch(createNotification('stats', 'Username is too long! (max 12 characters)', 'error'));
 		return;
 	}
 	dispatch(createNotification('stats', 'Fetching stats', 'loading'));

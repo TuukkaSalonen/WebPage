@@ -45,23 +45,25 @@ export const Profile = () => {
 		}
 	}, [loading, username, email]);
 
-	const handleUsernameSubmit = (e) => {
+	const handleUsernameSubmit = async (e) => {
 		e.preventDefault();
 		handleCloseConfirmUsernameDialog();
 		if (validateUsername(dispatch, username, newUsername, confirmNewUsername)) {
-			dispatch(updateUsername(userId, newUsername)).then(() => {
+			const success = await dispatch(updateUsername(userId, newUsername));
+			if (success) {
 				setIsEditingUsername(false);
-			});
+			}
 		}
 	};
 
-	const handleEmailSubmit = (e) => {
+	const handleEmailSubmit = async (e) => {
 		e.preventDefault();
 		handleCloseConfirmEmailDialog();
 		if (validateEmail(dispatch, email, newEmail)) {
-			dispatch(updateEmail(userId, newEmail)).then(() => {
+			const success = await dispatch(updateEmail(userId, newEmail));
+			if (success) {
 				setIsEditingEmail(false);
-			});
+			};
 		}
 	};
 

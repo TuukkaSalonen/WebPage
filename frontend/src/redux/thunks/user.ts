@@ -4,7 +4,8 @@ import { putEmail, putPassword, putUsername, deleteEmail, deleteUser } from '../
 import { removeLoginEmail, updateLoginEmail, updateLoginUsername } from '../actionCreators/loginActions.ts';
 import { RootState } from '../store.js';
 import { ADMIN_ROLE } from '../actionCreators/actionConstants.ts';
-import { sendLogout } from '../thunks/login.ts';
+import { logout } from '../actionCreators/loginActions.ts';
+import { postLogout } from '../API/loginAPI.ts';
 
 // Update username thunk
 export const updateUsername = (id: string, username: string) => async (dispatch: Dispatch, getState: () => RootState) => {
@@ -16,8 +17,10 @@ export const updateUsername = (id: string, username: string) => async (dispatch:
 			dispatch(updateLoginUsername(response));
 		}
 		dispatch(createNotification('user', 'Username updated successfully', 'success'));
+		return true;
 	} catch (error) {
 		dispatch(createNotification('user', `${error.message}`, 'error'));
+		return false;
 	}
 };
 
@@ -31,8 +34,10 @@ export const updateEmail = (id: string, email: string) => async (dispatch: Dispa
 			dispatch(updateLoginEmail(response));
 		}
 		dispatch(createNotification('user', 'Email updated successfully', 'success'));
+		return true;
 	} catch (error) {
 		dispatch(createNotification('user', `${error.message}`, 'error'));
+		return false;
 	}
 };
 
@@ -79,7 +84,8 @@ export const removeUser =
 			await deleteUser(id);
 			const { role, id: currentUserId } = getState().auth;
 			if (role !== ADMIN_ROLE && currentUserId === id) {
-				dispatch(sendLogout() as any);
+				await postLogout();
+                dispatch(logout());
 			}
 			dispatch(createNotification('user', 'User deleted successfully', 'success'));
 			return true;

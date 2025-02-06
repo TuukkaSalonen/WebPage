@@ -3,10 +3,27 @@ import { createNotification } from '../actionCreators/notificationActions.ts';
 
 export const emailRegex = '^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$';
 
-// Validate email input
-export const validateEmail = (email: string) => async (dispatch: Dispatch) => {
+// Validate reset password email input
+export const validateResetEmail = (email: string) => async (dispatch: Dispatch) => {
 	if (!email || !email.match(emailRegex)) {
 		dispatch(createNotification('reset-password', 'Invalid email!', 'error'));
+		return false;
+	}
+	return true;
+};
+
+// Validate email update input
+export const validateEmail = (dispatch: Dispatch, email: string, newEmail: string): boolean => {
+	if (!newEmail || newEmail.trim().length < 1) {
+		dispatch(createNotification('profile', 'Email field required!', 'error'));
+		return false;
+	}
+	if (newEmail === email) {
+		dispatch(createNotification('profile', 'This is already your email!', 'error'));
+		return false;
+	}
+	if (!newEmail.match(emailRegex)) {
+		dispatch(createNotification('profile', 'Invalid email!', 'error'));
 		return false;
 	}
 	return true;
@@ -35,10 +52,15 @@ export const validateUsername = (dispatch: Dispatch, username: string, newUserna
 
 // Validate password reset input
 export const validatePasswords = (password: string, confirmPassword: string) => async (dispatch: Dispatch) => {
-	if (!password || password.trim().length < 6 || !confirmPassword || confirmPassword.trim().length < 6) {
-		dispatch(createNotification('reset-password', 'Passwords are required and must be at least 6 characters long!', 'error'));
+	if (!password || !confirmPassword) {
+		dispatch(createNotification('reset-password', 'Password fields are required!', 'error'));
 		return false;
 	}
+	if (confirmPassword.trim().length < 6 || password.trim().length < 6) {
+		dispatch(createNotification('reset-password', 'Passwords are too short! (< 6 characters)', 'error'));
+		return false;
+	}
+
 	if (password !== confirmPassword) {
 		dispatch(createNotification('reset-password', 'Passwords do not match!', 'error'));
 		return false;

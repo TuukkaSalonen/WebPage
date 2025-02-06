@@ -9,9 +9,11 @@ export const ProtectedRoute = ({ children, roles }) => {
 	const loading = useSelector((state) => state.auth.loading);
 
 	if (loading) {
-		<Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-			<CircularProgress />
-		</Box>;
+		return (
+			<Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+				<CircularProgress />
+			</Box>
+		);
 	}
 
 	if (!isLoggedin && !loading) {

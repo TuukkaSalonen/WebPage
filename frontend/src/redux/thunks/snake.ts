@@ -33,7 +33,7 @@ export const fetchUserScores = (userId: string) => async (dispatch: Dispatch): P
 		const scores = await getUserSnakeScores(userId);
 		return scores;
 	} catch (error) {
-		dispatch(createNotification('snake', `Error fetching scores: ${error.message}`, 'error'));
+		dispatch(createNotification('snake', `${error.message}`, 'error'));
 		return [];
 	}
 };

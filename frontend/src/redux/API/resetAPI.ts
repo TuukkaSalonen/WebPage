@@ -4,18 +4,23 @@ export const postValidateResetToken = async (token: string): Promise<boolean> =>
         const response = await fetch(`/api/reset/validate/${token}`, {
             method: 'POST',
         });
-        if (response.ok) {
-            return true;
-        }
-        return false;
+        const data = await response.json();
+		if (data.message) {
+			if (!response.ok) {
+				throw new Error(data.message);
+			}
+			return data.message;
+		} else {
+			throw new Error('No message in response');
+		}
     } catch (error) {
         //console.error('Error validating reset token:', error);
-        return false;
+        throw new Error(error.message);
     }
 }
 
 // API request to reset password with token
-export const postResetPassword = async (token: string, password: string, confirmPassword: string): Promise<any> => {
+export const postResetPassword = async (token: string, password: string): Promise<any> => {
     try {
         const response = await fetch('/api/reset/password', {
             method: 'POST',
@@ -25,18 +30,17 @@ export const postResetPassword = async (token: string, password: string, confirm
             body: JSON.stringify({ token, password }),
         });
         const data = await response.json();
-        if (data.message) {
-            if (response.ok) {
-                return data.message;
-            } else {
-                throw new Error(data.message);
-            }
-        } else {
-            throw new Error('No message in response');
-        }
+		if (data.message) {
+			if (!response.ok) {
+				throw new Error(data.message);
+			}
+			return data.message;
+		} else {
+			throw new Error('No message in response');
+		}
     } catch (error) {
         //console.error('Error resetting password:', error);
-        throw new Error('Internal server error');
+        throw new Error(error.message);
     }
 }
 

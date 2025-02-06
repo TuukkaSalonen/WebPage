@@ -27,18 +27,18 @@ export const resetPasswordEmail = async (req: CustomRequest, res: Response): Pro
 		const user = req.user;
 		if (!email || !validateEmail(email)) {
 			logger.warn('Reset password email: Invalid email');
-			res.status(400).json({ status: 400, message: 'Invalid email' });
+			res.status(400).json({ status: 400, message: 'Invalid email!' });
 			return;
 		}
 		if (user.id) {
 			logger.warn(`Reset password email: User already logged in - Requester ${user.id}`);
-			res.status(400).json({ status: 400, message: 'User is already logged in' });
+			res.status(400).json({ status: 400, message: 'User is already logged in!' });
 			return;
 		}
 		const existingUser = await getUserByEmail(email);
 		if (!existingUser) {
 			logger.warn(`Reset password email: User with email ${email} not found`);
-			res.status(400).json({ status: 400, message: 'User not found' });
+			res.status(404).json({ status: 404, message: 'User not found!' });
 			return;
 		}
 		const resetToken = generateResetToken();

@@ -39,6 +39,10 @@ export const sendLogin = (username: string, password: string, navigate: Function
 				dispatch(createNotification('login', `Welcome, ${profileResponse.username}!`, 'success'));
 				navigate(-1);
 			}
+			else {
+				dispatch(createNotification('login', 'Error during login!', 'error'));
+				dispatch(logout());
+			}
 		} else {
 			dispatch(createNotification('login', `${loginResponse.message}`, 'error'));
 			dispatch(logout());
@@ -54,13 +58,13 @@ export const sendLogout = () => async (dispatch: Dispatch) => {
 	dispatch(loginLoading());
 	dispatch(createNotification('login', 'Logging out', 'loading'));
 	try {
-		const loggedOut = await postLogout();
-		if (loggedOut) {
+		const logoutSuccess = await postLogout();
+		if (logoutSuccess) {
 			dispatch(logout());
 			dispatch(createNotification('login', 'Logged out successfully', 'success'));
 		} else {
-			dispatch(createNotification('login', 'Error logging out', 'error'));
-			dispatch(logout());
+			dispatch(createNotification('login', 'Error during log out', 'error'));
+			dispatch(logout()); // Log user out locally even if server error
 		}
 	} catch (error) {
 		dispatch(logout()); // Clear user state even if server error

@@ -180,7 +180,7 @@ export const getUserProfile = async (req: CustomRequest, res: Response): Promise
 				logger.warn(`Get user profile: User ${reqUser.id} not found`);
 				res.clearCookie(cookie);
 				res.clearCookie('refresh_token'); // Shouldn't get here but clear cookies to logout just in case
-				res.status(400).json({ status: 400, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Get user profile: Not logged in`); // Shouldnt get here either due to middleware

@@ -20,7 +20,7 @@ export const postSnakeScore = async (score: number): Promise<Object> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error('Internal server error');
 	}
 };
@@ -45,7 +45,7 @@ export const getSnakeLeaderboard = async (): Promise<[Object]> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error('Internal server error');
 	}
 };
@@ -71,7 +71,7 @@ export const getUserSnakeScores = async (userId: string): Promise<[Object]> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };

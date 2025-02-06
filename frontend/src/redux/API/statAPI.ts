@@ -20,7 +20,7 @@ export const getStats = async (username: string): Promise<Object> => {
             return data.message;
         }
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error('Internal server error');
 	}
 };

@@ -9,7 +9,7 @@ export const postValidateResetToken = async (token: string): Promise<boolean> =>
         }
         return false;
     } catch (error) {
-        console.error('Error validating reset token:', error);
+        //console.error('Error validating reset token:', error);
         return false;
     }
 }
@@ -35,7 +35,7 @@ export const postResetPassword = async (token: string, password: string, confirm
             throw new Error('No message in response');
         }
     } catch (error) {
-        console.error('Error resetting password:', error);
+        //console.error('Error resetting password:', error);
         throw new Error('Internal server error');
     }
 }
@@ -60,6 +60,7 @@ export const postResetPasswordEmail = async (email: string) => {
 			}
 		}
 	} catch (error) {
+        //console.error('Error posting password email request:', error);
 		throw new Error(error.message);
 	}
 };

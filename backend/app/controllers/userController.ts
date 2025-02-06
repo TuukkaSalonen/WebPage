@@ -60,7 +60,7 @@ export const getUserById = async (req: CustomRequest, res: Response): Promise<vo
 				res.status(200).json({ status: 200, message: user });
 			} else {
 				logger.warn(`User: User ${id} not found - Requester: ${reqUser.id ? reqUser.id : 'Guest'}`);
-				res.status(400).json({ status: 404, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`User: Access denied - Requester: ${reqUser.id} - Target: ${id}`);
@@ -89,7 +89,7 @@ export const updateUserEmailById = async (req: CustomRequest, res: Response): Pr
 			const existingUser = await getUserByEmail(email);
 			if (existingUser) {
 				logger.warn(`Update user email: Email already in use - Requester: ${reqUser.id} - Target: ${userId}`);
-				res.status(400).json({ status: 409, message: 'Email already in use' });
+				res.status(409).json({ status: 409, message: 'Email already in use' });
 				return;
 			}
 			const updatedUser = await updateUserEmail(userId, email);
@@ -98,7 +98,7 @@ export const updateUserEmailById = async (req: CustomRequest, res: Response): Pr
 				res.status(200).json({ status: 200, message: updatedUser.email });
 			} else {
 				logger.warn(`Update user email: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 404, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Update user email: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -126,7 +126,7 @@ export const updateUserPasswordById = async (req: CustomRequest, res: Response):
 			const password = await getUserPasswordById(userId);
 			if (!password) {
 				logger.warn(`Update user password: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 404, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 				return;
 			}
 			if (await bcrypt.compare(oldPassword, password.password)) {
@@ -138,11 +138,11 @@ export const updateUserPasswordById = async (req: CustomRequest, res: Response):
 					res.status(200).json({ status: 200, message: 'Password updated' });
 				} else {
 					logger.warn(`Update user password: User ${userId} not found - Requester: ${reqUser.id}`);
-					res.status(400).json({ status: 404, message: 'User not found' });
+					res.status(404).json({ status: 404, message: 'User not found' });
 				}
 			} else {
 				logger.warn(`Update user password: Invalid password - Requester: ${reqUser.id} - Target: ${userId}`);
-				res.status(400).json({ status: 400, message: 'Invalid password' });
+				res.status(401).json({ status: 401, message: 'Invalid password' });
 			}
 		} else {
 			logger.warn(`Update user password: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -171,7 +171,7 @@ export const updateUsernameById = async (req: CustomRequest, res: Response): Pro
 			const existingUser = await getUserByUsername(username);
 			if (existingUser) {
 				logger.warn(`Update username: Username ${username} already exists - Requester: ${reqUser.id} - Target: ${userId}`);
-				res.status(400).json({ status: 400, message: 'Username already exists' });
+				res.status(409).json({ status: 409, message: 'Username already exists' });
 				return;
 			}
 			const updatedUser = await updateUsername(userId, username);
@@ -180,7 +180,7 @@ export const updateUsernameById = async (req: CustomRequest, res: Response): Pro
 				res.status(200).json({ status: 200, message: updatedUser.username });
 			} else {
 				logger.warn(`Update username: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 404, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Update username: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -212,7 +212,7 @@ export const updateUserRoleById = async (req: CustomRequest, res: Response): Pro
 				res.status(200).json({ status: 200, message: 'Role updated' });
 			} else {
 				logger.warn(`Update user role: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Update user role: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -243,7 +243,7 @@ export const deleteUserEmailById = async (req: CustomRequest, res: Response): Pr
 				res.status(200).json({ status: 200, message: 'Email deleted' });
 			} else {
 				logger.warn(`Delete user email: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Delete user email: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);
@@ -274,7 +274,7 @@ export const deleteUserById = async (req: CustomRequest, res: Response): Promise
 				res.status(200).json({ status: 200, message: 'User deleted' });
 			} else {
 				logger.warn(`Delete user: User ${userId} not found - Requester: ${reqUser.id}`);
-				res.status(400).json({ status: 400, message: 'User not found' });
+				res.status(404).json({ status: 404, message: 'User not found' });
 			}
 		} else {
 			logger.warn(`Delete user: Access denied - Requester: ${reqUser.id} - Target: ${userId}`);

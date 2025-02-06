@@ -19,7 +19,7 @@ export const putUsername = async (id: string, username: string): Promise<string>
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };
@@ -45,7 +45,7 @@ export const putEmail = async (id: string, email: string): Promise<string> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };
@@ -61,16 +61,16 @@ export const putPassword = async (id: string, oldPassword: string, newPassword: 
 			credentials: 'include',
 			body: JSON.stringify({ oldPassword, newPassword }),
 		});
-		const data = await response.json();
-		if (data.message) {
-			if (!response.ok) {
+		if (!response.ok) {
+			const data = await response.json();
+			if (data.message) {
 				throw new Error(data.message);
+			} else {
+				throw new Error('No message in response');
 			}
-		} else {
-			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };
@@ -94,7 +94,7 @@ export const deleteEmail = async (id: string): Promise<void> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };
@@ -118,7 +118,7 @@ export const deleteUser = async (id: string): Promise<void> => {
 			throw new Error('No message in response');
 		}
 	} catch (error) {
-		console.error('There was a problem with fetch operation:', error);
+		//console.error('There was a problem with fetch operation:', error);
 		throw new Error(error.message);
 	}
 };

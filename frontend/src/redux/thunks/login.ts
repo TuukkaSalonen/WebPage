@@ -21,7 +21,7 @@ export const checkLogin = () => async (dispatch: Dispatch) => {
 		}
 	} catch (error) {
 		dispatch(logout()); // Clear user state even if server error
-		console.log('Login check error: ', error.message);
+		//console.log('Login check error: ', error.message);
 	}
 };
 

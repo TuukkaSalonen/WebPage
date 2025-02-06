@@ -20,7 +20,7 @@ export const getLogin = async (): Promise<boolean> => {
 			return false;
 		}
 	} catch (error) {
-		console.error('Error checking login:', error);
+		//console.error('Error checking login:', error);
 		return false;
 	}
 };
@@ -42,7 +42,7 @@ export const getProfile = async (): Promise<any> => {
 			return false;
 		}
 	} catch (error) {
-		console.error('Error getting profile:', error);
+		//console.error('Error getting profile:', error);
 		return false;
 	}
 };
@@ -73,7 +73,7 @@ export const postLogin = async (username: string, password: string): Promise<Log
 			return { message: 'No message in response', status: false };
 		}
 	} catch (error) {
-		console.error('Error logging in:', error);
+		//console.error('Error logging in:', error);
 		throw new Error('Internal server error');
 	}
 };
@@ -94,7 +94,7 @@ export const postLogout = async (): Promise<boolean> => {
 			return false;
 		}
 	} catch (error) {
-		console.error('Error logging out:', error);
+		//console.error('Error logging out:', error);
 		return false;
 	}
 };
@@ -121,7 +121,7 @@ export const postRegister = async (username: string, password: string, email: st
 			return { message: 'No message in response', status: false };
 		}
 	} catch (error) {
-		console.error('Error registering:', error);
+		//console.error('Error registering:', error);
 		throw new Error('Internal server error');
 	}
 };

@@ -38,6 +38,7 @@ export const Login = () => {
 					<TextField
 						id="login-username"
 						value={username}
+						autoComplete='username'
 						onChange={(e) => setUsername(e.target.value)}
 						placeholder="Enter your username"
 						variant="outlined"
@@ -50,6 +51,7 @@ export const Login = () => {
 						id="login-password"
 						type={showPassword ? 'text' : 'password'}
 						value={password}
+						autoComplete='current-password'
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder="Enter your password"
 						variant="outlined"

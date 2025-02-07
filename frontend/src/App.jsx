@@ -34,6 +34,10 @@ const App = ({ visitorCount }) => {
 
 	useEffect(() => {
 		dispatch(checkLogin());
+		const intervalCheckLogin = setInterval(() => {
+			dispatch(checkLogin());
+		}, 300000);
+		return () => clearInterval(intervalCheckLogin);
 	}, [dispatch]);
 
 	return (

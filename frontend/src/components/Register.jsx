@@ -18,7 +18,6 @@ export const Register = () => {
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-	const [recaptchaToken, setRecaptchaToken] = useState(null);
 	const recaptchaRef = useRef(null);
 
 	const navigate = useNavigate();
@@ -30,11 +29,8 @@ export const Register = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(sendRegister(username, password, confirmPassword, email, recaptchaToken, recaptchaRef, navigate));
-	};
-
-	const handleRecaptchaChange = (token) => {
-		setRecaptchaToken(token);
+		const recaptchaValue = recaptchaRef.current?.getValue();
+		dispatch(sendRegister(username, password, confirmPassword, email, recaptchaValue, recaptchaRef, navigate));
 	};
 
 	return (
@@ -48,6 +44,7 @@ export const Register = () => {
 					<label htmlFor="register-username">Username</label>
 					<TextField
 						id="register-username"
+						autoComplete='username'
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 						placeholder="Enter username (length < 20)"
@@ -59,6 +56,7 @@ export const Register = () => {
 					<label htmlFor="register-email">Email (optional*)</label>
 					<TextField
 						id="register-email"
+						autoComplete='email'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder="Enter email (optional)"
@@ -70,6 +68,7 @@ export const Register = () => {
 					<label htmlFor="register-password">Password</label>
 					<TextField
 						id="register-password"
+						autoComplete='new-password'
 						type={showPassword ? 'text' : 'password'}
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
@@ -96,6 +95,7 @@ export const Register = () => {
 					<label htmlFor="register-password-confirm">Confirm Password</label>
 					<TextField
 						id="register-password-confirm"
+						autoComplete='new-password'
 						type={showConfirmPassword ? 'text' : 'password'}
 						value={confirmPassword}
 						onChange={(e) => setConfirmPassword(e.target.value)}
@@ -119,7 +119,7 @@ export const Register = () => {
 					/>
 				</div>
 				<div className="recaptcha-container">
-                    <ReCAPTCHA ref={recaptchaRef} sitekey="6Lct0rsqAAAAAJYlt--4RL4fKaa2r_FDgKs8zs7R" onChange={handleRecaptchaChange} />
+                    <ReCAPTCHA ref={recaptchaRef} sitekey="6Lct0rsqAAAAAJYlt--4RL4fKaa2r_FDgKs8zs7R" />
                 </div>
 				<button type="submit" className="register-button">
 					Register

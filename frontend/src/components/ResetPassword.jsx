@@ -37,7 +37,9 @@ export const ResetPassword = () => {
             <h2>Reset Password</h2>
                 <form onSubmit={handleSubmit}>
                     <TextField
+                        id="reset-password"
                         label="New Password"
+                        autoComplete='new-password'
                         type="password"
                         variant="outlined"
                         fullWidth
@@ -47,7 +49,9 @@ export const ResetPassword = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <TextField
+                        id='reset-confirm-password'
                         label="Confirm Password"
+                        autoComplete='new-password'
                         type="password"
                         placeholder="Confirm password"
                         variant="outlined"

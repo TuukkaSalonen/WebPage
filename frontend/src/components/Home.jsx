@@ -14,10 +14,11 @@ export const Home = () => {
 	const newsItems = [
 		{
 			date: '2025-02-9',
+			poster: 'Tuukka',
 			content: 'Added user system with register, login, password recovery, user details modification and snake scores tracking.',
 		},
-		{ date: '2025-01-12', content: 'Added RS stats page to search Runescape stats by username from the Runescape API.' },
-		{ date: '2024-12-23', content: 'Initial website launch with snake game, chatbot and the introduction page.' },
+		{ date: '2025-01-12', poster: 'Tuukka', content: 'Added RS stats page to search Runescape stats by username from the Runescape API.' },
+		{ date: '2024-12-23', poster: 'Tuukka', content: 'Initial website launch with snake game, chatbot and the introduction page.' },
 	];
 
 	return (
@@ -31,7 +32,7 @@ export const Home = () => {
 							<ListItem key={index}>
 								<ListItemText
 									primary={news.content}
-									secondary={news.date}
+									secondary={news.date + ' by ' + news.poster}
 									slotProps={{
 										primary: {
 											style: {

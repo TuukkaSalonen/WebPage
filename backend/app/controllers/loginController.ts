@@ -60,7 +60,10 @@ export const logOut = async (req: CustomRequest, res: Response): Promise<void> =
 		res.clearCookie('refresh_token');
 		
 		if (refreshToken) {
-			await revokeRefreshToken(refreshToken);
+			const tokenUser = await verifyRefreshToken(refreshToken);
+			if (tokenUser) {
+				await revokeRefreshToken(refreshToken);
+			}
 		}
 		if (user && user.id) {
 			logger.info(`Logout successful: User ${user.id}`);
@@ -94,6 +97,14 @@ export const checkAndRefreshLogin = async (req: CustomRequest, res: Response): P
 					return;
 				}
 			} else {
+				const currentUser = await getUser(user.id);
+				if (!currentUser) {
+					logger.warn(`Login check: User ${user.id} not found`);
+					res.clearCookie(cookie);
+					res.clearCookie('refresh_token');
+					res.status(404).json({ status: 404, message: 'User not found!' });
+					return;
+				}
 				logger.info(`Login check: User ${user.id} logged in.`);
 				res.status(200).json({ status: 200, message: 'Logged in', accessToken });
 				return;
@@ -102,6 +113,7 @@ export const checkAndRefreshLogin = async (req: CustomRequest, res: Response): P
 		if (refreshToken) {
 			const user = await verifyRefreshToken(refreshToken);
 			if (user) {
+				await revokeRefreshToken(refreshToken);
 				const { accessToken, refreshToken: newRefreshToken } = await createTokens(user);
 				res.cookie(cookie, accessToken, {
 					httpOnly: true,
@@ -159,7 +171,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 			}
 			const user = await createUser(username, hashedPassword, email);
 			logger.info(`Register attempt: User ${user.id} created`);
-			res.status(200).json({ status: 200, message: 'User created', user });
+			res.status(200).json({ status: 200, message: 'User created' });
 		} else {
 			res.status(400).json({ status: 400, message: 'Invalid input!' });
 		}

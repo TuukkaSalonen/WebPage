@@ -43,6 +43,7 @@ const FloatingChat = ({isOpen, toggleChat, closeChat}) => {
 				<div className="chatbox-input">
 					<input
 						type="text"
+						id='chat-input'
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						onKeyDown={(e) => e.key === 'Enter' && handleSend()}

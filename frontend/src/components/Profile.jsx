@@ -168,6 +168,7 @@ export const Profile = () => {
 							<TextField
 								type="text"
 								id="username"
+								autoComplete='username'
 								value={newUsername}
 								onChange={(e) => setNewUsername(e.target.value)}
 								placeholder="Enter your new username"
@@ -179,6 +180,7 @@ export const Profile = () => {
 							<TextField
 								type="text"
 								id="confirmNewUsername"
+								autoComplete='username'
 								value={confirmNewUsername}
 								onChange={(e) => setConfirmNewUsername(e.target.value)}
 								placeholder="Confirm your new username"
@@ -211,6 +213,7 @@ export const Profile = () => {
 							<TextField
 								type="email"
 								id="email"
+								autoComplete='email'
 								value={newEmail}
 								onChange={(e) => setNewEmail(e.target.value)}
 								placeholder="Enter your email"
@@ -250,6 +253,7 @@ export const Profile = () => {
 							<TextField
 								type={showCurrentPassword ? 'text' : 'password'}
 								id="currentPassword"
+								autoComplete='current-password'
 								value={currentPassword}
 								onChange={(e) => setCurrentPassword(e.target.value)}
 								placeholder="Enter your current password"
@@ -275,6 +279,7 @@ export const Profile = () => {
 							<TextField
 								type={showNewPassword ? 'text' : 'password'}
 								id="newPassword"
+								autoComplete='new-password'
 								value={newPassword}
 								onChange={(e) => setNewPassword(e.target.value)}
 								placeholder="Enter your new password"
@@ -300,6 +305,7 @@ export const Profile = () => {
 							<TextField
 								type={showConfirmNewPassword ? 'text' : 'password'}
 								id="confirmNewPassword"
+								autoComplete='new-password'
 								value={confirmNewPassword}
 								onChange={(e) => setConfirmNewPassword(e.target.value)}
 								placeholder="Confirm your new password"

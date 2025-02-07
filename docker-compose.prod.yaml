@@ -20,7 +20,7 @@ services:
       - COMBINED_LOG=${COMBINED_LOG}
     restart: always
     volumes:
-      - ./backend/app/logs:/app/logs
+      - ./backend/app/logs:/backend/app/logs
     depends_on:
       - db
     ports:

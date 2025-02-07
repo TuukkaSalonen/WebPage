@@ -22,7 +22,7 @@ services:
     restart: always
     volumes:
       - ./backend:/app
-      - ./backend/app/logs:/app/logs
+      - ./backend/app/logs:/backend/app/logs
     depends_on:
       - db
     ports:

@@ -1,7 +1,7 @@
 services:
   backend:
     container_name: backend
-    image: 850995544968.dkr.ecr.eu-north-1.amazonaws.com/webapp:backend-prod-latest
+    image: 850995544968.dkr.ecr.eu-north-1.amazonaws.com/webapp:backend-prod-latest-update
     environment:
       - FRONTEND_PORT=${FRONTEND_PORT}
       - FRONTEND_PORT_SSL=${FRONTEND_PORT_SSL}
@@ -11,6 +11,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB=${DB_NAME}
       - AI_KEY=${AI_KEY}
+      - RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
       - ENV=production
       - FRONTEND_URL_PROD=${FRONTEND_URL_PROD}
       - EMAIL_USER=${EMAIL_USER}
@@ -21,6 +22,7 @@ services:
     restart: always
     volumes:
       - ./backend/app/logs:/backend/app/logs
+      - ./backend:/app
     depends_on:
       - db
     ports:
@@ -30,7 +32,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: 850995544968.dkr.ecr.eu-north-1.amazonaws.com/webapp:frontend-prod-latest
+    image: 850995544968.dkr.ecr.eu-north-1.amazonaws.com/webapp:frontend-prod-latest-update
     ports:
       - "80:80"
       - "443:443"

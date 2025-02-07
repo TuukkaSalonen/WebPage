@@ -78,7 +78,7 @@ export const Sidebar = ({ isOpen, toggleSidebar, visitorCount }) => {
 			</ul>
 			<div className="site-info">
 				<p>Visitor count: {visitorCount}</p>
-				<p>Last update: 3.2.2025</p>
+				<p>Last update: 8.2.2025</p>
 			</div>
 		</div>
 	);

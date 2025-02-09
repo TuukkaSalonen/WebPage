@@ -25,8 +25,8 @@ export async function up(knex: Knex): Promise<void> {
 			await knex.schema.withSchema('app').createTable('snake', (table) => {
 				table.increments('id').primary();
 				table.uuid('user_id').nullable().references('id').inTable('app.user').onDelete('CASCADE');
-				table.string('name');
-				table.integer('score');
+				table.string('name').notNullable();
+				table.integer('score').notNullable();
 				table.timestamps(true, true);
 			});
 		}
@@ -37,8 +37,8 @@ export async function up(knex: Knex): Promise<void> {
 		if (!userTableExists) {
 			await knex.schema.withSchema('app').createTable('user', (table) => {
 				table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
-				table.string('username').unique();
-				table.string('password');
+				table.string('username').unique().notNullable();
+				table.string('password').notNullable();
 				table.string('email').unique().nullable();
 				table.enum('role', ['user', 'admin']).defaultTo('user');
 				table.timestamps(true, true);
@@ -82,6 +82,8 @@ export async function down(knex: Knex): Promise<void> {
 		await knex.schema.withSchema('app').dropTableIfExists('general');
 		await knex.schema.withSchema('app').dropTableIfExists('snake');
 		await knex.schema.withSchema('app').dropTableIfExists('user');
+		await knex.schema.withSchema('app').dropTableIfExists('refresh_token');
+		await knex.schema.withSchema('app').dropTableIfExists('password_reset');
 	} catch (error) {
 		console.error('Error running migration down:', error);
 		throw error; // Re-throw the error to ensure the migration fails

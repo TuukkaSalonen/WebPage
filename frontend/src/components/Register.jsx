@@ -56,6 +56,7 @@ export const Register = () => {
 					<label htmlFor="register-email">Email (optional*)</label>
 					<TextField
 						id="register-email"
+						type='email'
 						autoComplete='email'
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}

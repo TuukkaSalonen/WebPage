@@ -53,10 +53,10 @@ export async function getUsers() {
 }
 
 // Create user
-export async function createUser(username: string, password: string, email: string) {
+export async function createUser(username: string, password: string, emailInput: string) {
 	try {
+		const email = emailInput !== '' ? emailInput : null;
 		const [insertedRecord] = await db(userTable).insert({ username, password, email }).returning(['id', 'username']);
-
 		return insertedRecord;
 	} catch (error) {
 		console.error('Error creating user:', error);
@@ -127,8 +127,7 @@ export const deleteUserEmail = async (id: string): Promise<{ id: string }[]> => 
 export const deleteUser = async (id: string) => {
 	try {
 		return await db(userTable).where('id', id).del();
-	}
-	catch (error) {
+	} catch (error) {
 		console.error('Error deleting user:', error);
 		throw new Error(`DB error - Error deleting user by id: ${error}`);
 	}

@@ -69,5 +69,8 @@
 		"http-proxy-middleware": "^3.0.3",
 		"npm-force-resolutions": "^0.0.10",
 		"style-loader": "^4.0.0"
+	},
+	"node_modules/serialize-javascript": {
+		"version": "6.0.2"
 	}
 }

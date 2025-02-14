@@ -28,8 +28,8 @@ EMAIL_PASSWORD : Define email password\
 EMAIL_HOST: Define email host\
 COOKIE_NAME: Define access token cookie name (token as default in code)\
 COOKIE_EXPIRATION : Define access token cookie expiration (1h as default in code)\
-REFRESH_COOKIE_EXPIRATION: Define refresh token cookie expiration (7d as default in code, name is coded as refresh_token)
-JWT_SECRET : Define secure jwt secret key
+REFRESH_COOKIE_EXPIRATION: Define refresh token cookie expiration (7d as default in code, name is coded as refresh_token)\
+JWT_SECRET : Define secure jwt secret key\
 SALT_ROUNDS : Define the amount of salt rounds (defaulted as 10 in code)
 
 ### Frontend

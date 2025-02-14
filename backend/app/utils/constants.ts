@@ -1,7 +1,4 @@
 // List of skills used in RS stats
-
-import { Interface } from "readline";
-
 export const skills = [
 	{ name: 'Overall', imageUrl: '/images/skills/Overall.png' },
 	{ name: 'Attack', imageUrl: '/images/skills/Attack.png' },

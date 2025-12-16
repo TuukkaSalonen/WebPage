@@ -31,6 +31,9 @@
         listen 80 default_server;
         listen [::]:80 default_server;
 
-        return 301 https://$host$request_uri;
-    }
+        server_name tuukkasalonen.fi www.tuukkasalonen.fi;
 
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }

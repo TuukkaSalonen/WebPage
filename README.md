@@ -44,3 +44,11 @@ DB_PORT : Define what port the database runs on\
 DB_USER : Define database username\
 DB_PASSWORD : Define database password\
 DB_NAME : Define database name
+
+## Technologies used
+Frontend: React, Redux, JavaScript/TypeScript, CSS\
+Backend: Node.js, Express.js, Knex\
+Database: PostgreSQL\
+Docker: Containerization for development and production environments\
+Authentication: JWT-based authentication system\
+Google reCAPTCHA: For validating registration forms\

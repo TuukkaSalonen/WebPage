@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import logger from '../logger';
 
 const AI_KEY = process.env.AI_KEY || 'Error';
-const genAI = new GoogleGenerativeAI(AI_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const genAI = new GoogleGenAI({apiKey: AI_KEY});
 
 // Get response from AI model and return response to user
 export const getChatResponse = async (req: Request, res: Response): Promise<void> => {
@@ -28,8 +27,11 @@ export const getChatResponse = async (req: Request, res: Response): Promise<void
 // Generate AI response based on user message
 const generateAIResponse = async (message: string) => {
 	try {
-		const generated = await model.generateContent(message);
-		return generated.response.text();
+		const generated = await genAI.models.generateContent({
+			model: "gemini-2.0-flash",
+			contents: message
+		});
+		return generated.text;
 	} catch (error) {
 		logger.error(`Chat: Error generating AI response: ${error}`);
 		console.error(error);

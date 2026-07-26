@@ -14,21 +14,20 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@google/genai": "^1.33.0",
-		"@google/generative-ai": "^0.24.1",
+		"@google/genai": "^2.13.0",
 		"@types/bcrypt": "^6.0.0",
 		"backend": "file:",
 		"bcryptjs": "^3.0.3",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
 		"express": "^5.2.1",
-		"express-rate-limit": "^8.2.1",
+		"express-rate-limit": "^8.6.0",
 		"helmet": "^8.1.0",
 		"jsonwebtoken": "^9.0.3",
 		"knex": "^3.1.0",
-		"morgan": "^1.10.1",
+		"morgan": "^1.11.0",
 		"node-schedule": "^2.1.1",
-		"nodemailer": "^7.0.11",
+		"nodemailer": "^9.0.3",
 		"pg": "^8.16.3",
 		"winston": "^3.19.0",
 		"winston-daily-rotate-file": "^5.0.0"
@@ -43,12 +42,17 @@
 		"@types/node": "^25.0.2",
 		"@types/node-schedule": "^2.1.8",
 		"@types/nodemailer": "^7.0.4",
-		"nodemon": "^3.1.11",
+		"nodemon": "^3.1.14",
 		"ts-node": "^10.9.2",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3"
 	},
 	"overrides": {
-		"esbuild": "0.25.0"
+		"brace-expansion": "5.0.8",
+		"esbuild": "0.25.0",
+		"gaxios": "7.3.0",
+		"glob": "13.0.6",
+		"minimatch": "10.2.5",
+		"rimraf": "6.1.3"
 	}
 }

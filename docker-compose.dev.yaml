@@ -44,6 +44,7 @@ services:
       - "${FRONTEND_PORT_DEV}:${FRONTEND_PORT_DEV}"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     environment:
       - WDS_SOCKET_HOST=127.0.0.1 
       - CHOKIDAR_USEPOLLING=true

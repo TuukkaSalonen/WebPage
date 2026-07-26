@@ -1,6 +1,5 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import Navbar from './components/Navbar.jsx';
 import { Home } from './components/Home.jsx';
 import { Details } from './components//Details.jsx';
@@ -40,16 +39,25 @@ const App = ({ visitorCount }) => {
 		return () => clearInterval(intervalCheckLogin);
 	}, [dispatch]);
 
+	useEffect(() => {
+		document.title = title;
+
+		const ensureMetaTag = (selector, attributes) => {
+			let metaTag = document.head.querySelector(selector);
+			if (!metaTag) {
+				metaTag = document.createElement('meta');
+				document.head.appendChild(metaTag);
+			}
+			Object.entries(attributes).forEach(([name, value]) => metaTag.setAttribute(name, value));
+		};
+
+		ensureMetaTag('meta[name="description"]', { name: 'description', content: description });
+		ensureMetaTag('meta[property="og:title"]', { property: 'og:title', content: title });
+		ensureMetaTag('meta[property="og:description"]', { property: 'og:description', content: description });
+	}, [description, title]);
+
 	return (
 		<div className="App">
-			<Helmet>
-				<title>{title}</title>
-				<meta name="description" content={description} />
-				<meta property="og:title" content={title} />
-				<meta property="og:description" content={description} />
-				<link rel="icon" href="/favicon.ico" type="image/x-icon" />
-				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-			</Helmet>
 			<Navbar visitorCount={visitorCount} />
 			<Notification />
 			<div className="main-content">

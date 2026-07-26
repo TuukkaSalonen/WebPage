@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import '../src/index.css';
+import App from '../src/App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/store.ts';
+import store from '../src/redux/store.ts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -34,12 +34,16 @@ const Main = () => {
 	}, []);
 
 	return (
-		<Provider store={store}>
-			<BrowserRouter>
-				<App visitorCount={visitorCount} />
-			</BrowserRouter>
-		</Provider>
+		React.createElement(
+			Provider,
+			{ store },
+			React.createElement(
+				BrowserRouter,
+				null,
+				React.createElement(App, { visitorCount }),
+			),
+		)
 	);
 };
 
-root.render(<Main />);
+root.render(React.createElement(Main));

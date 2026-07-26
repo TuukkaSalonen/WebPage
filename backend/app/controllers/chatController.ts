@@ -27,11 +27,11 @@ export const getChatResponse = async (req: Request, res: Response): Promise<void
 // Generate AI response based on user message
 const generateAIResponse = async (message: string) => {
 	try {
-		const generated = await genAI.models.generateContent({
-			model: "gemini-2.0-flash",
-			contents: message
+		const generated = await genAI.interactions.create({
+			model: "gemini-3.6-flash",
+			input: message
 		});
-		return generated.text;
+		return generated.output_text;
 	} catch (error) {
 		logger.error(`Chat: Error generating AI response: ${error}`);
 		console.error(error);

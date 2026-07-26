@@ -1,4 +1,4 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
 import { getRefreshToken, insertRefreshToken } from '../../db/queries/token';
 import { getUser } from '../../db/queries/user';
 
@@ -8,16 +8,19 @@ const recaptchaSecret = env.RECAPTCHA_SECRET_KEY || 'recaptchaSecret';
 const expiration = env.COOKIE_EXPIRATION || '1h';
 const refreshExpiration = env.REFRESH_COOKIE_EXPIRATION || '7d';
 
+const accessTokenOptions: SignOptions = {
+	expiresIn: expiration as SignOptions['expiresIn'],
+};
+const refreshTokenOptions: SignOptions = {
+	expiresIn: refreshExpiration as SignOptions['expiresIn'],
+};
+
 // Create token and refresh token
 export const createTokens = async (user: any): Promise<any> => {
 	try {
-		const accessToken = jwt.sign({ id: user.id, role: user.role }, secret, {
-			expiresIn: expiration,
-		});
+		const accessToken = jwt.sign({ id: user.id, role: user.role }, secret, accessTokenOptions);
 
-		const refreshToken = jwt.sign({ id: user.id, role: user.role }, secret, {
-			expiresIn: refreshExpiration,
-		});
+		const refreshToken = jwt.sign({ id: user.id, role: user.role }, secret, refreshTokenOptions);
 		await insertRefreshToken(user.id, refreshToken);
 		return { accessToken, refreshToken };
 	} catch (error) {
